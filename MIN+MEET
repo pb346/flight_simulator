@@ -1,4 +1,6 @@
-Meeting 1) 12:30 ...
+Meeting 1) 12:30-2:15
+Attendees paulbaba namaurer
+
 purpose: Start gitRepo. Download required software. Discuss how to tackle the project
 
-
+Progress: We have an idea how to implement some of the mathmatical formulas. We had an issue figuring out how to display the angular orientation in a plane in 2D. It was suggested to use openGL to create a sphere to show current angular orientation. Discussed future stages of the project.
