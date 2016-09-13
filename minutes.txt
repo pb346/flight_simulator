@@ -1,11 +1,37 @@
-Meeting 1) 12:30-2:15
-Attendees paulbaba namaurer
-
-purpose: Start gitRepo. Download required software. Discuss how to tackle the project
-
-Progress: We have an idea how to implement some of the mathmatical formulas. We had an issue figuring out how to display the angular orientation in a plane in 2D. It was suggested to use openGL to create a sphere to show current angular orientation. Discussed future stages of the project.
-
 date: September 9, 2016
 meeting_type: group
 attendance: [paulbaba, namaurer]
-absent:[
+excused_absent:[
+	{echriste, : sick}
+	]
+task_progress: [
+	{ initial meeting: repo setup }
+	]
+
+issues: [
+	{ no issues }
+	]
+Notes:[{}]
+
+date: September 12, 2016
+meeting_type: ta
+attendance: [echriste, namaurer, paulbaba]
+task_progress: [
+	{ sprint 1 description }
+	]
+
+issues: [
+	{no issues }
+	]
+notes:[{}]
+
+date: September 13, 2016
+meeting_type: group
+attendance: [echriste, namaurer, paulbaba]
+task_pogress: [
+	{ubit: echriste, progress: Basic GUI, installed QT, cloned Repo}
+	{ubit: namaurer, progress: Basic GUI, README}
+	{ubit: paulbaba, progress: Basic GUI, minutes}
+	]
+issues:[{}]
+Notes:
