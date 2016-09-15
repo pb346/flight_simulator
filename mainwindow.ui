@@ -816,73 +816,9 @@
    <widget class="QLabel" name="label_22">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>140</y>
-      <width>211</width>
-      <height>311</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../Desktop/cse442/flight_simulator/src/images/adjusted F16.png</pixmap>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_23">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>150</y>
-      <width>51</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../Desktop/cse442/flight_simulator/src/images/Fuel.png</pixmap>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_24">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>150</y>
-      <width>51</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../Desktop/cse442/flight_simulator/src/images/Fuel.png</pixmap>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_26">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>-10</y>
-      <width>231</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../../Desktop/cse442/flight_simulator/src/images/sphere.png</pixmap>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_27">
-    <property name="geometry">
-     <rect>
       <x>200</x>
       <y>310</y>
-      <width>221</width>
+      <width>191</width>
       <height>81</height>
      </rect>
     </property>
@@ -890,7 +826,71 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../Desktop/cse442/flight_simulator/src/images/heading.png</pixmap>
+     <pixmap>src/images/heading.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>30</y>
+      <width>201</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>src/images/sphere.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_24">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>140</y>
+      <width>191</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>src/images/adjusted F16.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>150</y>
+      <width>51</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>src/images/Fuel.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_27">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>150</y>
+      <width>51</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>src/images/Fuel.png</pixmap>
     </property>
    </widget>
   </widget>

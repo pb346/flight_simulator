@@ -18,3 +18,9 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    src/images/adjusted F16.png \
+    src/images/Fuel.png \
+    src/images/heading.png \
+    src/images/sphere.png
