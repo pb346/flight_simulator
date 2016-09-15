@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>951</width>
+    <height>710</height>
+   </rect>
+  </property>
   <property name="minimumSize">
    <size>
     <width>951</width>
@@ -112,7 +120,7 @@
      <string>Afterburner</string>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider">
+   <widget class="QSlider" name="throttleSlider">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -160,7 +168,7 @@
      <string>Throttle</string>
     </property>
    </widget>
-   <widget class="QSlider" name="verticalSlider_2">
+   <widget class="QSlider" name="ySlider">
     <property name="geometry">
      <rect>
       <x>320</x>
@@ -198,7 +206,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSlider_2">
+   <widget class="QSlider" name="zSlider">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -315,7 +323,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>620</y>
+      <y>610</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -454,7 +462,7 @@
      <string>fuel</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="xAxisValue">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -463,8 +471,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="yAxisValue">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -473,8 +484,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="zAxisValue">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -483,18 +497,24 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="throttleValue">
     <property name="geometry">
      <rect>
       <x>620</x>
-      <y>610</y>
+      <y>600</y>
       <width>61</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="xAngleValue">
     <property name="geometry">
      <rect>
       <x>730</x>
@@ -503,8 +523,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_6">
+   <widget class="QLineEdit" name="yAngleValue">
     <property name="geometry">
      <rect>
       <x>730</x>
@@ -513,8 +536,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_7">
+   <widget class="QLineEdit" name="zAngleValue">
     <property name="geometry">
      <rect>
       <x>730</x>
@@ -523,8 +549,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_8">
+   <widget class="QLineEdit" name="thrustValue">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -533,8 +562,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_9">
+   <widget class="QLineEdit" name="dragValue">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -543,8 +575,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_10">
+   <widget class="QLineEdit" name="accelValue">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -553,8 +588,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_11">
+   <widget class="QLineEdit" name="speedValue">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -563,8 +601,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>0</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_12">
+   <widget class="QLineEdit" name="airDensity">
     <property name="geometry">
      <rect>
       <x>860</x>
@@ -573,8 +614,11 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="text">
+     <string>1</string>
+    </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_13">
+   <widget class="QLineEdit" name="fuelValue">
     <property name="geometry">
      <rect>
       <x>730</x>
@@ -583,15 +627,8 @@
       <height>20</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QOpenGLWidget" name="openGLWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>270</y>
-      <width>300</width>
-      <height>151</height>
-     </rect>
+    <property name="text">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_21">
@@ -722,6 +759,138 @@
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_25">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>120</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Plane Status</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_28">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>300</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>90</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_29">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>370</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_30">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>370</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>180</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_22">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>140</y>
+      <width>211</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../Desktop/cse442/flight_simulator/src/images/adjusted F16.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>150</y>
+      <width>51</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../Desktop/cse442/flight_simulator/src/images/Fuel.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_24">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>150</y>
+      <width>51</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../Desktop/cse442/flight_simulator/src/images/Fuel.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>-10</y>
+      <width>231</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../Desktop/cse442/flight_simulator/src/images/sphere.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_27">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>310</y>
+      <width>221</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../Desktop/cse442/flight_simulator/src/images/heading.png</pixmap>
     </property>
    </widget>
   </widget>
