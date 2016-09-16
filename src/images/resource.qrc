@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>sphere.png</file>
+        <file>Fuel.png</file>
+        <file>heading.png</file>
+        <file>adjusted F16.png</file>
+    </qresource>
+</RCC>

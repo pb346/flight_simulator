@@ -24,3 +24,6 @@ DISTFILES += \
     src/images/Fuel.png \
     src/images/heading.png \
     src/images/sphere.png
+
+RESOURCES += \
+    src/images/resource.qrc

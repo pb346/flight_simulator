@@ -7,7 +7,6 @@ excused_absent:[
 task_progress: [
 	{ initial meeting: repo setup }
 	]
-
 issues: [
 	{ no issues }
 	]
@@ -19,7 +18,6 @@ attendance: [echriste, namaurer, paulbaba]
 task_progress: [
 	{ sprint 1 description }
 	]
-
 issues: [
 	{no issues }
 	]
@@ -33,5 +31,16 @@ task_pogress: [
 	{ubit: namaurer, progress: Basic GUI, README}
 	{ubit: paulbaba, progress: Basic GUI, minutes}
 	]
-issues:[{}]
+issues:[{no issues}]
+Notes:
+
+date: September 15, 2016
+meeting_type: group
+attendance: [echriste, namaurer, paulbaba]
+task_progress: [
+	{ubit: echriste, progress: Fixed local Qt compiler errors }
+	{ubit: namaurer, progress: Sprint 1 script}
+	{ubit: paulbaba, progress: Basic GUI }
+	]
+issues:[{ Qt is not loading images from source folder during runtime }	]
 Notes:

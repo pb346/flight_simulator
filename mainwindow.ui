@@ -826,7 +826,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>src/images/heading.png</pixmap>
+     <pixmap resource="src/images/resource.qrc">:/new/prefix1/heading.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_23">
@@ -842,7 +842,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>src/images/sphere.png</pixmap>
+     <pixmap resource="src/images/resource.qrc">:/new/prefix1/sphere.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_24">
@@ -858,7 +858,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>src/images/adjusted F16.png</pixmap>
+     <pixmap resource="src/images/resource.qrc">:/new/prefix1/adjusted F16.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_26">
@@ -874,7 +874,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>src/images/Fuel.png</pixmap>
+     <pixmap resource="src/images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_27">
@@ -890,7 +890,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>src/images/Fuel.png</pixmap>
+     <pixmap resource="src/images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
     </property>
    </widget>
   </widget>
@@ -915,6 +915,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="src/images/resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
