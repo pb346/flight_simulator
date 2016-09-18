@@ -1,0 +1,10 @@
+date: September 13, 2016
+meeting_type: group
+attendance: [echriste, namaurer, paulbaba]
+task_pogress: [
+	{ubit: echriste, progress: Basic GUI, installed QT, cloned Repo}
+	{ubit: namaurer, progress: Basic GUI, README}
+	{ubit: paulbaba, progress: Basic GUI, minutes}
+	]
+issues:[{no issues}]
+Notes:
