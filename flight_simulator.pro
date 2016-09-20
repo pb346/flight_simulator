@@ -13,16 +13,16 @@ TEMPLATE = app
 
 win32:LIBS += -lwinmm
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    joystick_interface.cpp \
-    state_timer.cpp
+SOURCES += src/main.cpp\
+        src/mainwindow.cpp \
+    src/joystick_interface.cpp \
+    src/state_timer.cpp
 
-HEADERS  += mainwindow.h \
-    joystick_interface.h \
-    state_timer.h
+HEADERS  += src/mainwindow.h \
+    src/joystick_interface.h \
+    src/state_timer.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/mainwindow.ui
 
 DISTFILES += \
     src/images/adjusted F16.png \
