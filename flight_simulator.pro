@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    joystick_interface.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    joystick_interface.h
 
 FORMS    += mainwindow.ui
 
