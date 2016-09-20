@@ -7,11 +7,8 @@
  *
  *
  */
-
-#ifndef JOYSTICK_INTERFACE_H
-#define JOYSTICK_INTERFACE_H
 /*-- INCLUDES: ------------------------------------------------------------*/
-
+#include "joystick_interface.h"
 #include <vector>
 #if __WIN32__
 #include <Windows.h>
@@ -21,7 +18,7 @@
 #define WIN_MAX_POS (65535.0)
 
 #if __WIN32__
-void saveWin(save_event* saved)
+void saveWin(joystick_event* saved)
 {
     JOYINFOEX joyinfo;
     joyinfo.dwFlags= JOY_RETURNBUTTONS;
@@ -129,4 +126,3 @@ void saveWin(save_event* saved)
 }
 #endif
 
-#endif // JOYSTICK_INTERFACE_H
