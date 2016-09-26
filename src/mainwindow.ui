@@ -6,19 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>951</width>
+    <width>1350</width>
     <height>710</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>951</width>
-    <height>710</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>951</width>
+    <width>1120</width>
     <height>710</height>
    </size>
   </property>
@@ -181,10 +175,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
-     <number>1</number>
+     <number>100</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -200,10 +194,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
-     <number>1</number>
+     <number>100</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -219,10 +213,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
-     <number>1</number>
+     <number>100</number>
     </property>
     <property name="value">
      <number>0</number>
@@ -896,27 +890,27 @@
      <pixmap resource="images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
     </property>
    </widget>
+   <widget class="QTextEdit" name="status">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>500</y>
+      <width>104</width>
+      <height>71</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>40</y>
+      <x>450</x>
+      <y>470</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="status">
-    <property name="geometry">
-     <rect>
-      <x>840</x>
-      <y>70</y>
-      <width>104</width>
-      <height>71</height>
-     </rect>
+     <string>Start/Stop</string>
     </property>
    </widget>
   </widget>
@@ -925,7 +919,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>951</width>
+     <width>1350</width>
      <height>21</height>
     </rect>
    </property>
