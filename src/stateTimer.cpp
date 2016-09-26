@@ -1,4 +1,4 @@
-#include "state_timer.h"
+#include "stateTimer.h"
 
 StateTimer::StateTimer(QObject *parent) : QObject(parent)
 {

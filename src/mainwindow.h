@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "timerThread.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -14,9 +14,16 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    timerThread* procThread;
+    void updateValues(joystick_event* event);
+    void updateSliders(joystick_event* event);
 
 private slots:
+    void onUpdateGUI(joystick_event*);
 
+
+    void on_pushButton_clicked();
+    void onEventLoopStarted();
 
 private:
     Ui::MainWindow *ui;
