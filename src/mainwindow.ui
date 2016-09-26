@@ -6,19 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>951</width>
+    <width>1350</width>
     <height>710</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>951</width>
-    <height>710</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>951</width>
+    <width>1120</width>
     <height>710</height>
    </size>
   </property>
@@ -130,13 +124,16 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="singleStep">
      <number>1</number>
     </property>
     <property name="value">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -178,10 +175,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
-     <number>1</number>
+     <number>100</number>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -197,10 +194,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
-     <number>1</number>
+     <number>100</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -216,10 +213,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-1</number>
+     <number>0</number>
     </property>
     <property name="maximum">
-     <number>1</number>
+     <number>100</number>
     </property>
     <property name="value">
      <number>0</number>
@@ -826,7 +823,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="src/images/resource.qrc">:/new/prefix1/heading.png</pixmap>
+     <pixmap resource="images/resource.qrc">:/new/prefix1/heading.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_23">
@@ -842,7 +839,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="src/images/resource.qrc">:/new/prefix1/sphere.png</pixmap>
+     <pixmap resource="images/resource.qrc">:/new/prefix1/sphere.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_24">
@@ -858,7 +855,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="src/images/resource.qrc">:/new/prefix1/adjusted F16.png</pixmap>
+     <pixmap resource="images/resource.qrc">:/new/prefix1/adjusted F16.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_26">
@@ -874,7 +871,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="src/images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
+     <pixmap resource="images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_27">
@@ -890,7 +887,30 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="src/images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
+     <pixmap resource="images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="status">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>500</y>
+      <width>104</width>
+      <height>71</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>470</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start/Stop</string>
     </property>
    </widget>
   </widget>
@@ -899,7 +919,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>951</width>
+     <width>1350</width>
      <height>21</height>
     </rect>
    </property>
@@ -916,7 +936,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="src/images/resource.qrc"/>
+  <include location="images/resource.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -11,13 +11,20 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = flight_simulator
 TEMPLATE = app
 
+win32:LIBS += -lwinmm
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES += src/main.cpp\
+        src/mainwindow.cpp \
+    src/joystick_interface.cpp \
+    src/stateTimer.cpp \
+    src/timerThread.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += src/mainwindow.h \
+    src/joystick_interface.h \
+    src/stateTimer.h \
+    src/timerThread.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/mainwindow.ui
 
 DISTFILES += \
     src/images/adjusted F16.png \
