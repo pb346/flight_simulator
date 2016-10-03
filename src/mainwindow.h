@@ -17,6 +17,7 @@ public:
     timerThread* procThread;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
+    int runningFlag;
 
 private slots:
     void onUpdateGUI(joystick_event*);

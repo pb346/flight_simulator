@@ -4,6 +4,7 @@
 #include "QSlider"
 #include "QPixmap"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -44,9 +45,20 @@ void MainWindow::updateSliders(joystick_event* event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    procThread->Stop = false;
-    ui->status->setText("READING");
-    procThread->start();
+
+    if(!runningFlag)
+    {
+        procThread->Stop = false;
+        runningFlag = 1;
+        ui->status->setText("READING");
+        procThread->start();
+    }
+    else
+    {
+        runningFlag = 0;
+        procThread->Stop = true;
+        ui->status->setText("STOPPED");
+    }
 }
 
 void MainWindow::onEventLoopStarted()
