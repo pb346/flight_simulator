@@ -33,6 +33,7 @@ void MainWindow::updateValues(joystick_event* event)
     ui->yAxisValue->setText(QString::number(event->stick_y, 'f', 2 ));
     ui->zAxisValue->setText(QString::number(event->stick_z, 'f', 2 ));
     ui->throttleValue->setText(QString::number(event->throttle, 'f', 2 ));
+    ui->afterburner_box->setChecked(event->button[1]);
 
 
 }

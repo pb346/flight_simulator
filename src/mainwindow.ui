@@ -101,7 +101,7 @@
      <string>AUX2</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_5">
+   <widget class="QCheckBox" name="afterburner_box">
     <property name="geometry">
      <rect>
       <x>700</x>
