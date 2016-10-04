@@ -1,0 +1,9 @@
+date: September 27, 2016
+meeting_type: TA 
+attendace: [echriste, namaurer, paulbaba]
+task_progress:[ echriste {start OpenGL}
+		namaurer {start physics}
+		paulbaba {clean up joystick}]
+issues:
+	-Simulation does not stop and cleanup
+Notes:
