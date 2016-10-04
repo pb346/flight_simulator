@@ -90,7 +90,7 @@ private:
 	double y_lift_right;
 	double z_lift_right;
 
-	double cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
+	double * cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
 	double dot_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
 	double calculate_magnitude(double x_unit_vector, double y_unit_vector, double z_unit_vector);
 	double calculate_unit_vector(double magnitude, double angle_to_axis);
@@ -113,5 +113,6 @@ private:
 	void calculate_velocities();
 	void calculate_positions();
 public:
+	Plane();
 	void update_plane();
 };

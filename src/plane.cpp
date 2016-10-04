@@ -1,117 +1,183 @@
 #include <iostream>
-
-class Plane {
-private:
-// environmental variables
-	const double gravity = 9.81;
-	double air_density;
+#include "plane.h"
+#include <cmath>
+Plane::Plane() {
 // scalars (all due to change in disaster scenarios)
-	double mass;
-	double coefficient_of_lift;
-	double coefficient_of_drag;
-	double left_wing_surface_area;
-	double right_wing_surface_area;
+	mass = 0;
+	coefficient_of_lift = 0;
+	coefficient_of_drag = 0;
+	left_wing_surface_area = 0;
+	right_wing_surface_area = 0;
 // position variables
-	double x_position;
-	double y_position;
-	double z_position;
-	double x_velocity;
-	double y_velocity;
-	double z_velocity;
-	double x_acceleration;
-	double y_acceleration;
-	double z_acceleration;
+	x_position = 0;
+	y_position = 0;
+	z_position = 0;
+	x_velocity = 0;
+	y_velocity = 0;
+	z_velocity = 0;
+	x_acceleration = 0;
+	y_acceleration = 0;
+	z_acceleration = 0;
 // angles
 	// angle to axis variables
-	double alpha_angle;
-	double beta_angle;
-	double gamma_angle;
-	double alpha_velocity;
-	double beta_velocity;
-	double gamma_velocity;
-	double alpha_acceleration;
-	double beta_acceleration;
-	double gamma_acceleration;
+	alpha_angle = 0;
+	beta_angle = 0;
+	gamma_angle = 0;
+	alpha_velocity = 0;
+	beta_velocity = 0;
+	gamma_velocity = 0;
+	alpha_acceleration = 0;
+	beta_acceleration = 0;
+	gamma_acceleration = 0;
 	// angle to about axis variables
-	double pitch_angle;
-	double pitch_angular_velocity;
-	double pitch_angular_acceleration;
-	double yaw_angle;
-	double yaw_angular_velocity;
-	double yaw_angular_acceleration;
-	double roll_angle;
-	double roll_angular_velocity;
-	double roll_angular_acceleration;
+	pitch_angle = 0;
+	pitch_angular_velocity = 0;
+	pitch_angular_acceleration = 0;
+	yaw_angle = 0;
+	yaw_angular_velocity = 0;
+	yaw_angular_acceleration = 0;
+	roll_angle = 0;
+	roll_angular_velocity = 0;
+	roll_angular_acceleration = 0;
 // resultant momentum and resultant forces
 	// magnitude
-	double m_momentum;
-	double m_angular_momentum;
+	m_momentum = 0;
+	m_angular_momentum = 0;
 	// unit vectors
-	double x_momentum;
-	double y_momentum;
-	double z_momentum;
-	double x_angular_momentum;
-	double y_angular_momentum;
-	double z_angular_momentum;
-	double x_force;
-	double y_force;
-	double z_force;
-	double x_torque;
-	double y_torque;
-	double z_torque;
+	x_momentum = 0;
+	y_momentum = 0;
+	z_momentum = 0;
+	x_angular_momentum = 0;
+	y_angular_momentum = 0;
+	z_angular_momentum = 0;
+	x_force = 0;
+	y_force = 0;
+	z_force = 0;
+	x_torque = 0;
+	y_torque = 0;
+	z_torque = 0;
 // forces
-	double thrust_mag;
-	double x_thrust;
-	double y_thrust;
-	double z_thrust;
+	thrust_mag = 0;
+	x_thrust = 0;
+	y_thrust = 0;
+	z_thrust = 0;
 	// force of gravity (z_gravity == m_gravity)
-	double z_gravity;
+	z_gravity = 0;
 	// normal force
-	double m_normal;
-	double z_normal;
-	double y_normal;
-	double x_normal;
+	m_normal = 0;
+	z_normal = 0;
+	y_normal = 0;
+	x_normal = 0;
 	// left wing
-	double m_drag_left;
-	double m_lift_left;
-	double x_drag_left;
-	double y_drag_left;
-	double z_drag_left;
-	double x_lift_left;
-	double y_lift_left;
-	double z_lift_left;
+	m_drag_left = 0;
+	m_lift_left = 0;
+	x_drag_left = 0;
+	y_drag_left = 0;
+	z_drag_left = 0;
+	x_lift_left = 0;
+	y_lift_left = 0;
+	z_lift_left = 0;
 	// right wing
-	double m_drag_right;
-	double m_lift_right;
-	double x_drag_right;
-	double y_drag_right;
-	double z_drag_right;
-	double x_lift_right;
-	double y_lift_right;
-	double z_lift_right;
+	m_drag_right = 0;
+	m_lift_right = 0;
+	x_drag_right = 0;
+	y_drag_right = 0;
+	z_drag_right = 0;
+	x_lift_right = 0;
+	y_lift_right = 0;
+	z_lift_right = 0;
+}
 
-	double cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
-	double dot_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
-	double calculate_magnitude(double x_unit_vector, double y_unit_vector, double z_unit_vector);
-	double calculate_unit_vector(double magnitude, double angle_to_axis);
-	double calculate_angle_to_axis(double magnitude, double axis_unit_vector);
 
-	void calculate_air_density();
-	void calculate_coefficient_of_lift();
-	void calculate_lift(); // (1/2) * d * v^2 * s * CL
-	void calculate_coefficient_of_drag();
-	void calcualte_drag(); // Cd * (p * v^2)/2 * A
-	void calculate_thrust();
-	void calculate_gravitational_force();
-	void calculate_normal_force();
-	void calculate_torque();
+double * Plane::cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z) {
+	double crossproduct[3] = {a_y * b_z - a_z * b_y, a_x * b_z - b_x * a_z, a_x * b_y - a_y * b_x};
+	return crossproduct;
+}
+double Plane::dot_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z) {
+	return a_x * b_x + a_y + b_y + a_z + b_z;
+}
+double Plane::calculate_magnitude(double x_unit_vector, double y_unit_vector, double z_unit_vector) {
+	return sqrt(x_unit_vector * x_unit_vector + y_unit_vector * y_unit_vector + z_unit_vector * z_unit_vector);
+}
+double Plane::calculate_unit_vector(double magnitude, double angle_to_axis) {
+	return magnitude * cos(angle_to_axis*3.14159265/180.0);
+}
+double Plane::calculate_angle_to_axis(double magnitude, double axis_unit_vector) {
+	return cos(axis_unit_vector*3.14159265/180.0) / magnitude;
+}
 
-	void calculate_angular_accelerations();
-	void calculate_angular_velocities();
-	void calculate_angular_positions();
-	void calculate_accelerations();
-	void calculate_velocities();
-	void calculate_positions();
-public:
-	void update_plane();
-};
+void Plane::calculate_air_density() {
+
+}
+void Plane::calculate_coefficient_of_lift() {
+
+}
+void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
+
+}
+void Plane::calculate_coefficient_of_drag() {
+
+}
+void Plane::calcualte_drag() { // Cd * (p * v^2)/2 * A
+
+}
+void Plane::calculate_thrust() {
+
+}
+void Plane::calculate_gravitational_force() {
+
+}
+void Plane::calculate_normal_force() {
+
+}
+void Plane::calculate_torque() {
+
+}
+void Plane::calculate_angular_accelerations() {
+	pitch_angular_acceleration = pitch_angular_acceleration + z_torque / mass;
+	yaw_angular_acceleration = yaw_angular_acceleration + y_torque / mass;
+	roll_angular_acceleration = roll_angular_acceleration + x_torque / mass;
+}
+void Plane::calculate_angular_velocities() {
+	pitch_angular_velocity = pitch_angular_velocity + pitch_angular_acceleration;
+	yaw_angular_velocity = yaw_angular_velocity + yaw_angular_acceleration;
+	roll_angular_velocity = roll_angular_velocity + roll_angular_acceleration;
+}
+void Plane::calculate_angular_positions() {
+	pitch_angle = pitch_angle + pitch_angular_velocity;
+	yaw_angle = yaw_angle + yaw_angular_velocity;
+	roll_angle = roll_angle + roll_angular_velocity;
+}
+void Plane::calculate_accelerations() {
+	x_acceleration = x_acceleration + x_force / mass;
+	y_acceleration = y_acceleration + y_force / mass;
+	z_acceleration = z_acceleration + z_force / mass;
+}
+void Plane::calculate_velocities() {
+	x_velocity = x_velocity + x_acceleration;
+	y_velocity = y_velocity + y_acceleration;
+	z_velocity = z_velocity + z_acceleration;
+}
+void Plane::calculate_positions() {
+	x_position = x_position + x_velocity;
+	y_position = y_position + y_velocity;
+	z_position = z_position + z_velocity;
+}
+void Plane::update_plane() {
+	calculate_air_density();
+	calculate_coefficient_of_lift();
+	calculate_lift(); // (1/2) * d * v^2 * s * CL
+	calculate_coefficient_of_drag();
+	calcualte_drag(); // Cd * (p * v^2)/2 * A
+	calculate_thrust();
+	calculate_gravitational_force();
+	calculate_normal_force();
+	calculate_torque();
+
+	calculate_angular_accelerations();
+	calculate_angular_velocities();
+	calculate_angular_positions();
+	calculate_accelerations();
+	calculate_velocities();
+	calculate_positions();
+}
