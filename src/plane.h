@@ -114,5 +114,10 @@ private:
 	void calculate_positions();
 public:
 	Plane();
+
 	void update_plane();
+	void update_right_flaps(double angle);
+	void update_left_flaps(double angle);
+	void update_thrust(double thrust);
+	void update_air_break(double angle);
 };
