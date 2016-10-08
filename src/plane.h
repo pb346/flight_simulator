@@ -1,17 +1,21 @@
 #include <iostream>
 
 class Plane {
-private:
+public:
 // environmental variables
 	const double gravity = 9.81;
 	double air_density;
 // scalars (all due to change in disaster scenarios)
 	double mass;
+
 	double coefficient_of_lift;
 	double coefficient_of_drag;
 	double left_wing_surface_area;
 	double right_wing_surface_area;
+	double air_break_surface_area;
 // position variables
+	double m_velocity;
+	double m_acceleration;
 	double x_position;
 	double y_position;
 	double z_position;
@@ -46,6 +50,8 @@ private:
 	// magnitude
 	double m_momentum;
 	double m_angular_momentum;
+	double m_force;
+	double m_torque;
 	// unit vectors
 	double x_momentum;
 	double y_momentum;
@@ -53,19 +59,26 @@ private:
 	double x_angular_momentum;
 	double y_angular_momentum;
 	double z_angular_momentum;
+	double yaw_angular_momentum;
+	double pitch_angular_momentum;
+	double roll_angular_momentum;
 	double x_force;
 	double y_force;
 	double z_force;
+	double yaw_torque;
+	double pitch_torque;
+	double roll_torque;
 	double x_torque;
 	double y_torque;
 	double z_torque;
+
 // forces
-	double thrust_mag;
+	double m_thrust;
 	double x_thrust;
 	double y_thrust;
 	double z_thrust;
 	// force of gravity (z_gravity == m_gravity)
-	double z_gravity;
+	double m_gravity;
 	// normal force
 	double m_normal;
 	double z_normal;
@@ -80,6 +93,7 @@ private:
 	double x_lift_left;
 	double y_lift_left;
 	double z_lift_left;
+	double left_flaps_angle;
 	// right wing
 	double m_drag_right;
 	double m_lift_right;
@@ -89,6 +103,13 @@ private:
 	double x_lift_right;
 	double y_lift_right;
 	double z_lift_right;
+	double right_flaps_angle;
+	//air break
+	double m_drag_air_break;
+	double x_drag_air_break;
+	double y_drag_air_break;
+	double z_drag_air_break;
+	double air_break_angle;
 
 	double * cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
 	double dot_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
@@ -97,14 +118,13 @@ private:
 	double calculate_angle_to_axis(double magnitude, double axis_unit_vector);
 
 	void calculate_air_density();
-	void calculate_coefficient_of_lift();
 	void calculate_lift(); // (1/2) * d * v^2 * s * CL
-	void calculate_coefficient_of_drag();
-	void calcualte_drag(); // Cd * (p * v^2)/2 * A
+	void calculate_drag(); // Cd * (p * v^2)/2 * A
 	void calculate_thrust();
 	void calculate_gravitational_force();
 	void calculate_normal_force();
 	void calculate_torque();
+	void calculate_resultant_force();
 
 	void calculate_angular_accelerations();
 	void calculate_angular_velocities();
@@ -112,7 +132,8 @@ private:
 	void calculate_accelerations();
 	void calculate_velocities();
 	void calculate_positions();
-public:
+
+
 	Plane();
 
 	void update_plane();
