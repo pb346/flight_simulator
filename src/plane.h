@@ -14,6 +14,7 @@ public:
 	double right_wing_surface_area;
 	double air_break_surface_area;
 // position variables
+	double m_position;
 	double m_velocity;
 	double m_acceleration;
 	double x_position;

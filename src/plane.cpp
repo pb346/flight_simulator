@@ -1,6 +1,9 @@
 #include <iostream>
 #include "plane.h"
 #include <cmath>
+
+#define PI 3.14159265358979323846264338327950
+
 Plane::Plane() {
 // scalars (all due to change in disaster scenarios)
 	mass = 652.69995; // slugs
@@ -102,10 +105,10 @@ double Plane::calculate_magnitude(double x_unit_vector, double y_unit_vector, do
 	return sqrt(pow(x_unit_vector,2) + pow(y_unit_vector,2) + pow(z_unit_vector,2));
 }
 double Plane::calculate_unit_vector(double magnitude, double angle_to_axis) {
-	return magnitude * cos(angle_to_axis*3.14159265/180.0);
+	return magnitude * cos(angle_to_axis*PI/180.0);
 }
 double Plane::calculate_angle_to_axis(double magnitude, double axis_unit_vector) {
-	return cos(axis_unit_vector*3.14159265/180.0) / magnitude;
+	return cos(axis_unit_vector*PI/180.0) / magnitude;
 }
 
 void Plane::calculate_air_density() {
@@ -121,22 +124,52 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	if(m_lift_left < 0) {
 		m_lift_left = 0;
 	}
+	x_lift_left = m_lift_left * cos((alpha_angle - 90) * PI/180);
+	y_lift_left = m_lift_left * cos((beta_angle) * PI/180);
+	z_lift_left = m_lift_left * cos((gamma_angle - 90) * PI/180);
+	x_lift_right = m_lift_right * cos((alpha_angle - 90) * PI/180);
+	y_lift_right = m_lift_right * cos((beta_angle) * PI/180);
+	z_lift_right = m_lift_right * cos((gamma_angle - 90) * PI/180);
 }
 void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
 	m_drag_right = 774.5966692*pow(m_velocity, 0.5)/2;
 	m_drag_left = 774.5966692*pow(m_velocity, 0.5)/2;
+	if(m_drag_right < 0) {
+		m_drag_right = 0;
+	}
+	if(m_drag_left < 0) {
+		m_drag_left = 0;
+	}
+	x_drag_left = m_drag_left * cos((alpha_angle + 180) * PI/180);
+	y_drag_left = m_drag_left * cos((beta_angle + 180) * PI/180);
+	z_drag_left = m_drag_left * cos((gamma_angle + 180) * PI/180);
+	x_drag_right = m_drag_right * cos((alpha_angle + 180) * PI/180);
+	y_drag_right = m_drag_right * cos((beta_angle + 180) * PI/180);
+	z_drag_right = m_drag_right * cos((gamma_angle + 180) * PI/180);
 }
 void Plane::calculate_thrust() {
-
+	x_thrust = cos(alpha_angle * PI/180) * m_thrust;
+	y_thrust = cos(beta_angle * PI/180) * m_thrust;
+	z_thrust = cos(gamma_angle * PI/180) * m_thrust;
 }
 void Plane::calculate_gravitational_force() {
 	m_gravity = mass * 32.174; // in feet not meters
 }
 void Plane::calculate_normal_force() {
-
+	m_normal = 0;
 }
 void Plane::calculate_resultant_force() {
-	m_force = m_thrust-m_drag_left-m_drag_right;
+	// thrust, drag, lift, and weight + normal (z only)
+	x_force = x_thrust + x_lift_left + x_lift_right + x_drag_left + x_drag_right;
+	y_force = y_thrust + y_lift_left + y_lift_right + y_drag_left + y_drag_right;
+	z_force = z_thrust + z_lift_left + z_lift_right + z_drag_left + z_drag_right + m_normal - m_gravity;
+	if(z_force < 0.05 && z_force > -0.05) {
+		z_force = 0;
+	}
+	if(z_position <= 0 && z_force < 0) {
+		z_force = 0;
+	}
+	m_force = calculate_magnitude(x_force, y_force, z_force);
 }
 void Plane::calculate_torque() {
 
@@ -160,14 +193,20 @@ void Plane::calculate_accelerations() {
 	x_acceleration = x_force / mass;
 	y_acceleration = y_force / mass;
 	z_acceleration = z_force / mass;
+	if(z_position <= 0 && z_acceleration < 0) {
+		z_acceleration = 0;
+	}
 	m_acceleration = calculate_magnitude(x_acceleration,y_acceleration,z_acceleration);
 }
 void Plane::calculate_velocities() {
 	x_velocity = x_velocity + x_acceleration;
 	y_velocity = y_velocity + y_acceleration;
 	z_velocity = z_velocity + z_acceleration;
+	if(z_position <= 0 && z_velocity < 0) {
+		z_velocity = 0;
+	}
 	m_velocity = calculate_magnitude(x_velocity, y_velocity, z_velocity);
-	if(m_velocity < 0) {
+	if(m_velocity < 0.0) {
 		m_velocity = 0;
 		x_velocity = 0;
 		y_velocity = 0;
@@ -178,6 +217,10 @@ void Plane::calculate_positions() {
 	x_position = x_position + x_velocity;
 	y_position = y_position + y_velocity;
 	z_position = z_position + z_velocity;
+	m_position = calculate_magnitude(x_position, y_position, z_position);
+	if(z_position < 0) {
+		z_position = 0;
+	}
 }
 void Plane::update_plane() {
 	calculate_air_density();
