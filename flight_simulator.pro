@@ -17,12 +17,14 @@ SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/joystick_interface.cpp \
     src/stateTimer.cpp \
-    src/timerThread.cpp
+    src/timerThread.cpp \
+    src/plane.cpp
 
 HEADERS  += src/mainwindow.h \
     src/joystick_interface.h \
     src/stateTimer.h \
-    src/timerThread.h
+    src/timerThread.h \
+    src/plane.h
 
 FORMS    += src/mainwindow.ui
 
@@ -33,4 +35,5 @@ DISTFILES += \
     src/images/sphere.png
 
 RESOURCES += \
-    src/images/resource.qrc
+    src/images/resource.qrc \
+    input/planeModels.xml

@@ -3,6 +3,8 @@
 #include "timerThread.h"
 #include "QSlider"
 #include "QPixmap"
+#include "QFile"
+#include "QDir"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
     runningFlag = 0;
+    planeState = new Plane;
 }
 
 MainWindow::~MainWindow()
@@ -65,5 +68,22 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::onEventLoopStarted()
 {
+    parseXML();
+    planeState->update_model_parameters();
+}
+
+void parseXML()
+{
+/*    QString file = "planeModels.xml";
+    QCoreApplication qApp;
+    QString relative = QDir->qApp(QCoreApplication::applicationDirPath()).absoluteFilePath(file);
+    printf(relative.toLatin1());
+    QFile readin(file);
+    if(!readin.open(QIODevice::ReadOnly | QIODevice::Text))
+        printf("ERROR\n");
+    QString content = readin.readAll();
+    printf(content.toLatin1());*/
+
+
 
 }

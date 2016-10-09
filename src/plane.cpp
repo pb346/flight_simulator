@@ -181,3 +181,7 @@ void Plane::update_plane() {
 	calculate_velocities();
 	calculate_positions();
 }
+
+void Plane::update_model_parameters(){
+
+}

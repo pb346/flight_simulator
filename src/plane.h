@@ -115,4 +115,5 @@ private:
 public:
 	Plane();
 	void update_plane();
+    void update_model_parameters();
 };

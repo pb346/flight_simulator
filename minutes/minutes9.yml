@@ -1,0 +1,9 @@
+date: October 4, 2016
+meeting_type: Professor 
+attendace: [echriste, namaurer, paulbaba]
+task_progress:[ echriste {start OpenGL}
+		namaurer {start physics}
+		paulbaba {clean up joystick}]
+issues:
+	-Merge Open GL and Physics
+Notes:
