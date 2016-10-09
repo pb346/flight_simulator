@@ -35,5 +35,4 @@ DISTFILES += \
     src/images/sphere.png
 
 RESOURCES += \
-    src/images/resource.qrc \
-    input/planeModels.xml
+    src/images/resource.qrc

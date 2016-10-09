@@ -1,9 +1,9 @@
-date: October 4, 2016
-meeting_type: TA 
+date: October 9, 2016
+meeting_type: Group 
 attendace: [echriste, namaurer, paulbaba]
-task_progress:[ echriste {start OpenGL}
-		namaurer {start physics}
-		paulbaba {clean up joystick}]
+task_progress:[ echriste {OpenGL, link to GUI}
+		namaurer {Physics, planeState Model}
+		paulbaba {XML Parse, Linking physics to GUI}]
 issues:
-	-Merge OpenGL and Physics
+		
 Notes:

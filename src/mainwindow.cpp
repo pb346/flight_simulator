@@ -74,16 +74,12 @@ void MainWindow::onEventLoopStarted()
 
 void parseXML()
 {
-/*    QString file = "planeModels.xml";
-    QCoreApplication qApp;
-    QString relative = QDir->qApp(QCoreApplication::applicationDirPath()).absoluteFilePath(file);
-    printf(relative.toLatin1());
-    QFile readin(file);
-    if(!readin.open(QIODevice::ReadOnly | QIODevice::Text))
+    QString exe = QCoreApplication::applicationDirPath();
+    QString fileName = exe + "/../../flight_simulator/src/input/planeModels.xml";
+    printf(fileName.toLatin1());
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         printf("ERROR\n");
-    QString content = readin.readAll();
-    printf(content.toLatin1());*/
-
-
-
+    QString content = file.readAll();
+    printf(content.toLatin1());
 }
