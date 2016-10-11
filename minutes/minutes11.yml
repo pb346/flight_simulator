@@ -1,9 +1,8 @@
-date: October 4, 2016
+date: October 11, 2016
 meeting_type: TA 
 attendace: [echriste, namaurer, paulbaba]
-task_progress:[ echriste {start OpenGL}
-		namaurer {start physics}
-		paulbaba {clean up joystick}]
+task_progress:[ echriste {OpenGL Angular Orientation}
+		namaurer {Lift, Angular equations, drag}
+		paulbaba {Add more debug values, Parse XML model file}]
 issues:
-	-Merge OpenGL and Physics
 Notes:

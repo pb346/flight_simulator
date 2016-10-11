@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindow.h"0
 #include "ui_mainwindow.h"
 #include "timerThread.h"
 #include "QSlider"
