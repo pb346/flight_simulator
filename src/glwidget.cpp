@@ -1,5 +1,4 @@
 #include "glwidget.h"
-#include <QtOpenGL>
 #include <GL/glu.h>
 #include <GL/gl.h>
 #include <stdlib.h>
