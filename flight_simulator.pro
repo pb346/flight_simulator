@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml
+
+QT       += core gui xml opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,13 +19,15 @@ SOURCES += src/main.cpp\
     src/joystick_interface.cpp \
     src/stateTimer.cpp \
     src/timerThread.cpp \
-    src/plane.cpp
+    src/plane.cpp \
+    src/glwidget.cpp
 
 HEADERS  += src/mainwindow.h \
     src/joystick_interface.h \
     src/stateTimer.h \
     src/timerThread.h \
-    src/plane.h
+    src/plane.h \
+    src/glwidget.h
 
 FORMS    += src/mainwindow.ui
 
