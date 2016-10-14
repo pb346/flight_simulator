@@ -1,10 +1,14 @@
-#include "mainwindow.h"0
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "timerThread.h"
-#include "QSlider"
-#include "QPixmap"
-#include "QFile"
-#include "QDir"
+#include <QSlider>
+#include <QPixmap>
+#include <QFile>
+#include <QDir>
+#include <QtXml>
+#include <QXmlStreamReader>
+#include <iostream>
+#include <stdio.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -77,9 +81,38 @@ void parseXML()
     QString exe = QCoreApplication::applicationDirPath();
     QString fileName = exe + "/../../flight_simulator/src/input/planeModels.xml";
     printf(fileName.toLatin1());
-    QFile file(fileName);
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        printf("ERROR\n");
-    QString content = file.readAll();
-    printf(content.toLatin1());
+    QFile* file = new QFile(fileName);
+    if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
+        printf("ERROR: Cannot open XML File\n");
+    QXmlStreamReader xmlParser(file);
+    printf("\nStarting read\n");
+
+    while(!xmlParser.atEnd() && !xmlParser.hasError())
+    {
+        QXmlStreamReader::TokenType token = xmlParser.readNext();
+        if(token == QXmlStreamReader::StartDocument)
+        {
+            continue;
+        }
+
+        if(token == QXmlStreamReader::StartElement)
+        {
+           if(xmlParser.name() == "PLANE")
+           {
+                //create new node
+               printf("New Plane Model\n");
+               continue;
+           }
+           if(xmlParser.name() == "NAME")
+           {
+                printf("NAME ");
+                printf(xmlParser.readElementText().toLatin1());
+                continue;
+           }
+        }
+    }
+
+
+    QString content = file->readAll();
+   // printf(content.toLatin1());
 }
