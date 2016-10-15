@@ -20,14 +20,16 @@ SOURCES += src/main.cpp\
     src/stateTimer.cpp \
     src/timerThread.cpp \
     src/plane.cpp \
-    src/glwidget.cpp
+    src/glwidget.cpp \
+    src/planemodel.cpp
 
 HEADERS  += src/mainwindow.h \
     src/joystick_interface.h \
     src/stateTimer.h \
     src/timerThread.h \
     src/plane.h \
-    src/glwidget.h
+    src/glwidget.h \
+    src/planemodel.h
 
 FORMS    += src/mainwindow.ui
 

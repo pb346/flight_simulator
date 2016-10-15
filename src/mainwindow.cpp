@@ -85,7 +85,8 @@ void parseXML()
     if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
         printf("ERROR: Cannot open XML File\n");
     QXmlStreamReader xmlParser(file);
-    printf("\nStarting read\n");
+    printf("\nStarting read\n");;
+    PlaneModel* node;
 
     while(!xmlParser.atEnd() && !xmlParser.hasError())
     {
@@ -99,16 +100,53 @@ void parseXML()
         {
            if(xmlParser.name() == "PLANE")
            {
-                //create new node
-               printf("New Plane Model\n");
+               node = new PlaneModel;
+               printf("New Plane Model Loaded\n");
                continue;
            }
            if(xmlParser.name() == "NAME")
            {
-                printf("NAME ");
-                printf(xmlParser.readElementText().toLatin1());
+                node->Name = xmlParser.readElementText();
                 continue;
            }
+           if(xmlParser.name() == "NICKNAME")
+           {
+                node->Nickname = xmlParser.readElementText();
+                continue;
+           }
+           if(xmlParser.name() == "ENGINE")
+                continue;
+           if(xmlParser.name() == "MAXNUM")
+           {
+                node->numEngines = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "MAXTHRUST")
+           {
+                node->maxThrust = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "SURFACEAREA")
+           {
+                node->surfaceArea = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "EMPTYMASS")
+           {
+                node->minWeight = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "MAXMASS")
+           {
+                node->maxWeight = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "DCOEFFICIENT")
+           {
+                node->dragCoeff = xmlParser.readElementText().toFloat();
+                continue;
+           }
+
         }
     }
 

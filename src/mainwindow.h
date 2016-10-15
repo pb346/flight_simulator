@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include "timerThread.h"
 #include "plane.h"
+#include "planemodel.h"
 #include <QMainWindow>
 void parseXML();
 namespace Ui {
@@ -18,6 +19,7 @@ public:
     timerThread* procThread;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
+    PlaneModel* currentModel;
     int runningFlag;
     Plane* planeState;
 
