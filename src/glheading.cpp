@@ -15,7 +15,7 @@ void GLHeading::initializeGL()
     glClearColor(0.0, 0.0, 102.0/255.0, 0.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    glOrtho(1.0, 1.0, 0.0, 0.0, 0.0, 0.0);
 }
 
 void GLHeading::resizeGL(int width, int height)

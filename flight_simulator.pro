@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = flight_simulator
 TEMPLATE = app
+INCLUDEPATH += src/
 
 win32:LIBS += -lwinmm -lopengl32
 
@@ -42,4 +43,5 @@ DISTFILES += \
     src/images/sphere.png
 
 RESOURCES += \
-    src/images/resource.qrc
+    src/images/resource.qrc \
+    src/openglresources.qrc
