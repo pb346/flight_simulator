@@ -1,9 +1,9 @@
 #ifndef GLHEADING_H
 #define GLHEADING_H
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QtWidgets>
 
-class GLHeading : public QGLWidget
+class GLHeading : public QOpenGLWidget
 {
 public:
     GLHeading(QWidget* parent);

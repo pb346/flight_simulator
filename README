@@ -1,4 +1,17 @@
-This is a flight simulator.  It will show the user what a pilot would see looking at the instruments on the plane.  The user will be able to control the plane via a joystick.  In the development phase of the project it will also show information helpful for debugging the program and the joystick.
+This is a flight simulator.  It will show the user what a pilot would see looking at the instruments on the plane.  
+The user will be able to control the plane via a joystick. In the development phase of the project it will also show 
+information helpful for debugging the program and the joystick.
+
+/******* File List    *********/
+
+
+/******* Requirements *********/
+
+
+/******* Installation *********/
+
+
+/*******  Usage       ********/
 
 
 

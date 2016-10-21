@@ -43,5 +43,4 @@ DISTFILES += \
     src/images/sphere.png
 
 RESOURCES += \
-    src/images/resource.qrc \
-    src/openglresources.qrc
+    src/images/resource.qrc

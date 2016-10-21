@@ -1,0 +1,8 @@
+date: October 20, 2016
+meeting_type: Group 
+attendace: [echriste, namaurer, paulbaba]
+task_progress:[ echriste {OpenGL Angular Orientation}
+		namaurer {Angular equations}
+		paulbaba {Open GL Heading}]
+issues: There is screen tearing with openGL heading in mainwindow class
+Notes:
