@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QOpenGLWidget" name="openGLWidget">
+   <widget class="GLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -810,22 +810,6 @@
      <string>180</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_23">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>30</y>
-      <width>201</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="images/resource.qrc">:/new/prefix1/sphere.png</pixmap>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_24">
     <property name="geometry">
      <rect>
@@ -973,7 +957,6 @@
    <zorder>label_28</zorder>
    <zorder>label_29</zorder>
    <zorder>label_30</zorder>
-   <zorder>label_23</zorder>
    <zorder>label_24</zorder>
    <zorder>label_26</zorder>
    <zorder>label_27</zorder>
@@ -1007,6 +990,11 @@
    <class>GLHeading</class>
    <extends>QOpenGLWidget</extends>
    <header>glheading.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>glwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>
