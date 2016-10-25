@@ -223,17 +223,17 @@ void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
 	if(m_drag_left < 0) {
 		m_drag_left = 0;
 	}
-	x_drag_left = m_drag_left * cos((alpha_angle + 180) * PI/180);
-	y_drag_left = m_drag_left * cos((beta_angle + 180) * PI/180);
-	z_drag_left = m_drag_left * cos((gamma_angle + 180) * PI/180);
-	x_drag_right = m_drag_right * cos((alpha_angle + 180) * PI/180);
-	y_drag_right = m_drag_right * cos((beta_angle + 180) * PI/180);
-	z_drag_right = m_drag_right * cos((gamma_angle + 180) * PI/180);
+	x_drag_left = m_drag_left * -unit_vector_front.x;
+	y_drag_left = m_drag_left * -unit_vector_front.y;
+	z_drag_left = m_drag_left * -unit_vector_front.z;
+	x_drag_right = m_drag_right * -unit_vector_front.x;
+	y_drag_right = m_drag_right * -unit_vector_front.y;
+	z_drag_right = m_drag_right * -unit_vector_front.z;
 }
 void Plane::calculate_thrust() {
-	x_thrust = cos(alpha_angle * PI/180) * m_thrust;
-	y_thrust = cos(beta_angle * PI/180) * m_thrust;
-	z_thrust = cos(gamma_angle * PI/180) * m_thrust;
+	x_thrust = m_thrust * unit_vector_front.x;
+	y_thrust = m_thrust * unit_vector_front.y;
+	z_thrust = m_thrust * unit_vector_front.z;
 }
 void Plane::calculate_gravitational_force() {
 	m_gravity = mass * 32.174; // in feet not meters
