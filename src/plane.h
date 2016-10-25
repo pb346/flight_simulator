@@ -12,11 +12,22 @@ public:
 	double air_density;
 // scalars (all due to change in disaster scenarios)
 	double mass;
+	double wingspan;
+	double length;
+	double height;
 	double coefficient_of_lift;
 	double coefficient_of_drag;
 	double left_wing_surface_area;
 	double right_wing_surface_area;
 	double air_break_surface_area;
+// flaps/ailerons
+	double left_elevator_angle;
+	double right_elevator_angle;
+	double left_aileron_angle;
+	double right_aileron_angle;
+	double left_leading_edge_flap_angle;
+	double right_leading_edge_flap_angle;
+	double rudder_angle;
 // position variables
 	double m_position;
 	double m_velocity;
