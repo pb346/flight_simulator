@@ -35,10 +35,11 @@ public:
 	struct unit_vector unit_vector_left;
 	struct unit_vector unit_vector_up;
 // rotation
-	void rotate(double roll_degrees, double pitch_degrees, yaw_degrees);
+	void rotate(double roll_degrees, double pitch_degrees, double yaw_degrees);
 	void rotate_about_x(double degrees, double &x, double &y, double &z);
 	void rotate_about_y(double degrees, double &x, double &y, double &z);
 	void rotate_about_z(double degrees, double &x, double &y, double &z);
+	void unitize(double &x, double &y, double &z);
 // angles
 	// angle to axis variables
 	double alpha_angle;

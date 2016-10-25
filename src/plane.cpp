@@ -123,7 +123,7 @@ double Plane::calculate_angle_to_axis(double magnitude, double axis_unit_vector)
 }
 
 
-void rotate_about_x(double degrees, double &x, double &y, double &z) {
+void Plane::rotate_about_x(double degrees, double &x, double &y, double &z) {
 	degrees = -degrees;
 	double new_x = 1 * x + 0 * y + 0 * z;
 	double new_y = 0 * x + cos(degrees*PI/180.0) * y - sin(degrees*PI/180.0) * z;
@@ -131,8 +131,9 @@ void rotate_about_x(double degrees, double &x, double &y, double &z) {
 	x = new_x;
 	y = new_y;
 	z = new_z;
+	unitize(x, y, z);
 }
-void rotate_about_y(double degrees, double &x, double &y, double &z) {
+void Plane::rotate_about_y(double degrees, double &x, double &y, double &z) {
 	degrees = -degrees;
 	double new_x = cos(degrees*PI/180.0) * x + 0 * y + sin(degrees*PI/180.0) * z;
 	double new_y = 0 * x + 1 * y + 0 * z;
@@ -140,8 +141,9 @@ void rotate_about_y(double degrees, double &x, double &y, double &z) {
 	x = new_x;
 	y = new_y;
 	z = new_z;
+	unitize(x, y, z);
 }
-void rotate_about_z(double degrees, double &x, double &y, double &z) {
+void Plane::rotate_about_z(double degrees, double &x, double &y, double &z) {
 	degrees = -degrees;
 	double new_x = cos(degrees*PI/180.0) * x - sin(degrees*PI/180.0) * y + 0 * z;
 	double new_y = sin(degrees*PI/180.0) * x + cos(degrees*PI/180.0) * y + 0 * z;
@@ -149,8 +151,9 @@ void rotate_about_z(double degrees, double &x, double &y, double &z) {
 	x = new_x;
 	y = new_y;
 	z = new_z;
+	unitize(x, y, z);
 }
-void rotate(double roll_degrees, double pitch_degrees, double yaw_degrees) {
+void Plane::rotate(double roll_degrees, double pitch_degrees, double yaw_degrees) {
 	double x = 1;
 	double y = 0;
 	double z = 0;
@@ -181,6 +184,14 @@ void rotate(double roll_degrees, double pitch_degrees, double yaw_degrees) {
 	unit_vector_up.y = y;
 	unit_vector_up.z = z;
 }
+void Plane::unitize(double &x, double &y, double &z) {
+	double x_new = x/sqrt(pow(x,2)+pow(y,2)+pow(z,2));
+	double y_new = y/sqrt(pow(x,2)+pow(y,2)+pow(z,2));
+	double z_new = z/sqrt(pow(x,2)+pow(y,2)+pow(z,2));
+	x = x_new;
+	y = y_new;
+	z = z_new;
+}
 
 
 void Plane::calculate_air_density() {
@@ -196,12 +207,12 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	if(m_lift_left < 0) {
 		m_lift_left = 0;
 	}
-	x_lift_left = m_lift_left * cos((alpha_angle - 90) * PI/180);
-	y_lift_left = m_lift_left * cos((beta_angle) * PI/180);
-	z_lift_left = m_lift_left * cos((gamma_angle - 90) * PI/180);
-	x_lift_right = m_lift_right * cos((alpha_angle - 90) * PI/180);
-	y_lift_right = m_lift_right * cos((beta_angle) * PI/180);
-	z_lift_right = m_lift_right * cos((gamma_angle - 90) * PI/180);
+	x_lift_left = m_lift_left * unit_vector_up.x;
+	y_lift_left = m_lift_left * unit_vector_up.y;
+	z_lift_left = m_lift_left * unit_vector_up.z;
+	x_lift_right = m_lift_right * unit_vector_up.x;
+	y_lift_right = m_lift_right * unit_vector_up.y;
+	z_lift_right = m_lift_right * unit_vector_up.z;
 }
 void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
 	m_drag_right = 774.5966692*pow(m_velocity, 0.5)/2;
