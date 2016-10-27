@@ -8,10 +8,21 @@
 Plane::Plane() {
 // scalars (all due to change in disaster scenarios)
 	mass = 652.69995; // slugs
+	wingspan = 32.8; // feet
+	length = 49.3; // feet
+	height = 16.7; // feet
 	coefficient_of_lift = 0;
 	coefficient_of_drag = 0;
 	left_wing_surface_area = 0;
 	right_wing_surface_area = 0;
+// flaps/ailerons
+	left_elevator_angle = 0;
+	right_elevator_angle = 0;
+	left_aileron_angle = 0;
+	right_aileron_angle = 0;
+	left_leading_edge_flap_angle = 0;
+	right_leading_edge_flap_angle = 0;
+	rudder_angle = 0;
 // position variables
 	x_position = 0;
 	y_position = 0;
@@ -29,9 +40,9 @@ Plane::Plane() {
 	unit_vector_left.x = 0;
 	unit_vector_left.y = 1;
 	unit_vector_left.z = 0;
-	unit_vector_left.x = 0;
-	unit_vector_left.y = 0;
-	unit_vector_left.z = 1;
+	unit_vector_up.x = 0;
+	unit_vector_up.y = 0;
+	unit_vector_up.z = 1;
 // angles
 	// angle to axis variables
 	alpha_angle = 0;
@@ -255,7 +266,15 @@ void Plane::calculate_resultant_force() {
 	m_force = calculate_magnitude(x_force, y_force, z_force);
 }
 void Plane::calculate_torque() {
-
+	roll_torque = sqrt(m_velocity) * (m_lift_right * wingspan/4 + m_lift_left * -wingspan/4);
+	pitch_torque = sqrt(m_velocity) * (length/2*sin(left_elevator_angle * PI/180) + length/2*sin(right_elevator_angle * PI/180));
+	yaw_torque = sqrt(m_velocity) * (length/2*sin(rudder_angle * PI/180));
+//	x_torque = sqrt(abs(x_velocity)) * (roll_torque * unit_vector_front.x + pitch_torque * unit_vector_left.x + yaw_torque * unit_vector_up.x);
+//	y_torque = sqrt(abs(y_velocity)) * (roll_torque * unit_vector_front.y + pitch_torque * unit_vector_left.y + yaw_torque * unit_vector_up.y);
+//	z_torque = sqrt(abs(z_velocity)) * (roll_torque * unit_vector_front.z + pitch_torque * unit_vector_left.z + yaw_torque * unit_vector_up.z);
+	x_torque = (roll_torque * unit_vector_front.x + pitch_torque * unit_vector_left.x + yaw_torque * unit_vector_up.x);
+	y_torque = (roll_torque * unit_vector_front.y + pitch_torque * unit_vector_left.y + yaw_torque * unit_vector_up.y);
+	z_torque = (roll_torque * unit_vector_front.z + pitch_torque * unit_vector_left.z + yaw_torque * unit_vector_up.z);
 }
 void Plane::calculate_angular_accelerations() {
 	pitch_angular_acceleration = pitch_angular_acceleration + pitch_torque / mass;
@@ -305,7 +324,15 @@ void Plane::calculate_positions() {
 		z_position = 0;
 	}
 }
-void Plane::update_plane() {
+void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_left_leading_edge_flap_angle, double p_right_leading_edge_flap_angle, double p_rudder_angle) {
+	m_thrust = p_m_thrust;
+	left_elevator_angle = p_left_elevator_angle;
+	right_elevator_angle = p_right_elevator_angle;
+	left_aileron_angle = p_left_aileron_angle;
+	right_aileron_angle = p_right_aileron_angle;
+	left_leading_edge_flap_angle = p_left_leading_edge_flap_angle;
+	right_leading_edge_flap_angle = p_right_leading_edge_flap_angle;
+	rudder_angle = p_rudder_angle;
 	calculate_air_density();
 	calculate_lift(); // (1/2) * d * v^2 * s * CL
 	calculate_drag(); // Cd * (p * v^2)/2 * A
@@ -318,6 +345,7 @@ void Plane::update_plane() {
 	calculate_angular_accelerations();
 	calculate_angular_velocities();
 	calculate_angular_positions();
+	rotate(roll_angle, pitch_angle, yaw_angle);
 	calculate_accelerations();
 	calculate_velocities();
 	calculate_positions();
