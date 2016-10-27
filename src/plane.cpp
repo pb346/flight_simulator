@@ -324,7 +324,15 @@ void Plane::calculate_positions() {
 		z_position = 0;
 	}
 }
-void Plane::update_plane() {
+void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_left_leading_edge_flap_angle, double p_right_leading_edge_flap_angle, double p_rudder_angle) {
+	m_thrust = p_m_thrust;
+	left_elevator_angle = p_left_elevator_angle;
+	right_elevator_angle = p_right_elevator_angle;
+	left_aileron_angle = p_left_aileron_angle;
+	right_aileron_angle = p_right_aileron_angle;
+	left_leading_edge_flap_angle = p_left_leading_edge_flap_angle;
+	right_leading_edge_flap_angle = p_right_leading_edge_flap_angle;
+	rudder_angle = p_rudder_angle;
 	calculate_air_density();
 	calculate_lift(); // (1/2) * d * v^2 * s * CL
 	calculate_drag(); // Cd * (p * v^2)/2 * A

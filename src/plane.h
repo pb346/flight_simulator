@@ -159,10 +159,9 @@ public:
 	void calculate_velocities();
 	void calculate_positions();
 
-
 	Plane();
+	void update_plane(double, double, double, double, double, double, double, double);
 
-	void update_plane();
         void update_model_parameters();
 	void update_right_flaps(double angle);
 	void update_left_flaps(double angle);
