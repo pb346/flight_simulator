@@ -4,7 +4,7 @@
 #include "plane.h"
 #include "planemodel.h"
 #include <QMainWindow>
-void parseXML();
+PlaneModel* parseXML();
 namespace Ui {
 class MainWindow;
 }
@@ -17,11 +17,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     timerThread* procThread;
+    PlaneModel* currentModel;
+    Plane* planeState;
+    DebugValues* debug;
+    int runningFlag;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
-    PlaneModel* currentModel;
-    int runningFlag;
-    Plane* planeState;
 
 private slots:
     void onUpdateGUI(joystick_event*);
@@ -31,5 +32,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
 };
+
 
 #endif // MAINWINDOW_H

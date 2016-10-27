@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "timerThread.h"
+#include "plane.h"
 #include <QSlider>
 #include <QPixmap>
 #include <QFile>
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
     runningFlag = 0;
     planeState = new Plane;
+    debug = new DebugValues;
 }
 
 MainWindow::~MainWindow()
@@ -31,7 +33,9 @@ void MainWindow::onUpdateGUI(joystick_event* event)
 {
     updateValues(event);
     updateSliders(event);
-   // QCoreApplication::processEvents();
+    planeState->process_joystick_input(currentModel,event, &debug);
+    ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
+    ui->rightAilVal->setText(QString::number(debug->aileronRight, 'f', 2));
 }
 
 void MainWindow::updateValues(joystick_event* event)
@@ -41,7 +45,6 @@ void MainWindow::updateValues(joystick_event* event)
     ui->zAxisValue->setText(QString::number(event->stick_z, 'f', 2 ));
     ui->throttleValue->setText(QString::number(event->throttle, 'f', 2 ));
     ui->afterburner_box->setChecked(event->button[1]);
-
 
 }
 void MainWindow::updateSliders(joystick_event* event)
@@ -72,11 +75,11 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::onEventLoopStarted()
 {
-    parseXML();
+    currentModel = parseXML();
     planeState->update_model_parameters();
 }
 
-void parseXML()
+PlaneModel* parseXML()
 {
     QString exe = QCoreApplication::applicationDirPath();
     QString fileName = exe + "/../../flight_simulator/src/input/planeModels.xml";
@@ -85,9 +88,7 @@ void parseXML()
     if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
         printf("ERROR: Cannot open XML File\n");
     QXmlStreamReader xmlParser(file);
-    printf("\nStarting read\n");;
     PlaneModel* node;
-
     while(!xmlParser.atEnd() && !xmlParser.hasError())
     {
         QXmlStreamReader::TokenType token = xmlParser.readNext();
@@ -141,6 +142,58 @@ void parseXML()
                 node->maxWeight = xmlParser.readElementText().toFloat();
                 continue;
            }
+           if(xmlParser.name() == "MAXFUEL")
+           {
+               continue;
+           }
+           if(xmlParser.name() == "ACTUATOR_SPEED")
+           {
+                node->maxActuatorSpeed = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "LIFT_SURFACES")
+           {
+                continue;
+           }
+           if(xmlParser.name() == "MAX_SLAT_POSANGLE")
+           {
+                node->maxSlatPOS = xmlParser.readElementText().toInt();
+                continue;
+           }
+           if(xmlParser.name() == "MAX_SLAT_NEGANGLE")
+           {
+                node->maxSlatNEG = xmlParser.readElementText().toInt();
+                continue;
+           }
+           if(xmlParser.name() == "MAX_FLAP_ANGLE")
+           {
+                node->maxFlapAngleNEG = xmlParser.readElementText().toInt();
+                continue;
+           }
+           if(xmlParser.name() == "CONTROL_SURFACES")
+           {
+                continue;
+           }
+           if(xmlParser.name() == "MAX_ELEVATOR_POSANGLE")
+           {
+                node->maxElevPOS = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "MAX_ELEVATOR_NEGANGLE")
+           {
+                node->maxElevNEG = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "MAX_RUDDER_ANGLE")
+           {
+                node->maxRudderAngle = xmlParser.readElementText().toFloat();
+                continue;
+           }
+           if(xmlParser.name() == "MAX_AILERON_ANGLE")
+           {
+                node->maxAileronAngle = xmlParser.readElementText().toFloat();
+                continue;
+           }
            if(xmlParser.name() == "DCOEFFICIENT")
            {
                 node->dragCoeff = xmlParser.readElementText().toFloat();
@@ -149,8 +202,7 @@ void parseXML()
 
         }
     }
-
-
-    QString content = file->readAll();
+    return node;
+    //QString content = file->readAll();
    // printf(content.toLatin1());
 }

@@ -1,3 +1,7 @@
+#ifndef PLANE_H
+#define PLANE_H
+#include "planemodel.h"
+#include "joystick_interface.h"
 #include <iostream>
 
 struct unit_vector {
@@ -161,11 +165,12 @@ public:
 
 	Plane();
 	void update_plane(double, double, double, double, double, double, double, double);
-
-        void update_model_parameters();
+    void process_joystick_input(PlaneModel*, joystick_event*, DebugValues**);
+    void update_model_parameters();
 	void update_right_flaps(double angle);
 	void update_left_flaps(double angle);
 	void update_thrust(double thrust);
 	void update_air_break(double angle);
 
 };
+#endif

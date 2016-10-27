@@ -28,10 +28,10 @@
 /*-- FUNCTION DECLARATIONS: -----------------------------------------------*/
 struct joystick_event {
     int button[12];
-    float stick_x;
-    float stick_y;
-    float stick_z;
-    float throttle;
+    float stick_x; //Up/Down Aileron
+    float stick_y; //up/down Elevator
+    float stick_z; //left/right rudder
+    float throttle; //thrust
     float direct_x;
     float direct_y;
 };
