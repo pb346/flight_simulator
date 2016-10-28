@@ -398,8 +398,8 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     else //plane left;
     {
         aileronLeftAngle = event->stick_x * model->maxAileronAngle;
-        //printf("%f\n", left_aileron_angle);
-        if(left_aileron_angle < 0.0)//plane left
+        printf("%f\n", left_aileron_angle);
+        if(left_aileron_angle <= 0.0)//plane left
         {
             if(aileronLeftAngle < left_aileron_angle)//keep rotating left
             {
