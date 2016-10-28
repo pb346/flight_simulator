@@ -355,6 +355,7 @@ void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double
 void Plane::update_model_parameters(){
 //might not be needed
 }
+
 void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, DebugValues** debug)
 {
     DebugValues* localDebug = *debug;
@@ -429,11 +430,22 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
          }
 
      }
+    if(event->throttle > 0.0)
+    {
+        localDebug->thrust = .5 + event->throttle/2.0; //.5 + (x>0)/2
+    }
+    else
+    {
+        localDebug->thrust = .50 - ((-1.0 * event->throttle)/ 2);
+    }
     localDebug->aileronLeft = (1.0)* left_aileron_angle;
     localDebug->aileronRight = (1.0)* right_aileron_angle;
+
     //thrust
     //elevator
     //slat
     //flap
     //rudder
+    //thrust, lElev, rElev, lAil, rAil, slatl, slatr, rudder
+    update_plane(0,0,0, left_aileron_angle, right_aileron_angle, 0, 0, 0);
 }
