@@ -361,6 +361,7 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     DebugValues* localDebug = *debug;
     double aileronLeftAngle;
     double aileronRightAngle;
+
     //aileronLeftAngle = event->stick_x * model->maxAileronAngle; // -20 to 20
     if((event->stick_x) >= 0.0)//joystick right
     {
@@ -394,6 +395,8 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
                 }
             }
         }
+        localDebug->aileronLeft = (1.0)* left_aileron_angle;
+        localDebug->aileronRight = (1.0)* right_aileron_angle;
     }
     else //plane left;
     {
@@ -411,7 +414,7 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
                  else
                  {
                      left_aileron_angle = aileronLeftAngle;
-                     right_aileron_angle = (-1.0)*aileronLeftAngle;
+                     right_aileron_angle = (-1.0)*aileronLeftAngle;//neg
                  }
              }
              else //plane right
@@ -424,11 +427,12 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
                  else
                  {
                      left_aileron_angle = aileronLeftAngle;
-                     right_aileron_angle = (-1.0)*aileronLeftAngle;
+                     right_aileron_angle = (-1.0)*aileronLeftAngle;//neg
                  }
              }
          }
-
+        localDebug->aileronLeft = (-1.0)* left_aileron_angle;
+        localDebug->aileronRight = (-1.0)* right_aileron_angle;
      }
     if(event->throttle > 0.0)
     {
@@ -438,8 +442,6 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     {
         localDebug->thrust = .50 - ((-1.0 * event->throttle)/ 2);
     }
-    localDebug->aileronLeft = (1.0)* left_aileron_angle;
-    localDebug->aileronRight = (1.0)* right_aileron_angle;
 
     //thrust
     //elevator
@@ -447,5 +449,4 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     //flap
     //rudder
     //thrust, lElev, rElev, lAil, rAil, slatl, slatr, rudder
-    update_plane(0,0,0, left_aileron_angle, right_aileron_angle, 0, 0, 0);
 }
