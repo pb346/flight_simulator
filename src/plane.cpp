@@ -361,79 +361,84 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     DebugValues* localDebug = *debug;
     double aileronLeftAngle;
     double aileronRightAngle;
+    double local_right_aileron_angle = right_aileron_angle;
+    double local_left_aileron_angle = left_aileron_angle;//left_aileron_angle;
 
     //aileronLeftAngle = event->stick_x * model->maxAileronAngle; // -20 to 20
     if((event->stick_x) >= 0.0)//joystick right
     {
         aileronRightAngle = event->stick_x * model->maxAileronAngle;
-        if(right_aileron_angle >= 0.0)//plane is rotated right
+        if(local_right_aileron_angle >= 0.0)//plane is rotated right
         {
-            if(aileronRightAngle > right_aileron_angle) //joystick further right than plane
+            if(aileronRightAngle > local_right_aileron_angle) //joystick further right than plane
             {
-                if((aileronRightAngle - right_aileron_angle > model->maxActuatorSpeed))//if actuator can't complete in one cycle
+                if((aileronRightAngle - local_right_aileron_angle > model->maxActuatorSpeed))//if actuator can't complete in one cycle
                 {
-                   right_aileron_angle += model->maxActuatorSpeed;
-                   left_aileron_angle -= model->maxActuatorSpeed;
+                   local_right_aileron_angle += model->maxActuatorSpeed;
+                   local_left_aileron_angle -= model->maxActuatorSpeed;
                 }
                 else //can complete in one cycle;
                 {
-                    right_aileron_angle = aileronRightAngle;
-                    left_aileron_angle = (-1.0) * aileronRightAngle;
+                    local_right_aileron_angle = aileronRightAngle;
+                    local_left_aileron_angle = (-1.0) * aileronRightAngle;
                 }
             }
             else // rotate left
             {
-                if((right_aileron_angle - aileronRightAngle) > model->maxActuatorSpeed)//if actuator can complete in one cycle
+                if((local_right_aileron_angle - aileronRightAngle) > model->maxActuatorSpeed)//if actuator can complete in one cycle
                 {
-                    right_aileron_angle -= model->maxActuatorSpeed;
-                    left_aileron_angle += model->maxActuatorSpeed;
+                    local_right_aileron_angle -= model->maxActuatorSpeed;
+                    local_left_aileron_angle += model->maxActuatorSpeed;
                 }
                 else
                 {
-                    right_aileron_angle = aileronRightAngle;
-                    left_aileron_angle = (-1.0) * aileronRightAngle;
+                    local_right_aileron_angle = aileronRightAngle;
+                    local_left_aileron_angle = (-1.0) * aileronRightAngle;
                 }
             }
         }
-        localDebug->aileronLeft = (1.0)* left_aileron_angle;
-        localDebug->aileronRight = (1.0)* right_aileron_angle;
+        localDebug->aileronLeft = (1.0)* local_left_aileron_angle;
+        localDebug->aileronRight = (1.0)* local_right_aileron_angle;
     }
     else //plane left;
     {
         aileronLeftAngle = event->stick_x * model->maxAileronAngle;
-        printf("%f\n", left_aileron_angle);
-        if(left_aileron_angle <= 0.0)//plane left
+        //printf("%f\n", left_aileron_angle);
+        if(local_left_aileron_angle <= 0.0)//plane left
         {
-            if(aileronLeftAngle < left_aileron_angle)//keep rotating left
+            if(aileronLeftAngle < local_left_aileron_angle)//keep rotating left
             {
-                if(aileronLeftAngle - left_aileron_angle > ((-1)*model->maxActuatorSpeed))
+                if(aileronLeftAngle - local_left_aileron_angle > ((-1)*model->maxActuatorSpeed))
                 {
-                    left_aileron_angle -= model->maxActuatorSpeed;
-                    right_aileron_angle += model->maxActuatorSpeed;
+                    local_left_aileron_angle -= model->maxActuatorSpeed;
+                    local_right_aileron_angle += model->maxActuatorSpeed;
                  }
                  else
                  {
-                     left_aileron_angle = aileronLeftAngle;
-                     right_aileron_angle = (-1.0)*aileronLeftAngle;//neg
+                     local_left_aileron_angle = aileronLeftAngle;
+                     local_right_aileron_angle = (-1.0)*aileronLeftAngle;//neg
                  }
              }
              else //plane right
              {
-                 if(left_aileron_angle - aileronLeftAngle > (model->maxActuatorSpeed))
+                 if(local_left_aileron_angle - aileronLeftAngle > (model->maxActuatorSpeed))
                  {
-                     left_aileron_angle += model->maxActuatorSpeed;
-                     right_aileron_angle -= model->maxActuatorSpeed;
+                     local_left_aileron_angle += model->maxActuatorSpeed;
+                     local_right_aileron_angle -= model->maxActuatorSpeed;
                  }
                  else
                  {
-                     left_aileron_angle = aileronLeftAngle;
-                     right_aileron_angle = (-1.0)*aileronLeftAngle;//neg
+                     local_left_aileron_angle = aileronLeftAngle;
+                     local_right_aileron_angle = (-1.0)*aileronLeftAngle;//neg
                  }
              }
          }
-        localDebug->aileronLeft = (-1.0)* left_aileron_angle;
-        localDebug->aileronRight = (-1.0)* right_aileron_angle;
+        localDebug->aileronLeft = (-1.0)* local_left_aileron_angle;
+        localDebug->aileronRight = (-1.0)* local_right_aileron_angle;
      }
+    left_aileron_angle = local_left_aileron_angle;
+    right_aileron_angle = local_right_aileron_angle;
+
     if(event->throttle > 0.0)
     {
         localDebug->thrust = .5 + event->throttle/2.0; //.5 + (x>0)/2
@@ -443,7 +448,60 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
         localDebug->thrust = .50 - ((-1.0 * event->throttle)/ 2);
     }
 
-    //thrust
+    if(event->stick_z > 0.0)
+    {
+        double local_rudder = event->stick_z * model->maxRudderAngle;
+        if(local_rudder > rudder_angle ) // move rudder more right
+        {
+            if(local_rudder - rudder_angle > model->maxRudderAngle)
+            {
+                rudder_angle += model->maxActuatorSpeed;
+            }
+            else
+            {
+                rudder_angle = local_rudder;
+            }
+        }
+        else // rudder move toward center
+        {
+           if(rudder_angle - local_rudder > model->maxActuatorSpeed)
+           {
+               rudder_angle -= model->maxActuatorSpeed;
+           }
+           else
+           {
+               rudder_angle = local_rudder;
+           }
+        }
+    }
+    else
+    {
+        double local_rudder = event->stick_z * model->maxRudderAngle;
+        if(local_rudder < rudder_angle)
+        {
+            if(local_rudder - rudder_angle > ((-1.0)*model->maxActuatorSpeed))
+            {
+                rudder_angle -= model->maxActuatorSpeed;
+            }
+            else
+            {
+                rudder_angle = local_rudder;
+            }
+        }
+        else
+        {
+            if(rudder_angle - local_rudder > (model->maxActuatorSpeed))
+            {
+                rudder_angle += model->maxActuatorSpeed;
+            }
+            else
+            {
+                rudder_angle = local_rudder;
+            }
+        }
+
+    }
+    localDebug->rudder = rudder_angle;
     //elevator
     //slat
     //flap
