@@ -359,12 +359,13 @@ void Plane::update_model_parameters(){
 void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, DebugValues** debug)
 {
     DebugValues* localDebug = *debug;
+
+/***************************AILERON*************************************/
+    //aileronLeftAngle = event->stick_x * model->maxAileronAngle; // -20 to 20
     double aileronLeftAngle;
     double aileronRightAngle;
     double local_right_aileron_angle = right_aileron_angle;
     double local_left_aileron_angle = left_aileron_angle;//left_aileron_angle;
-
-    //aileronLeftAngle = event->stick_x * model->maxAileronAngle; // -20 to 20
     if((event->stick_x) >= 0.0)//joystick right
     {
         aileronRightAngle = event->stick_x * model->maxAileronAngle;
@@ -447,7 +448,7 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     {
         localDebug->thrust = .50 - ((-1.0 * event->throttle)/ 2);
     }
-
+/********************RUDDER*************************/
     if(event->stick_z > 0.0)
     {
         double local_rudder = event->stick_z * model->maxRudderAngle;
@@ -473,6 +474,7 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
                rudder_angle = local_rudder;
            }
         }
+        localDebug->rudder = rudder_angle;
     }
     else
     {
@@ -499,12 +501,66 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
                 rudder_angle = local_rudder;
             }
         }
+    localDebug->rudder = rudder_angle;
+    }
+/*******************************ELEVATOR *************************/
+    if(event->stick_y > 0.0) // 23 / -19
+    {
+        double local_elevator = event->stick_y * model->maxElevPOS;
+        if(local_elevator > elevator_angle )
+        {
+            if(local_elevator - elevator_angle > model->maxActuatorSpeed)
+            {
+                elevator_angle += model->maxActuatorSpeed;
+            }
+            else
+            {
+                elevator_angle = local_elevator;
+            }
+        }
+        else
+        {
+            if(elevator_angle - local_elevator > model->maxActuatorSpeed)
+            {
+                elevator_angle -= model->maxActuatorSpeed;
+            }
+            else
+            {
+                elevator_angle = local_elevator;
+            }
+        }
+        localDebug->elevator = elevator_angle;
 
     }
-    localDebug->rudder = rudder_angle;
+    else
+    {
+        double local_elevator = event->stick_y * model->maxElevNEG;
+        if(local_elevator < elevator_angle)
+        {
+            if(local_elevator - elevator_angle > model->maxActuatorSpeed)
+            {
+                elevator_angle -= model->maxActuatorSpeed;
+            }
+            else
+            {
+                elevator_angle = local_elevator;
+            }
+        }
+        else
+        {
+            if(elevator_angle - local_elevator > model->maxActuatorSpeed)
+            {
+                elevator_angle += model->maxActuatorSpeed;
+            }
+            else
+            {
+                elevator_angle = local_elevator;
+            }
+        }
+        localDebug->elevator = elevator_angle;
+    }
     //elevator
     //slat
     //flap
-    //rudder
     //thrust, lElev, rElev, lAil, rAil, slatl, slatr, rudder
 }

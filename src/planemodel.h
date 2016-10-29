@@ -33,8 +33,7 @@ struct DebugValues
 {
     double aileronLeft;
     double aileronRight;
-    double elevatorLeft;
-    double elevatorRight;
+    double elevator;
     double rudder;
     double thrust;
     double slat;

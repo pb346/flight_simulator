@@ -998,20 +998,7 @@
      <string>0</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="leftElevVal">
-    <property name="geometry">
-     <rect>
-      <x>1240</x>
-      <y>250</y>
-      <width>61</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="yAngleValue_2">
+   <widget class="QLineEdit" name="ElevVal">
     <property name="geometry">
      <rect>
       <x>1240</x>
@@ -1024,30 +1011,17 @@
      <string>0</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_34">
+   <widget class="QLabel" name="elev_val">
     <property name="geometry">
      <rect>
-      <x>1176</x>
-      <y>250</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>LeftElevator</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="rightElevVal">
-    <property name="geometry">
-     <rect>
-      <x>1170</x>
+      <x>1190</x>
       <y>220</y>
-      <width>131</width>
+      <width>41</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>RightElevator</string>
+     <string>Elevator</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="slatVal">
@@ -1168,10 +1142,8 @@
    <zorder>label_32</zorder>
    <zorder>rightAilVal</zorder>
    <zorder>leftAilVal</zorder>
-   <zorder>leftElevVal</zorder>
-   <zorder>yAngleValue_2</zorder>
-   <zorder>label_34</zorder>
-   <zorder>rightElevVal</zorder>
+   <zorder>ElevVal</zorder>
+   <zorder>elev_val</zorder>
    <zorder>slatVal</zorder>
    <zorder>label_36</zorder>
    <zorder>label_37</zorder>

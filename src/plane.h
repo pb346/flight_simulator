@@ -25,12 +25,14 @@ public:
 	double right_wing_surface_area;
 	double air_break_surface_area;
 // flaps/ailerons
-	double left_elevator_angle;
-	double right_elevator_angle;
+    double left_elevator_angle;
+    double right_elevator_angle;
+    double elevator_angle;      //left/right always the same
 	double left_aileron_angle;
 	double right_aileron_angle;
 	double left_leading_edge_flap_angle;
 	double right_leading_edge_flap_angle;
+    double slat_angle; //leading edge left/right always the same
 	double rudder_angle;
 // position variables
 	double m_position;

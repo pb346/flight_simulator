@@ -38,6 +38,8 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     ui->rightAilVal->setText(QString::number(debug->aileronRight, 'f', 2));
     ui->throttleValue->setText(QString::number(debug->thrust, 'f', 2));
     ui->rudVal->setText(QString::number(debug->rudder, 'f', 2));
+    ui->ElevVal->setText(QString::number(debug->elevator, 'f', 2));
+
 }
 
 void MainWindow::updateValues(joystick_event* event)
