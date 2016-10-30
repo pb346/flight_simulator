@@ -43,7 +43,7 @@
      <string>Angular Orientation</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="checkGear">
     <property name="geometry">
      <rect>
       <x>740</x>
@@ -62,7 +62,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_2">
+   <widget class="QCheckBox" name="checkAux">
     <property name="geometry">
      <rect>
       <x>740</x>
@@ -72,46 +72,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Flaps</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_3">
-    <property name="geometry">
-     <rect>
-      <x>740</x>
-      <y>160</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
      <string>AUX1</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_4">
-    <property name="geometry">
-     <rect>
-      <x>740</x>
-      <y>180</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>AUX2</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="afterburner_box">
-    <property name="geometry">
-     <rect>
-      <x>740</x>
-      <y>200</y>
-      <width>81</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Afterburner</string>
     </property>
    </widget>
    <widget class="QSlider" name="throttleSlider">
@@ -1079,11 +1040,8 @@
    <zorder>openGLWidget_2</zorder>
    <zorder>openGLWidget</zorder>
    <zorder>label</zorder>
-   <zorder>checkBox</zorder>
-   <zorder>checkBox_2</zorder>
-   <zorder>checkBox_3</zorder>
-   <zorder>checkBox_4</zorder>
-   <zorder>afterburner_box</zorder>
+   <zorder>checkGear</zorder>
+   <zorder>checkAux</zorder>
    <zorder>throttleSlider</zorder>
    <zorder>label_2</zorder>
    <zorder>label_3</zorder>

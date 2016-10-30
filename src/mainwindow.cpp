@@ -20,8 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
     runningFlag = 0;
-    planeState = new Plane;
-    debug = new DebugValues;
+    planeState = new Plane();
+    debug = new DebugValues();
+    previousDebug = new DebugValues();
+    previousDebug->gears = -1;
 }
 
 MainWindow::~MainWindow()
@@ -34,11 +36,53 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     updateValues(event);
     updateSliders(event);
     planeState->process_joystick_input(currentModel,event, &debug);
+
     ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
     ui->rightAilVal->setText(QString::number(debug->aileronRight, 'f', 2));
     ui->throttleValue->setText(QString::number(debug->thrust, 'f', 2));
     ui->rudVal->setText(QString::number(debug->rudder, 'f', 2));
     ui->ElevVal->setText(QString::number(debug->elevator, 'f', 2));
+    ui->checkGear->setChecked(planeState->gears_Deployed);
+
+    if(previousDebug->gears == -1)
+    {
+        printf("First previous");
+        debug->copyDebug(previousDebug);
+/*        previousDebug->aileronLeft = debug->aileronLeft;
+        previousDebug->aileronRight = debug->aileronRight;
+        previousDebug->elevator = debug->elevator;
+       // previousDebug->flap = this->flap;
+        previousDebug->rudder = debug->rudder;
+      //  previousDebug->slat = this->slat;
+        previousDebug->thrust = debug->thrust;
+        previousDebug->gears = 0;
+        //debug->copyDebug(previousDebug);*/
+        return;
+    }
+    if(previousDebug->gears == 1 && debug->gears == 0)
+    {
+        if(ui->checkGear->isChecked() == 1)
+        {
+            ui->checkGear->setChecked(0);
+            planeState->gears_Deployed = 0;
+        }
+        else
+        {
+            ui->checkGear->setChecked(1);
+            planeState->gears_Deployed = 1;
+        }
+    }
+            debug->copyDebug(previousDebug);
+            /*
+    previousDebug->aileronLeft = debug->aileronLeft;
+    previousDebug->aileronRight = debug->aileronRight;
+    previousDebug->elevator = debug->elevator;
+   // previousDebug->flap = this->flap;
+    previousDebug->rudder = debug->rudder;
+  //  previousDebug->slat = this->slat;
+    previousDebug->thrust = debug->thrust;
+    previousDebug->gears = debug->gears;
+    */
 
 }
 
@@ -48,7 +92,7 @@ void MainWindow::updateValues(joystick_event* event)
     ui->yAxisValue->setText(QString::number(event->stick_y, 'f', 2 ));
     ui->zAxisValue->setText(QString::number(event->stick_z, 'f', 2 ));
     ui->throttleValue->setText(QString::number(event->throttle, 'f', 2 ));
-    ui->afterburner_box->setChecked(event->button[1]);
+
 
 }
 void MainWindow::updateSliders(joystick_event* event)

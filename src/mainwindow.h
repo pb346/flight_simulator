@@ -19,7 +19,9 @@ public:
     timerThread* procThread;
     PlaneModel* currentModel;
     Plane* planeState;
+    Plane* previousState;
     DebugValues* debug;
+    DebugValues* previousDebug;
     int runningFlag;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);

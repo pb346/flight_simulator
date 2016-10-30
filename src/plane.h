@@ -142,7 +142,9 @@ public:
 	double y_drag_air_break;
 	double z_drag_air_break;
 	double air_break_angle;
-
+    //misc controls
+    int gears_Deployed;
+    //function prototypes
 	double * cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
 	double dot_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);
 	double calculate_magnitude(double x_unit_vector, double y_unit_vector, double z_unit_vector);

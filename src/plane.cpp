@@ -114,6 +114,8 @@ Plane::Plane() {
 	x_lift_right = 0;
 	y_lift_right = 0;
 	z_lift_right = 0;
+    //misc controls
+    gears_Deployed = 1;
 }
 
 
@@ -558,6 +560,14 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
             }
         }
         localDebug->elevator = elevator_angle;
+    }
+    if(event->button[7] != 0)
+    {
+        localDebug->gears = 1;
+    }
+    else
+    {
+        localDebug->gears = 0;
     }
     //elevator
     //slat

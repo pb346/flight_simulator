@@ -16,7 +16,8 @@
 
 /*-- DEFINES: -------------------------------------------------------------*/
 #define WIN_MAX_POS (65535.0)
-
+//7 AUX: 8 GEARS
+//11 FLAPDOWN: 12 FLAPUP
 #if __WIN32__
 void saveWin(joystick_event* saved)
 {

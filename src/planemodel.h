@@ -38,5 +38,7 @@ struct DebugValues
     double thrust;
     double slat;
     double flap;
+    int gears;
+    void copyDebug(DebugValues*);
 };
 #endif // PLANEMODEL_H
