@@ -20,8 +20,20 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    glColor3f(1,0,0);
+    x1 = 0.0, y1 = 0.0;
+    int triangles = 50; //number used to draw
+    float dPi = 2.0f * M_PI; //double Pi
+    glColor3f(0.5,0.5,1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x1, y1); //center object at these coord
+    for(int i =0; i <= triangles; i++)
+    {
+        x2 = x1 + (radius * cos(i * dPi / triangles))*2;
+        y2 = y1 + (radius * sin(i * dPi / triangles))*2;
+        glVertex2f(x2, y2);
+    }
+    glEnd();
 }
 
 void GLWidget::resizeGL(int w, int h)
