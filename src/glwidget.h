@@ -1,19 +1,19 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
+#include <QOpenGLWidget>
+#include <QtWidgets>
 
-#include <QGLWidget>
-#include <QOpenGLFunctions>
-
-class GLWidget : public QGLWidget, protected QOpenGLFunctions
+class GLWidget : public QOpenGLWidget
 {
-    Q_OBJECT
 public:
-    explicit GLWidget(QWidget *parent);
-
-protected:
-    void initializeGL() Q_DECL_OVERRIDE;
-    void paintGL() Q_DECL_OVERRIDE;
-    void resizeGL(int w, int h) Q_DECL_OVERRIDE;
+    GLWidget(QWidget *parent);
+    void initializeGL();
+    void paintGL();
+    void resizeGL(int w, int h);
+public:
+    QTimer* timer;
+    double radius;
+    float angle, x1,x2,y1,y2;
 };
 
 #endif // GLWIDGET_H
