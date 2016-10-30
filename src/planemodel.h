@@ -39,7 +39,11 @@ struct DebugValues
     double slat;
     double flap;
     double afterburner;
-    double afterburnerActive;
+    int afterburnerActive;
+    double flapDown;
+    double flapUp;
+    //int flapDown;
+    //int flapUp;
     int gears;
 
     void copyDebug(DebugValues*);

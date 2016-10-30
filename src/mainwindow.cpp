@@ -37,14 +37,17 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     updateSliders(event);
     planeState->process_joystick_input(currentModel,event, &debug);
 
-    ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
+    //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
     ui->rightAilVal->setText(QString::number(debug->aileronRight, 'f', 2));
+    ui->leftAilVal->setText(QString::number(planeState->left_aileron_angle, 'f', 2));
+
     ui->throttleValue->setText(QString::number(debug->thrust, 'f', 2));
     ui->rudVal->setText(QString::number(debug->rudder, 'f', 2));
     ui->ElevVal->setText(QString::number(debug->elevator, 'f', 2));
     ui->checkGear->setChecked(planeState->gears_Deployed);
     ui->afterburnVal->setText(QString::number(debug->afterburner, 'f', 2));
     ui->checkAfterburner->setChecked(planeState->afterburnerActive);
+    ui->flapVal->setText(QString::number(planeState->flap, 'f', 2));
     if(previousDebug->gears == 1 && debug->gears == 0)
     {
         if(ui->checkGear->isChecked() == 1)
@@ -69,6 +72,23 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         {
             ui->checkAfterburner->setChecked(1);
             planeState->afterburnerActive = 1;
+        }
+    }
+
+    if(previousDebug->flapDown == 1 && debug->flapDown == 0)
+    {
+        if(planeState->flap > ((-1.0)*currentModel->maxFlapAngleNEG))
+        {
+            planeState->flap -= 1;//.5;
+            //planeState->right_aileron_angle -= 1;
+        }
+    }
+    if(previousDebug->flapUp == 1 && debug->flapUp == 0)
+    {
+        if(planeState->flap < 0.0 )
+        {
+            planeState->flap += 1;//.5;
+            //planeState->left_aileron_angle -= 1;
         }
     }
     debug->copyDebug(previousDebug);

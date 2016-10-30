@@ -16,4 +16,6 @@ void DebugValues::copyDebug(DebugValues* previousDebug)
     previousDebug->thrust = this->thrust;
     previousDebug->gears = this->gears;
     previousDebug->afterburnerActive = this->afterburnerActive;
+    previousDebug->flapDown = this->flapDown;
+    previousDebug->flapUp = this->flapUp;
 }

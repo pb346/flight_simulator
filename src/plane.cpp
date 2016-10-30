@@ -614,13 +614,20 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     }
     if(event->button[10] != 0)
     {
-        printf("FLAPS DOWN\n");
+        localDebug->flapDown = 1;
+    }
+    else
+    {
+        localDebug->flapDown = 0;
     }
     if(event->button[11] != 0)
     {
-        printf("FLAPS UP\n");
+        localDebug->flapUp = 1;
     }
-    //elevator
+    else
+    {
+        localDebug->flapUp = 0;
+    }
     //slat
     //flap
     //thrust, lElev, rElev, lAil, rAil, slatl, slatr, rudder
