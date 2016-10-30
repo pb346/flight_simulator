@@ -15,4 +15,5 @@ void DebugValues::copyDebug(DebugValues* previousDebug)
   //  previousDebug->slat = this->slat;
     previousDebug->thrust = this->thrust;
     previousDebug->gears = this->gears;
+    previousDebug->afterburnerActive = this->afterburnerActive;
 }

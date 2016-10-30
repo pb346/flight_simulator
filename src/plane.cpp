@@ -116,6 +116,7 @@ Plane::Plane() {
 	z_lift_right = 0;
     //misc controls
     gears_Deployed = 1;
+    afterburnerActive = 0;
 }
 
 
@@ -441,15 +442,47 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
      }
     left_aileron_angle = local_left_aileron_angle;
     right_aileron_angle = local_right_aileron_angle;
-
-    if(event->throttle > 0.0)
+    /* if(event->throttle > 0.0)
     {
-        localDebug->thrust = .5 + event->throttle/2.0; //.5 + (x>0)/2
+    localDebug->thrust = .5 + event->throttle/2.0;
     }
     else
     {
-        localDebug->thrust = .50 - ((-1.0 * event->throttle)/ 2);
+    localDebug->thrust = .5 - ((-1.0*event->throttle)/2);
     }
+    */
+    double tempThrottle;
+    if(event->throttle > 0.0)
+    {
+        tempThrottle = 1 + event->throttle;
+    }
+    else
+    {
+        tempThrottle = 1 - (-1.0)*event->throttle;
+    }
+    if(tempThrottle > 1.7)
+    {
+        double afterburnerTemp = 2 - tempThrottle;
+        double afterburnerVal = ((.3-afterburnerTemp) / .3 *100);
+        localDebug->thrust = 100;
+        afterburnerTemp = 2 - tempThrottle;
+        if(afterburnerActive == 1)
+        {
+            afterburnerVal = ((.3-afterburnerTemp) / .3 *100);
+            localDebug->afterburner = afterburnerVal;
+        }
+        else
+        {
+            localDebug->afterburner = 0;
+        }
+    }
+    else
+    {
+        localDebug->thrust = tempThrottle /1.7 * 100;
+        localDebug->afterburner = 0;
+    }
+    //thrust is now 0 to 2
+
 /********************RUDDER*************************/
     if(event->stick_z > 0.0)
     {
@@ -568,6 +601,24 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     else
     {
         localDebug->gears = 0;
+    }
+    if(event->button[1] != 0)
+    {
+        localDebug->afterburnerActive = 1;
+        //this->afterburnerActive = 1;
+    }
+    else
+    {
+        localDebug->afterburnerActive = 0;
+        //this->afterburnerActive = 0;
+    }
+    if(event->button[10] != 0)
+    {
+        printf("FLAPS DOWN\n");
+    }
+    if(event->button[11] != 0)
+    {
+        printf("FLAPS UP\n");
     }
     //elevator
     //slat
