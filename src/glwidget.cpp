@@ -32,6 +32,9 @@ void GLWidget::paintGL()
         x2 = x1 + (radius * cos(i * dPi / triangles))*2;
         y2 = y1 + (radius * sin(i * dPi / triangles))*2;
         glVertex2f(x2, y2);
+        if(y2<0){
+            glColor3f(0.5f, 0.35f, 0.05f);
+        }
     }
     glEnd();
 }
