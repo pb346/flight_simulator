@@ -21,7 +21,7 @@ void GLWidget::initializeGL()
 void GLWidget::paintGL()
 {
     x1 = 0.0, y1 = 0.0;
-    int triangles = 50; //number used to draw
+    int triangles = 100; //number used to draw
     float dPi = 2.0f * M_PI; //double Pi
     glColor3f(0.5,0.5,1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
