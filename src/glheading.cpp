@@ -1,5 +1,8 @@
 #include "glheading.h"
+#include <QFileInfo>
 #include <math.h>
+#include <stdio.h>
+#include <QGLWidget>
 
 GLHeading::GLHeading(QWidget* parent):QOpenGLWidget(parent)
 {
@@ -10,8 +13,18 @@ GLHeading::GLHeading(QWidget* parent):QOpenGLWidget(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(repaint()));
 }
 
+void GLHeading::glRotated()
+{
+
+}
+
 void GLHeading::initializeGL()
 {
+    //QFileInfo checkpath(":/new/prefix1/heading.bmp");
+    //QOpenGLTexture* texture = new QOpenGLTexture(QImage(":/new/prefix1/heading.bmp"));
+    //QImage fileName;
+    //fileName.load(":/new/prefix/heading.bmp");
+    //QImage texture = QGLWidget::convertToGLFormat(fileName);
     glClearColor(0.0, 0.0, 102.0/255.0, 0.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();

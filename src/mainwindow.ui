@@ -855,16 +855,6 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="GLHeading" name="openGLWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>270</y>
-      <width>301</width>
-      <height>181</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="rudVal">
     <property name="geometry">
      <rect>
@@ -1060,77 +1050,16 @@
      <string>Afterburner</string>
     </property>
    </widget>
-   <zorder>openGLWidget_2</zorder>
-   <zorder>openGLWidget</zorder>
-   <zorder>label</zorder>
-   <zorder>checkGear</zorder>
-   <zorder>checkAux</zorder>
-   <zorder>throttleSlider</zorder>
-   <zorder>label_2</zorder>
-   <zorder>label_3</zorder>
-   <zorder>ySlider</zorder>
-   <zorder>xSlider</zorder>
-   <zorder>zSlider</zorder>
-   <zorder>label_4</zorder>
-   <zorder>label_5</zorder>
-   <zorder>label_6</zorder>
-   <zorder>line_2</zorder>
-   <zorder>label_7</zorder>
-   <zorder>label_8</zorder>
-   <zorder>label_9</zorder>
-   <zorder>label_10</zorder>
-   <zorder>label_11</zorder>
-   <zorder>label_12</zorder>
-   <zorder>label_14</zorder>
-   <zorder>label_15</zorder>
-   <zorder>label_13</zorder>
-   <zorder>label_16</zorder>
-   <zorder>label_17</zorder>
-   <zorder>label_18</zorder>
-   <zorder>label_19</zorder>
-   <zorder>label_20</zorder>
-   <zorder>xAxisValue</zorder>
-   <zorder>yAxisValue</zorder>
-   <zorder>zAxisValue</zorder>
-   <zorder>throttleValue</zorder>
-   <zorder>xAngleValue</zorder>
-   <zorder>yAngleValue</zorder>
-   <zorder>zAngleValue</zorder>
-   <zorder>thrustValue</zorder>
-   <zorder>dragValue</zorder>
-   <zorder>accelValue</zorder>
-   <zorder>speedValue</zorder>
-   <zorder>airDensity</zorder>
-   <zorder>fuelValue</zorder>
-   <zorder>label_21</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>line</zorder>
-   <zorder>label_25</zorder>
-   <zorder>label_28</zorder>
-   <zorder>label_29</zorder>
-   <zorder>label_30</zorder>
-   <zorder>label_24</zorder>
-   <zorder>label_26</zorder>
-   <zorder>label_27</zorder>
-   <zorder>status</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>line_3</zorder>
-   <zorder>rudVal</zorder>
-   <zorder>label_22</zorder>
-   <zorder>label_31</zorder>
-   <zorder>label_32</zorder>
-   <zorder>rightAilVal</zorder>
-   <zorder>leftAilVal</zorder>
-   <zorder>ElevVal</zorder>
-   <zorder>elev_val</zorder>
-   <zorder>slatVal</zorder>
-   <zorder>label_36</zorder>
-   <zorder>label_37</zorder>
-   <zorder>flapVal</zorder>
-   <zorder>afterburnVal</zorder>
-   <zorder>elev_val_2</zorder>
-   <zorder>checkAfterburner</zorder>
+   <widget class="QGraphicsView" name="graphicsView1">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>270</y>
+      <width>301</width>
+      <height>181</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -1154,11 +1083,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>GLHeading</class>
-   <extends>QOpenGLWidget</extends>
-   <header>glheading.h</header>
-  </customwidget>
   <customwidget>
    <class>GLWidget</class>
    <extends>QOpenGLWidget</extends>

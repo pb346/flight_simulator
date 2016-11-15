@@ -16,6 +16,10 @@ int main(int argc, char *argv[])
     window->setFixedSize(150,150);
     window->show();
 Testing openGL functions ******************************/
+    QGraphicsScene scene;
+    QGraphicsView view(&scene);
+    QGraphicsPixmapItem item(QPixmap(":/new/prefix1/heading.bmp"));
+    scene.addItem(&item);
     w.show();
 
     return a.exec();

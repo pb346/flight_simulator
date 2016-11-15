@@ -24,6 +24,19 @@ MainWindow::MainWindow(QWidget *parent) :
     debug = new DebugValues();
     previousDebug = new DebugValues();
     previousDebug->gears = -1;
+    imageObject = new QImage();
+    imageObject->load(":/new/prefix1/heading.bmp");
+    image = QPixmap::fromImage(*imageObject);
+    scene = new QGraphicsScene(QRect(0,0,0,0));
+    QMatrix rm;
+    rm.rotate(90);
+
+    image = image.transformed(rm);
+    image = image.scaled(300,300);
+    scene->addPixmap(image);
+    ui->graphicsView1->setScene(scene);
+    //ui->graphicsView1->fitInView(bounds, Qt::KeepAspectRatio);
+
 }
 
 MainWindow::~MainWindow()
@@ -111,7 +124,17 @@ void MainWindow::updateSliders(joystick_event* event)
 
 void MainWindow::on_pushButton_clicked()
 {
+    image = QPixmap::fromImage(*imageObject);
+    delete scene;
+    scene = new QGraphicsScene(QRect(0,0,0,0));
+    QMatrix rm;
+    rotate += 5;
+    rm.rotate(rotate);
 
+    image = image.transformed(rm);
+    image = image.scaled(300,300);
+    scene->addPixmap(image);
+    ui->graphicsView1->setScene(scene);
     if(!runningFlag)
     {
         procThread->Stop = false;

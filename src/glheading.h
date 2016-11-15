@@ -8,6 +8,7 @@ class GLHeading : public QOpenGLWidget
 public:
     GLHeading(QWidget* parent);
     void initializeGL();
+    void glRotated();
     void resizeGL(int width, int height);
     void paintGL();
     void repaint();
