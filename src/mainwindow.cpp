@@ -44,10 +44,11 @@ void MainWindow::headingInit()
     rm.rotate(90);
     headingAngle = 0;
     image = image.transformed(rm);
-    //image = image.scaled(400,400); //300 300
-    image = image.scaled(300, 300);
-    //rotateImage = image.copy(0, -250, image.width(), image.height());
-    rotateImage = image.copy(0, -120, image.width(), image.height() );
+    image = image.scaled(400,400); //300 300
+    //image = image.scaled(300, 300);
+    rotateImage = image.copy(0, -220, image.width(), image.height());
+    //rotateImage = image.copy(0, -120, image.width(), image.height() );
+    scene->addPixmap(rotateImage);
     scene->addPixmap(rotateImage);
     ui->graphicsView1->setScene(scene);
 }
@@ -62,9 +63,13 @@ void MainWindow::updateHeading(joystick_event* event)
     int offX = (rotateImage.width()- image.width()) / 2;
     int offY = (rotateImage.height() - image.height())/2;
     rotateImage = rotateImage.copy(offX, offY, image.width(), image.height());
+
     delete scene;
     scene = new QGraphicsScene(QRect(0,0,0,0));
-    scene->addPixmap(rotateImage);
+    QGraphicsPixmapItem* item =scene->addPixmap(rotateImage);
+    item->setPos(-50, 0);
+    item =scene->addPixmap(rotateImage);
+    item->setPos(-50, 0);
     ui->graphicsView1->setScene(scene);
 }
 
