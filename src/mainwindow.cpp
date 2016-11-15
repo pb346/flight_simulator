@@ -24,19 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     debug = new DebugValues();
     previousDebug = new DebugValues();
     previousDebug->gears = -1;
-    imageObject = new QImage();
-    imageObject->load(":/new/prefix1/heading.bmp");
-    image = QPixmap::fromImage(*imageObject);
-    rotateImage = QPixmap::fromImage(*imageObject);
-    scene = new QGraphicsScene(QRect(0,0,0,0));
-    rotate = 0;
-    QMatrix rm;
-    rm.rotate(90);
-    image = image.transformed(rm);
-    image = image.scaled(300,300);
-    rotateImage = image.copy(0, -120, image.width(), image.height());
-    scene->addPixmap(rotateImage);
-    ui->graphicsView1->setScene(scene);
+    headerTimerCount = 0;
+    headingInit();
 }
 
 MainWindow::~MainWindow()
@@ -44,12 +33,53 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::headingInit()
+{
+    imageObject = new QImage();
+    imageObject->load(":/new/prefix1/heading.bmp");
+    image = QPixmap::fromImage(*imageObject);
+    rotateImage = QPixmap::fromImage(*imageObject);
+    scene = new QGraphicsScene(QRect(0,0,0,0));
+    QMatrix rm;
+    rm.rotate(90);
+    headingAngle = 0;
+    image = image.transformed(rm);
+    //image = image.scaled(400,400); //300 300
+    image = image.scaled(300, 300);
+    //rotateImage = image.copy(0, -250, image.width(), image.height());
+    rotateImage = image.copy(0, -120, image.width(), image.height() );
+    scene->addPixmap(rotateImage);
+    ui->graphicsView1->setScene(scene);
+}
+void MainWindow::updateHeading(joystick_event* event)
+{
+    float rudder = event->stick_z;
+    rudder = rudder*5;
+    headingAngle += rudder;
+    QMatrix rm;
+    rm.rotate(headingAngle);
+    rotateImage = image.transformed(rm);
+    int offX = (rotateImage.width()- image.width()) / 2;
+    int offY = (rotateImage.height() - image.height())/2;
+    rotateImage = rotateImage.copy(offX, offY, image.width(), image.height());
+    delete scene;
+    scene = new QGraphicsScene(QRect(0,0,0,0));
+    scene->addPixmap(rotateImage);
+    ui->graphicsView1->setScene(scene);
+}
+
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
+    //printf("%i %i %i\n", (int)planeState->pitch_angle, (int)planeState->yaw_angle, (int)planeState->roll_angle);
+    headerTimerCount += 1;
     updateValues(event);
     updateSliders(event);
     planeState->process_joystick_input(currentModel,event, &debug);
-
+    if(headerTimerCount > 50)
+    {
+        updateHeading(event);
+        headerTimerCount = 0;
+    }
     //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
     ui->rightAilVal->setText(QString::number(debug->aileronRight, 'f', 2));
     ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
@@ -61,6 +91,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     ui->afterburnVal->setText(QString::number(debug->afterburner, 'f', 2));
     ui->checkAfterburner->setChecked(planeState->afterburnerActive);
     ui->flapVal->setText(QString::number(planeState->flap, 'f', 2));
+
     if(previousDebug->gears == 1 && debug->gears == 0)
     {
         if(ui->checkGear->isChecked() == 1)
@@ -124,31 +155,6 @@ void MainWindow::updateSliders(joystick_event* event)
 
 void MainWindow::on_pushButton_clicked()
 {
-    rotate += 5;
-    QMatrix rm;
-    rm.rotate(rotate);
-    rotateImage = image.transformed(rm);
-    int offX = (rotateImage.width()- image.width()) / 2;
-    int offY = (rotateImage.height() - image.height())/2;
-    rotateImage = rotateImage.copy(offX, offY, image.width(), image.height());
-    //rotateImage = image.scaled(300, 300);
-    //QPixmap cropped = image.copy(0,0,301,181);
-    delete scene;
-    scene = new QGraphicsScene(QRect(0,0,0,0));
-    scene->addPixmap(rotateImage);
-    ui->graphicsView1->setScene(scene);
-    /*
-    image = QPixmap::fromImage(*imageObject);
-    delete scene;
-    scene = new QGraphicsScene(QRect(0,0,0,0));
-    QMatrix rm;
-    rotate += 5;
-    rm.rotate(rotate);
-    image = image.transformed(rm);
-    image = image.scaled(300,300);
-    scene->addPixmap(image);
-    ui->graphicsView1->setScene(scene);
-    */
     if(!runningFlag)
     {
         procThread->Stop = false;

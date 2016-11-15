@@ -27,13 +27,17 @@ public:
     DebugValues* debug;
     DebugValues* previousDebug;
     int runningFlag;
-    int rotate = 90;
+    //int rotate = 90;
     QImage* imageObject;
     QPixmap image;
     QPixmap rotateImage;
     QGraphicsScene* scene;
+    int headingAngle;
+    int headerTimerCount;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
+    void updateHeading(joystick_event* event);
+    void headingInit();
 
 private slots:
     void onUpdateGUI(joystick_event*);
