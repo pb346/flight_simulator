@@ -27,16 +27,16 @@ MainWindow::MainWindow(QWidget *parent) :
     imageObject = new QImage();
     imageObject->load(":/new/prefix1/heading.bmp");
     image = QPixmap::fromImage(*imageObject);
+    rotateImage = QPixmap::fromImage(*imageObject);
     scene = new QGraphicsScene(QRect(0,0,0,0));
+    rotate = 0;
     QMatrix rm;
     rm.rotate(90);
-
     image = image.transformed(rm);
     image = image.scaled(300,300);
-    scene->addPixmap(image);
+    rotateImage = image.copy(0, -120, image.width(), image.height());
+    scene->addPixmap(rotateImage);
     ui->graphicsView1->setScene(scene);
-    //ui->graphicsView1->fitInView(bounds, Qt::KeepAspectRatio);
-
 }
 
 MainWindow::~MainWindow()
@@ -124,17 +124,31 @@ void MainWindow::updateSliders(joystick_event* event)
 
 void MainWindow::on_pushButton_clicked()
 {
+    rotate += 5;
+    QMatrix rm;
+    rm.rotate(rotate);
+    rotateImage = image.transformed(rm);
+    int offX = (rotateImage.width()- image.width()) / 2;
+    int offY = (rotateImage.height() - image.height())/2;
+    rotateImage = rotateImage.copy(offX, offY, image.width(), image.height());
+    //rotateImage = image.scaled(300, 300);
+    //QPixmap cropped = image.copy(0,0,301,181);
+    delete scene;
+    scene = new QGraphicsScene(QRect(0,0,0,0));
+    scene->addPixmap(rotateImage);
+    ui->graphicsView1->setScene(scene);
+    /*
     image = QPixmap::fromImage(*imageObject);
     delete scene;
     scene = new QGraphicsScene(QRect(0,0,0,0));
     QMatrix rm;
     rotate += 5;
     rm.rotate(rotate);
-
     image = image.transformed(rm);
     image = image.scaled(300,300);
     scene->addPixmap(image);
     ui->graphicsView1->setScene(scene);
+    */
     if(!runningFlag)
     {
         procThread->Stop = false;

@@ -30,6 +30,7 @@ public:
     int rotate = 90;
     QImage* imageObject;
     QPixmap image;
+    QPixmap rotateImage;
     QGraphicsScene* scene;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
