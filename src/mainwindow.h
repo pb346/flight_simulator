@@ -30,6 +30,9 @@ public:
     //int rotate = 90;
     QImage* imageObject;
     QPixmap image;
+    QPixmap altImage;
+
+
     QPixmap rotateImage;
     QGraphicsScene* scene;
     int headingAngle;
@@ -38,6 +41,7 @@ public:
     void updateSliders(joystick_event* event);
     void updateHeading(joystick_event* event);
     void headingInit();
+    void altitudeInit();
 
 private slots:
     void onUpdateGUI(joystick_event*);

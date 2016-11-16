@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     previousDebug->gears = -1;
     headerTimerCount = 0;
     headingInit();
+    altitudeInit();
 }
 
 MainWindow::~MainWindow()
@@ -45,18 +46,29 @@ void MainWindow::headingInit()
     headingAngle = 0;
     image = image.transformed(rm);
     image = image.scaled(400,400); //300 300
-    //image = image.scaled(300, 300);
-    rotateImage = image.copy(0, -220, image.width(), image.height());
-    //rotateImage = image.copy(0, -120, image.width(), image.height() );
-    scene->addPixmap(rotateImage);
+    rotateImage = image.copy(0, -280, image.width(), image.height());
+    scene->addPixmap(rotateImage);  //need double draw to compensate for compression loss
     scene->addPixmap(rotateImage);
     ui->graphicsView1->setScene(scene);
 }
+
+void MainWindow::altitudeInit()
+{
+    QImage* altitudeObject = new QImage();
+    altitudeObject->load(":new/prefix1/altitude50Kft.png");
+    altImage = QPixmap::fromImage(*altitudeObject);
+    QGraphicsScene* altScene = new QGraphicsScene(QRect(0,0,0,0));
+    altScene->addPixmap(altImage);
+    ui->graphicsViewAlt->setScene(altScene);
+
+}
+
 void MainWindow::updateHeading(joystick_event* event)
 {
     float rudder = event->stick_z;
     rudder = rudder*5;
     headingAngle += rudder;
+
     QMatrix rm;
     rm.rotate(headingAngle);
     rotateImage = image.transformed(rm);
