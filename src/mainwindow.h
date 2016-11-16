@@ -31,6 +31,7 @@ public:
     QImage* imageObject;
     QPixmap image;
     QPixmap altImage;
+    QPixmap speedImage;
 
 
     QPixmap rotateImage;
@@ -40,8 +41,10 @@ public:
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
     void updateHeading(joystick_event* event);
+    void updateSpeed(joystick_event* event);
     void headingInit();
     void altitudeInit();
+    void speedInit();
 
 private slots:
     void onUpdateGUI(joystick_event*);

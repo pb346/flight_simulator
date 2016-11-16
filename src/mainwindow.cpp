@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     headerTimerCount = 0;
     headingInit();
     altitudeInit();
+    speedInit();
 }
 
 MainWindow::~MainWindow()
@@ -60,7 +61,16 @@ void MainWindow::altitudeInit()
     QGraphicsScene* altScene = new QGraphicsScene(QRect(0,0,0,0));
     altScene->addPixmap(altImage);
     ui->graphicsViewAlt->setScene(altScene);
+}
 
+void MainWindow::speedInit()
+{
+    QImage* speedObject = new QImage();
+    speedObject->load(":new/prefix1/speed2K.png");
+    speedImage = QPixmap::fromImage(*speedObject);
+    QGraphicsScene* speedScene = new QGraphicsScene(QRect(0,0,0,0));
+    speedScene->addPixmap(speedImage);
+    ui->graphicsViewSpeed->setScene(speedScene);
 }
 
 void MainWindow::updateHeading(joystick_event* event)
@@ -83,6 +93,11 @@ void MainWindow::updateHeading(joystick_event* event)
     item =scene->addPixmap(rotateImage);
     item->setPos(-50, 0);
     ui->graphicsView1->setScene(scene);
+}
+
+void MainWindow::updateSpeed(joystick_event* event)
+{
+
 }
 
 void MainWindow::onUpdateGUI(joystick_event* event)

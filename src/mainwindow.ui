@@ -981,7 +981,7 @@
      <string>Speed</string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsViewAlt_2">
+   <widget class="QGraphicsView" name="graphicsViewSpeed">
     <property name="geometry">
      <rect>
       <x>60</x>
