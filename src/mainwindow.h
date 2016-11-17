@@ -4,6 +4,10 @@
 #include "plane.h"
 #include "planemodel.h"
 #include <QMainWindow>
+#include <QPixmap>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 PlaneModel* parseXML();
 namespace Ui {
 class MainWindow;
@@ -23,8 +27,24 @@ public:
     DebugValues* debug;
     DebugValues* previousDebug;
     int runningFlag;
+    //int rotate = 90;
+    QImage* imageObject;
+    QPixmap image;
+    QPixmap altImage;
+    QPixmap speedImage;
+
+
+    QPixmap rotateImage;
+    QGraphicsScene* scene;
+    int headingAngle;
+    int headerTimerCount;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
+    void updateHeading(joystick_event* event);
+    void updateSpeed(joystick_event* event);
+    void headingInit();
+    void altitudeInit();
+    void speedInit();
 
 private slots:
     void onUpdateGUI(joystick_event*);

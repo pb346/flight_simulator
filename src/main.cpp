@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "glheading.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,6 +7,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     QTimer::singleShot(0, &w, SLOT(onEventLoopStarted()));
     w.show();
-
     return a.exec();
 }

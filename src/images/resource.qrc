@@ -2,7 +2,9 @@
     <qresource prefix="/new/prefix1">
         <file>sphere.png</file>
         <file>Fuel.png</file>
-        <file>heading.png</file>
         <file>adjusted F16.png</file>
+        <file>heading.bmp</file>
+        <file>altitude50Kft.png</file>
+        <file>speed2K.png</file>
     </qresource>
 </RCC>
