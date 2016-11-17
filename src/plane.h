@@ -13,7 +13,7 @@ class Plane {
 public:
 // environmental variables
 	const double gravity = 9.81;
-	double air_density;
+	double air_pressure;
 // scalars (all due to change in disaster scenarios)
 	double mass;
 	double wingspan;
