@@ -118,6 +118,7 @@ Plane::Plane() {
     //misc controls
     gears_Deployed = 1;
     afterburnerActive = 0;
+    m_afterburner = 0;
 }
 
 
@@ -211,7 +212,7 @@ void Plane::unitize(double &x, double &y, double &z) {
 
 
 void Plane::calculate_air_density() {
-	air_pressure = 1.0 * exp(-z_position/22965.9)
+    air_pressure = 1.0 * exp(-z_position/22965.9);
 }
 void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	// lift = 9800*log(x+1)-0.015v^2+0.0000076x^3-10^(0.0022047877(x))
@@ -297,9 +298,9 @@ void Plane::calculate_angular_positions() {
 	roll_angle = roll_angle + roll_angular_velocity;
 }
 void Plane::calculate_accelerations() {
-	x_acceleration = x_force / mass;
-	y_acceleration = y_force / mass;
-	z_acceleration = z_force / mass;
+    x_acceleration = x_force / (mass*100.0);
+    y_acceleration = y_force / (mass*100.0);
+    z_acceleration = z_force / (mass*100.0);
 	if(z_position <= 0 && z_acceleration < 0) {
 		z_acceleration = 0;
 	}
@@ -329,14 +330,16 @@ void Plane::calculate_positions() {
 		z_position = 0;
 	}
 }
-void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_left_leading_edge_flap_angle, double p_right_leading_edge_flap_angle, double p_rudder_angle) {
-	m_thrust = p_m_thrust;
+void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_rudder_angle, double p_m_afterburner) {
+    m_thrust = p_m_thrust * 250.0;
+    m_afterburner = p_m_afterburner *50.0;
+    m_thrust += m_afterburner;
 	left_elevator_angle = p_left_elevator_angle;
 	right_elevator_angle = p_right_elevator_angle;
 	left_aileron_angle = p_left_aileron_angle;
 	right_aileron_angle = p_right_aileron_angle;
-	left_leading_edge_flap_angle = p_left_leading_edge_flap_angle;
-	right_leading_edge_flap_angle = p_right_leading_edge_flap_angle;
+    //left_leading_edge_flap_angle = p_left_leading_edge_flap_angle;
+    //right_leading_edge_flap_angle = p_right_leading_edge_flap_angle;
 	rudder_angle = p_rudder_angle;
 	calculate_air_density();
 	calculate_lift(); // (1/2) * d * v^2 * s * CL
@@ -366,10 +369,16 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
 
 /***************************AILERON*************************************/
     //aileronLeftAngle = event->stick_x * model->maxAileronAngle; // -20 to 20
-    double aileronLeftAngle;
-    double aileronRightAngle;
-    double local_right_aileron_angle = right_aileron_angle;
-    double local_left_aileron_angle = left_aileron_angle;//left_aileron_angle;
+    double local_right_aileron_angle = event->stick_x * model->maxAileronAngle;
+    double local_left_aileron_angle = (-1.0)* event->stick_x * model->maxAileronAngle;
+
+    right_aileron_angle = local_right_aileron_angle;
+    left_aileron_angle = local_left_aileron_angle;
+    localDebug->aileronLeft = left_aileron_angle;
+    localDebug->aileronRight = right_aileron_angle;
+
+    //left_aileron_angle;
+    /*
     if((event->stick_x) >= 0.0)//joystick right
     {
         aileronRightAngle = event->stick_x * model->maxAileronAngle;
@@ -443,6 +452,7 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
      }
     this->left_aileron_angle = local_left_aileron_angle;
     right_aileron_angle = local_right_aileron_angle;
+    */
     /* if(event->throttle > 0.0)
     {
     localDebug->thrust = .5 + event->throttle/2.0;

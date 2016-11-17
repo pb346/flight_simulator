@@ -145,6 +145,7 @@ public:
     //misc controls
     int gears_Deployed;
     int afterburnerActive;
+    double m_afterburner;
     double flap;
 
     //function prototypes
@@ -171,7 +172,7 @@ public:
 	void calculate_positions();
 
 	Plane();
-	void update_plane(double, double, double, double, double, double, double, double);
+    void update_plane(double, double, double, double, double, double, double);
     void process_joystick_input(PlaneModel*, joystick_event*, DebugValues**);
     void update_model_parameters();
 	void update_right_flaps(double angle);

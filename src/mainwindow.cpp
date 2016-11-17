@@ -75,6 +75,7 @@ void MainWindow::speedInit()
 
 void MainWindow::updateHeading(joystick_event* event)
 {
+    printf("UPDATE HEADING\n");
     float rudder = event->stick_z;
     rudder = rudder*5;
     headingAngle += rudder;
@@ -107,7 +108,8 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     updateValues(event);
     updateSliders(event);
     planeState->process_joystick_input(currentModel,event, &debug);
-    if(headerTimerCount > 50)
+    printf("TIMERCOUNT %i\n", headerTimerCount);
+    if(headerTimerCount > 0)
     {
         updateHeading(event);
         headerTimerCount = 0;
@@ -167,15 +169,23 @@ void MainWindow::onUpdateGUI(joystick_event* event)
             //planeState->left_aileron_angle -= 1;
         }
     }
+    planeState->update_plane(debug->thrust, debug->elevator, debug->elevator, debug->aileronLeft, debug->aileronRight, debug->rudder, debug->afterburner);
     debug->copyDebug(previousDebug);
 }
 
 void MainWindow::updateValues(joystick_event* event)
 {
-    ui->xAxisValue->setText(QString::number(event->stick_x, 'f', 2 ));
-    ui->yAxisValue->setText(QString::number(event->stick_y, 'f', 2 ));
-    ui->zAxisValue->setText(QString::number(event->stick_z, 'f', 2 ));
+    ui->xAxisValue->setText(QString::number(planeState->x_position, 'f', 2 ));
+    ui->yAxisValue->setText(QString::number(planeState->y_position, 'f', 2 ));
+    ui->zAxisValue->setText(QString::number(planeState->z_position, 'f', 2 ));
+    ui->speedValue->setText(QString::number(planeState->m_velocity, 'f', 2 ));
+    ui->accelValue->setText(QString::number(planeState->m_acceleration, 'f', 2 ));
+    ui->dragValue->setText(QString::number(planeState->m_drag_left + planeState->m_drag_right, 'f', 2 ));
+    ui->thrustValue->setText(QString::number(planeState->m_thrust, 'f', 2 ));
+    ui->airDensity->setText(QString::number(planeState->air_pressure, 'f', 2));
+
     ui->throttleValue->setText(QString::number(event->throttle, 'f', 2 ));
+
 }
 void MainWindow::updateSliders(joystick_event* event)
 {
