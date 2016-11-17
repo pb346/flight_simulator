@@ -13,9 +13,7 @@
 /*-- INCLUDES: ------------------------------------------------------------*/
 
 #include <vector>
-#if __WIN32__
 #include <Windows.h>
-#endif
 
 /*-- DEFINES: -------------------------------------------------------------*/
 
@@ -36,8 +34,6 @@ struct joystick_event {
     float direct_y;
 };
 
-#if __WIN32__
 void saveWin(joystick_event* saved);
-#endif
 
 #endif // JOYSTICK_INTERFACE_H
