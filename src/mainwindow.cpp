@@ -103,6 +103,8 @@ void MainWindow::updateSpeed(joystick_event* event)
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
     //printf("%i %i %i\n", (int)planeState->pitch_angle, (int)planeState->yaw_angle, (int)planeState->roll_angle);
+    //throttle
+
     headerTimerCount += 1;
     updateValues(event);
     updateSliders(event);
@@ -167,15 +169,25 @@ void MainWindow::onUpdateGUI(joystick_event* event)
             //planeState->left_aileron_angle -= 1;
         }
     }
+    planeState->update_plane(debug->thrust, debug->elevator, debug->elevator, debug->aileronLeft, debug->aileronRight, debug->rudder, debug->afterburner);
     debug->copyDebug(previousDebug);
 }
 
 void MainWindow::updateValues(joystick_event* event)
 {
-    ui->xAxisValue->setText(QString::number(event->stick_x, 'f', 2 ));
-    ui->yAxisValue->setText(QString::number(event->stick_y, 'f', 2 ));
-    ui->zAxisValue->setText(QString::number(event->stick_z, 'f', 2 ));
+    //ui->xAxisValue->setText(QString::number(event->stick_x, 'f', 2 ));
+    //ui->yAxisValue->setText(QString::number(event->stick_y, 'f', 2 ));
+    //ui->zAxisValue->setText(QString::number(event->stick_z, 'f', 2 ));
     ui->throttleValue->setText(QString::number(event->throttle, 'f', 2 ));
+    ui->thrustValue->setText(QString::number(planeState->m_thrust, 'f', 2));
+    ui->ElevVal->setText(QString::number(planeState->elevator_angle, 'f', 2));
+    ui->rudVal->setText(QString::number(planeState->rudder_angle, 'f', 2));
+    ui->speedValue->setText(QString::number(planeState->m_velocity, 'f', 2));
+    ui->dragValue->setText(QString::number(planeState->m_drag_left+ planeState->m_drag_right, 'f', 2));
+    ui->accelValue->setText(QString::number(planeState->m_acceleration, 'f', 2));
+    ui->xAxisValue->setText(QString::number(planeState->x_acceleration));
+    ui->yAxisValue->setText(QString::number(planeState->y_acceleration));
+    ui->zAxisValue->setText(QString::number(planeState->z_acceleration));
 }
 void MainWindow::updateSliders(joystick_event* event)
 {

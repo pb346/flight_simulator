@@ -25,13 +25,13 @@ void timerThread::readState(joystick_event* event)
     while(!this->Stop)
     {
         if(true == this->Stop)break;
-        saveWin(event);
-        emit updateGUI(event);
         this->msleep(1);
 
         if(TIMER_SPEED <= sTimer->count)
         {
             sTimer->count = 0;
+            saveWin(event);
+            emit updateGUI(event);
         }
     }
     return;
