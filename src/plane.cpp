@@ -7,6 +7,7 @@
 
 
 Plane::Plane() {
+	air_pressure = 0;
 // scalars (all due to change in disaster scenarios)
 	mass = 652.69995; // slugs
 	wingspan = 32.8; // feet
@@ -210,12 +211,12 @@ void Plane::unitize(double &x, double &y, double &z) {
 
 
 void Plane::calculate_air_density() {
-
+	air_pressure = 1.0 * exp(-z_position/22965.9)
 }
 void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	// lift = 9800*log(x+1)-0.015v^2+0.0000076x^3-10^(0.0022047877(x))
-	m_lift_right = (9800 * log10(m_velocity + 1) - 0.015*pow(m_velocity,2) + 0.0000076*pow(m_velocity, 3) - pow(10, 0.0022047877*m_velocity))/2;
-	m_lift_left = (9800 * log10(m_velocity + 1) - 0.015*pow(m_velocity,2) + 0.0000076*pow(m_velocity, 3) - pow(10, 0.0022047877*m_velocity))/2;
+	m_lift_right = air_pressure * pow(m_velocity, 2);
+	m_lift_left = air_pressure * pow(m_velocity, 2);
 	if(m_lift_right < 0) {
 		m_lift_right = 0;
 	}
@@ -230,8 +231,8 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	z_lift_right = m_lift_right * unit_vector_up.z;
 }
 void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
-	m_drag_right = 774.5966692*pow(m_velocity, 0.5)/2;
-	m_drag_left = 774.5966692*pow(m_velocity, 0.5)/2;
+	m_drag_right = air_pressure * pow(m_velocity, 2);
+	m_drag_left = air_pressure * pow(m_velocity, 2);
 	if(m_drag_right < 0) {
 		m_drag_right = 0;
 	}
