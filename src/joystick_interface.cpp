@@ -9,7 +9,7 @@
  */
 /*-- INCLUDES: ------------------------------------------------------------*/
 #include "joystick_interface.h"
-#include <vector>\
+#include <vector>
 #include "Windows.h"
 
 

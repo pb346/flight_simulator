@@ -27,6 +27,7 @@ public:
     DebugValues* debug;
     DebugValues* previousDebug;
     int runningFlag;
+    int startFlag;
     //int rotate = 90;
     QImage* imageObject;
     QPixmap image;

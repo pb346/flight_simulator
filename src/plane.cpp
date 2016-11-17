@@ -7,7 +7,7 @@
 
 
 Plane::Plane() {
-	air_pressure = 0;
+    air_pressure = 1.0;
 // scalars (all due to change in disaster scenarios)
 	mass = 652.69995; // slugs
 	wingspan = 32.8; // feet
@@ -216,8 +216,8 @@ void Plane::calculate_air_density() {
 }
 void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	// lift = 9800*log(x+1)-0.015v^2+0.0000076x^3-10^(0.0022047877(x))
-	m_lift_right = air_pressure * pow(m_velocity, 2);
-	m_lift_left = air_pressure * pow(m_velocity, 2);
+    m_lift_right = 0.958789992 * sqrt(sqrt(sqrt(air_pressure))) * pow(m_velocity, 2);
+    m_lift_left = 0.958789992 * sqrt(sqrt(sqrt(air_pressure))) * pow(m_velocity, 2);
 	if(m_lift_right < 0) {
 		m_lift_right = 0;
 	}
@@ -232,8 +232,8 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	z_lift_right = m_lift_right * unit_vector_up.z;
 }
 void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
-	m_drag_right = air_pressure * pow(m_velocity, 2);
-	m_drag_left = air_pressure * pow(m_velocity, 2);
+    m_drag_right = 0.75 * air_pressure * pow(m_velocity, 2);
+    m_drag_left = 0.75 * air_pressure * pow(m_velocity, 2);
 	if(m_drag_right < 0) {
 		m_drag_right = 0;
 	}
@@ -283,14 +283,14 @@ void Plane::calculate_torque() {
 	z_torque = (roll_torque * unit_vector_front.z + pitch_torque * unit_vector_left.z + yaw_torque * unit_vector_up.z);
 }
 void Plane::calculate_angular_accelerations() {
-	pitch_angular_acceleration = pitch_angular_acceleration + pitch_torque / mass;
-	yaw_angular_acceleration = yaw_angular_acceleration + yaw_torque / mass;
-	roll_angular_acceleration = roll_angular_acceleration + roll_torque / mass;
+    pitch_angular_acceleration = pitch_angular_acceleration + pitch_torque / (mass);
+    yaw_angular_acceleration = yaw_angular_acceleration + yaw_torque / (mass);
+    roll_angular_acceleration = roll_angular_acceleration + roll_torque / (mass);
 }
 void Plane::calculate_angular_velocities() {
-	pitch_angular_velocity = pitch_angular_velocity + pitch_angular_acceleration;
-	yaw_angular_velocity = yaw_angular_velocity + yaw_angular_acceleration;
-	roll_angular_velocity = roll_angular_velocity + roll_angular_acceleration;
+    pitch_angular_velocity = (pitch_angular_velocity + pitch_angular_acceleration)/ 100.0;
+    yaw_angular_velocity = (yaw_angular_velocity + yaw_angular_acceleration) / 100.0;
+    roll_angular_velocity = (roll_angular_velocity + roll_angular_acceleration) /100.0;
 }
 void Plane::calculate_angular_positions() {
 	pitch_angle = pitch_angle + pitch_angular_velocity;
@@ -298,9 +298,9 @@ void Plane::calculate_angular_positions() {
 	roll_angle = roll_angle + roll_angular_velocity;
 }
 void Plane::calculate_accelerations() {
-    x_acceleration = x_force / (mass*100.0);
-    y_acceleration = y_force / (mass*100.0);
-    z_acceleration = z_force / (mass*100.0);
+    x_acceleration = x_force / (mass);//*100.0);
+    y_acceleration = y_force / (mass);//*100.0);
+    z_acceleration = z_force / (mass);//*100.0);
 	if(z_position <= 0 && z_acceleration < 0) {
 		z_acceleration = 0;
 	}
@@ -322,9 +322,9 @@ void Plane::calculate_velocities() {
 	}
 }
 void Plane::calculate_positions() {
-	x_position = x_position + x_velocity;
-	y_position = y_position + y_velocity;
-	z_position = z_position + z_velocity;
+    x_position = x_position + x_velocity/100.0;
+    y_position = y_position + y_velocity/100.0;
+    z_position = z_position + z_velocity/100.0;
 	m_position = calculate_magnitude(x_position, y_position, z_position);
 	if(z_position < 0) {
 		z_position = 0;
@@ -342,12 +342,12 @@ void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double
     //left_leading_edge_flap_angle = p_left_leading_edge_flap_angle;
     //right_leading_edge_flap_angle = p_right_leading_edge_flap_angle;
 	rudder_angle = p_rudder_angle;
-	calculate_air_density();
-    //calculate_lift(); // (1/2) * d * v^2 * s * CL
-    //calculate_drag(); // Cd * (p * v^2)/2 * A
+    //calculate_air_density();
+    calculate_lift(); // (1/2) * d * v^2 * s * CL
+    calculate_drag(); // Cd * (p * v^2)/2 * A
 	calculate_thrust();
-    //calculate_gravitational_force();
-    //calculate_normal_force();
+    calculate_gravitational_force();
+    calculate_normal_force();
 	calculate_resultant_force();
 	calculate_torque();
 
@@ -408,21 +408,21 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     double tempThrottle;
     if(event->throttle > 0.0)
     {
-        tempThrottle = 1 + event->throttle;
+        tempThrottle = 1.0 + event->throttle;
     }
     else
     {
-        tempThrottle = 1 - (-1.0)*event->throttle;
+        tempThrottle = 1.0 - (-1.0)*event->throttle;
     }
     if(tempThrottle > 1.7)
     {
-        double afterburnerTemp = 2 - tempThrottle;
-        double afterburnerVal = ((.3-afterburnerTemp) / .3 *100);
+        double afterburnerTemp = 2.0 - tempThrottle;
+        double afterburnerVal = ((.3-afterburnerTemp) / .30 *100);
         localDebug->thrust = 100;
-        afterburnerTemp = 2 - tempThrottle;
+        afterburnerTemp = 2.0 - tempThrottle;
         if(afterburnerActive == 1)
         {
-            afterburnerVal = ((.3-afterburnerTemp) / .3 *100);
+            afterburnerVal = ((.30-afterburnerTemp) / .30 *100);
             localDebug->afterburner = afterburnerVal;
         }
         else
@@ -435,7 +435,6 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
         localDebug->thrust = tempThrottle /1.7 * 100;
         localDebug->afterburner = 0;
     }
-    //thrust is now 0 to 2
 
 /********************RUDDER*************************/
     if(event->stick_z > 0.0)
