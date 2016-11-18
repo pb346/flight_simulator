@@ -6,5 +6,6 @@
         <file>heading.bmp</file>
         <file>altitude50Kft.png</file>
         <file>speed2K.png</file>
+        <file>angularOrientation.png</file>
     </qresource>
 </RCC>

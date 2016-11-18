@@ -30,11 +30,22 @@ MainWindow::MainWindow(QWidget *parent) :
     headingInit();
     altitudeInit();
     speedInit();
+    angularInit();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::angularInit()
+{
+    angularObject = new QImage();
+    angularObject->load(":new/prefix1/angularOrientation.png");
+    angularImage = QPixmap::fromImage(*angularObject);
+    angularScene = new QGraphicsScene(QRect(0,0,0,0));
+    angularScene->addPixmap(angularImage);
+    ui->graphicsViewAO->setScene(angularScene);
 }
 
 void MainWindow::headingInit()
@@ -74,6 +85,12 @@ void MainWindow::speedInit()
     speedScene = new QGraphicsScene(QRect(0,0,0,0));
     speedScene->addPixmap(speedImage);
     ui->graphicsViewSpeed->setScene(speedScene);
+}
+
+void MainWindow::updateAngular(joystick_event* event)
+{
+
+
 }
 
 void MainWindow::updateHeading(joystick_event* event)

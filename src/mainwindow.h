@@ -33,15 +33,18 @@ public:
     QImage* imageObject;
     QImage* altObject;
     QImage* speedObject;
+    QImage* angularObject;
     QPixmap image;
     QPixmap altImage;
     QPixmap speedImage;
+    QPixmap angularImage;
 
 
     QPixmap rotateImage;
     QGraphicsScene* scene;
     QGraphicsScene* altScene;
     QGraphicsScene* speedScene;
+    QGraphicsScene* angularScene;
     int headingAngle;
     int headerTimerCount;
     void updateValues(joystick_event* event);
@@ -49,9 +52,11 @@ public:
     void updateHeading(joystick_event* event);
     void updateAltitude(joystick_event* event);
     void updateSpeed(joystick_event* event);
+    void updateAngular(joystick_event* event);
     void headingInit();
     void altitudeInit();
     void speedInit();
+    void angularInit();
 
 private slots:
     void onUpdateGUI(joystick_event*);
