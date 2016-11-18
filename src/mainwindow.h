@@ -30,6 +30,8 @@ public:
     int startFlag;
     //int rotate = 90;
     QImage* imageObject;
+    QImage* altObject;
+    QImage* speedObject;
     QPixmap image;
     QPixmap altImage;
     QPixmap speedImage;
@@ -37,11 +39,14 @@ public:
 
     QPixmap rotateImage;
     QGraphicsScene* scene;
+    QGraphicsScene* altScene;
+    QGraphicsScene* speedScene;
     int headingAngle;
     int headerTimerCount;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
     void updateHeading(joystick_event* event);
+    void updateAltitude(joystick_event* event);
     void updateSpeed(joystick_event* event);
     void headingInit();
     void altitudeInit();

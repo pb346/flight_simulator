@@ -372,11 +372,22 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     //aileronLeftAngle = event->stick_x * model->maxAileronAngle; // -20 to 20
     double local_right_aileron_angle = event->stick_x * model->maxAileronAngle;
     double local_left_aileron_angle = (-1.0)* event->stick_x * model->maxAileronAngle;
+    if(( local_right_aileron_angle < 0 && (local_right_aileron_angle + .2) > 0 ) || (local_right_aileron_angle > 0 && (local_right_aileron_angle-.2 < 0)))
+    {
 
-    right_aileron_angle = local_right_aileron_angle;
-    left_aileron_angle = local_left_aileron_angle;
-    localDebug->aileronLeft = left_aileron_angle;
-    localDebug->aileronRight = right_aileron_angle;
+        right_aileron_angle = 0;
+        left_aileron_angle =  0;
+        localDebug->aileronLeft = 0;
+        localDebug->aileronRight = 0;
+    }
+    else
+    {
+        right_aileron_angle = local_right_aileron_angle;
+        left_aileron_angle = local_left_aileron_angle;
+        localDebug->aileronLeft = left_aileron_angle;
+        localDebug->aileronRight = right_aileron_angle;
+
+    }
 
     //left_aileron_angle;
     /*

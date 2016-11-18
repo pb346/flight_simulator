@@ -56,20 +56,21 @@ void MainWindow::headingInit()
 
 void MainWindow::altitudeInit()
 {
-    QImage* altitudeObject = new QImage();
-    altitudeObject->load(":new/prefix1/altitude50Kft.png");
-    altImage = QPixmap::fromImage(*altitudeObject);
-    QGraphicsScene* altScene = new QGraphicsScene(QRect(0,0,0,0));
-    altScene->addPixmap(altImage);
+    altObject = new QImage();
+    altObject->load(":new/prefix1/altitude50Kft.png");
+    altImage = QPixmap::fromImage(*altObject);
+    altScene = new QGraphicsScene(QRect(0,0,0,0));
+    QGraphicsPixmapItem* item = altScene->addPixmap(altImage);
+  //  item->setPos(-18, -7560);
     ui->graphicsViewAlt->setScene(altScene);
 }
 
 void MainWindow::speedInit()
 {
-    QImage* speedObject = new QImage();
+    speedObject = new QImage();
     speedObject->load(":new/prefix1/speed2K.png");
     speedImage = QPixmap::fromImage(*speedObject);
-    QGraphicsScene* speedScene = new QGraphicsScene(QRect(0,0,0,0));
+    speedScene = new QGraphicsScene(QRect(0,0,0,0));
     speedScene->addPixmap(speedImage);
     ui->graphicsViewSpeed->setScene(speedScene);
 }
@@ -98,13 +99,30 @@ void MainWindow::updateHeading(joystick_event* event)
 
 void MainWindow::updateSpeed(joystick_event* event)
 {
+    speedImage = QPixmap::fromImage(*speedObject);
+    delete speedScene;
+    speedScene = new QGraphicsScene(QRect(0,0,0,0));
+    //altScene->addPixmap(altImage);
+    QGraphicsPixmapItem* item = speedScene->addPixmap(speedImage);
+    item->setPos(-18, -3120);
+    ui->graphicsViewSpeed->setScene(speedScene);
 
+}
+
+void MainWindow::updateAltitude(joystick_event* event)
+{
+    altImage = QPixmap::fromImage(*altObject);
+    delete altScene;
+    altScene = new QGraphicsScene(QRect(0,0,0,0));
+    //altScene->addPixmap(altImage);
+    QGraphicsPixmapItem* item = altScene->addPixmap(altImage);
+    item->setPos(-18, -7565);
+    ui->graphicsViewAlt->setScene(altScene);
 }
 
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
     //printf("%i %i %i\n", (int)planeState->pitch_angle, (int)planeState->yaw_angle, (int)planeState->roll_angle);
-    //throttle
     if(startFlag == 0)
     {
         event->throttle = -1.0;
@@ -119,6 +137,8 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     if(headerTimerCount > 0)
     {
         updateHeading(event);
+        updateAltitude(event);
+        updateSpeed(event);
         headerTimerCount = 0;
     }
     //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
