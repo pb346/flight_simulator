@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     headerTimerCount = 0;
     startFlag = 0;
     clockCycles = 0;
+    altitude = 0;
+    speed = 0;
     headingInit();
     altitudeInit();
     speedInit();
@@ -100,29 +102,28 @@ void MainWindow::updateHeading(joystick_event* event)
 
 void MainWindow::updateSpeed(joystick_event* event)
 {
+    double speed = (planeState->m_velocity * 3600.0)/(5280.0);
     speedImage = QPixmap::fromImage(*speedObject);
     delete speedScene;
     speedScene = new QGraphicsScene(QRect(0,0,0,0));
-    //altScene->addPixmap(altImage);
     QGraphicsPixmapItem* item = speedScene->addPixmap(speedImage);
-    item->setPos(-18, -3120);
+    float tempSpeed = speed * 1.65;
+    item->setPos(-18, (-3110 + tempSpeed));
     ui->graphicsViewSpeed->setScene(speedScene);
-
+    ui->speedVal->setText(QString::number(speed, 'f', 1));
 }
 
 void MainWindow::updateAltitude(joystick_event* event)
 {
-    float altitude = planeState->z_position;
+    altitude += 10;
     altImage = QPixmap::fromImage(*altObject);
     delete altScene;
     altScene = new QGraphicsScene(QRect(0,0,0,0));
-    //altScene->addPixmap(altImage);
     QGraphicsPixmapItem* item = altScene->addPixmap(altImage);
-    //item->setPos(-18, -7565);// point zero
-    //roughly 17 pixels per 100 ft
-    item->setPos(-18, -7565);
-    //item->setPos(-18, -7400);
+    float tempAlt = altitude * 1.65;
+    item->setPos(-18, (-7565 + tempAlt));
     ui->graphicsViewAlt->setScene(altScene);
+    ui->altValue->setText(QString::number( altitude*10 ));
 }
 
 void MainWindow::onUpdateGUI(joystick_event* event)
