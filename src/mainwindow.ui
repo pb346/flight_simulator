@@ -20,16 +20,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="GLWidget" name="openGLWidget">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>30</y>
-      <width>300</width>
-      <height>200</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -593,7 +583,7 @@
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>300</y>
+      <y>310</y>
       <width>47</width>
       <height>13</height>
      </rect>
@@ -885,7 +875,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>320</y>
+      <y>330</y>
       <width>301</width>
       <height>121</height>
      </rect>
@@ -984,6 +974,25 @@
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
+   <widget class="QGraphicsView" name="graphicsViewAO">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>30</y>
+      <width>275</width>
+      <height>275</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="interactive">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -1006,13 +1015,6 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>GLWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>glwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="images/resource.qrc"/>
  </resources>

@@ -27,8 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
     headerTimerCount = 0;
     startFlag = 0;
     clockCycles = 0;
-    altitude = 0;
-    speed = 0;
     headingInit();
     altitudeInit();
     speedInit();
@@ -115,15 +113,15 @@ void MainWindow::updateSpeed(joystick_event* event)
 
 void MainWindow::updateAltitude(joystick_event* event)
 {
-    altitude += 10;
+    int altitude = (planeState->z_position);
     altImage = QPixmap::fromImage(*altObject);
     delete altScene;
     altScene = new QGraphicsScene(QRect(0,0,0,0));
     QGraphicsPixmapItem* item = altScene->addPixmap(altImage);
-    float tempAlt = altitude * 1.65;
+    float tempAlt = altitude * 1.65/10.0;
     item->setPos(-18, (-7565 + tempAlt));
     ui->graphicsViewAlt->setScene(altScene);
-    ui->altValue->setText(QString::number( altitude*10 ));
+    ui->altValue->setText(QString::number( altitude ));
 }
 
 void MainWindow::onUpdateGUI(joystick_event* event)

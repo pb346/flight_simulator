@@ -44,8 +44,6 @@ public:
     QGraphicsScene* speedScene;
     int headingAngle;
     int headerTimerCount;
-    int altitude;
-    int speed;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
     void updateHeading(joystick_event* event);

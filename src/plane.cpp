@@ -312,6 +312,12 @@ void Plane::calculate_angular_positions() {
 	pitch_angle = pitch_angle + pitch_angular_velocity;
 	yaw_angle = yaw_angle + yaw_angular_velocity;
 	roll_angle = roll_angle + roll_angular_velocity;
+    roll_angular_velocity = 0.0;
+    yaw_angular_velocity = 0.0;
+    pitch_angular_velocity = 0.0;
+    roll_angular_acceleration = 0.0;
+    yaw_angular_acceleration = 0.0;
+    pitch_angular_acceleration = 0.0;
 }
 void Plane::calculate_accelerations() {
     x_acceleration = x_force / (mass);//*100.0);
@@ -319,7 +325,7 @@ void Plane::calculate_accelerations() {
     z_acceleration = z_force / (mass);//*100.0);
 	if(z_position <= 0 && z_acceleration < 0) {
 		z_acceleration = 0;
-	}
+    }
 	m_acceleration = calculate_magnitude(x_acceleration,y_acceleration,z_acceleration);
 }
 void Plane::calculate_velocities() {
