@@ -374,7 +374,6 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     double local_left_aileron_angle = (-1.0)* event->stick_x * model->maxAileronAngle;
     if(( local_right_aileron_angle < 0 && (local_right_aileron_angle + .2) > 0 ) || (local_right_aileron_angle > 0 && (local_right_aileron_angle-.2 < 0)))
     {
-
         right_aileron_angle = 0;
         left_aileron_angle =  0;
         localDebug->aileronLeft = 0;
@@ -386,7 +385,6 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
         left_aileron_angle = local_left_aileron_angle;
         localDebug->aileronLeft = left_aileron_angle;
         localDebug->aileronRight = right_aileron_angle;
-
     }
 
     //left_aileron_angle;
@@ -448,6 +446,9 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
     }
 
 /********************RUDDER*************************/
+    localDebug->rudder = event->stick_z *model->maxRudderAngle;
+    rudder_angle = localDebug->rudder;
+    /*
     if(event->stick_z > 0.0)
     {
         double local_rudder = event->stick_z * model->maxRudderAngle;
@@ -501,7 +502,7 @@ void Plane::process_joystick_input(PlaneModel* model, joystick_event* event, Deb
             }
         }
     localDebug->rudder = rudder_angle;
-    }
+    }*/
 /*******************************ELEVATOR *************************/
     if(event->stick_y > 0.0) // 23 / -19
     {
