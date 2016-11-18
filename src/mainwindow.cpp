@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     previousDebug->gears = -1;
     headerTimerCount = 0;
     startFlag = 0;
+    clockCycles = 0;
     headingInit();
     altitudeInit();
     speedInit();
@@ -122,6 +123,8 @@ void MainWindow::updateAltitude(joystick_event* event)
 
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
+    //clockCycles++;
+    //printf("Cycle %i\n", clockCycles);
     //printf("%i %i %i\n", (int)planeState->pitch_angle, (int)planeState->yaw_angle, (int)planeState->roll_angle);
     if(startFlag == 0)
     {

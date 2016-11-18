@@ -28,6 +28,7 @@ public:
     DebugValues* previousDebug;
     int runningFlag;
     int startFlag;
+    int clockCycles;
     //int rotate = 90;
     QImage* imageObject;
     QImage* altObject;

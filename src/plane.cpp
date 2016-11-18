@@ -216,9 +216,20 @@ void Plane::calculate_air_density() {
 }
 void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	// lift = 9800*log(x+1)-0.015v^2+0.0000076x^3-10^(0.0022047877(x))
-    m_lift_right = 0.958789992 * sqrt(sqrt(sqrt(air_pressure))) * pow(m_velocity, 2);
-    m_lift_left = 0.958789992 * sqrt(sqrt(sqrt(air_pressure))) * pow(m_velocity, 2);
-	if(m_lift_right < 0) {
+    if(m_velocity <= 220 && z_position <= 1000) {
+        m_lift_right = 50 * m_velocity;
+        m_lift_left = 50 * m_velocity;
+    }
+    else if(m_velocity > 220 && z_position <= 1000) {
+        m_lift_right = 11000;
+        m_lift_left = 11000;
+    }
+    else {
+        m_lift_right = 10450;
+        m_lift_left = 10450;
+    }
+
+    if(m_lift_right < 0) {
 		m_lift_right = 0;
 	}
 	if(m_lift_left < 0) {
@@ -232,8 +243,14 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	z_lift_right = m_lift_right * unit_vector_up.z;
 }
 void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
-    m_drag_right = 0.75 * air_pressure * pow(m_velocity, 2);
-    m_drag_left = 0.75 * air_pressure * pow(m_velocity, 2);
+    m_drag_right = pow(m_velocity, 0.2) * 3218.15326;
+    m_drag_left = pow(m_velocity, 0.2) * 3218.15326;
+    if(m_drag_right > m_force/2) {
+        m_drag_right = m_force/2;
+    }
+    if(m_drag_left > m_force/2) {
+        m_drag_left = m_force/2;
+    }
 	if(m_drag_right < 0) {
 		m_drag_right = 0;
 	}
@@ -288,9 +305,9 @@ void Plane::calculate_angular_accelerations() {
     roll_angular_acceleration = roll_angular_acceleration + roll_torque / (mass);
 }
 void Plane::calculate_angular_velocities() {
-    pitch_angular_velocity = (pitch_angular_velocity + pitch_angular_acceleration)/ 100.0;
-    yaw_angular_velocity = (yaw_angular_velocity + yaw_angular_acceleration) / 100.0;
-    roll_angular_velocity = (roll_angular_velocity + roll_angular_acceleration) /100.0;
+    pitch_angular_velocity = (pitch_angular_velocity + pitch_angular_acceleration)/ 10.0;
+    yaw_angular_velocity = (yaw_angular_velocity + yaw_angular_acceleration) / 10.0;
+    roll_angular_velocity = (roll_angular_velocity + roll_angular_acceleration) /10.0;
 }
 void Plane::calculate_angular_positions() {
 	pitch_angle = pitch_angle + pitch_angular_velocity;
@@ -322,9 +339,9 @@ void Plane::calculate_velocities() {
 	}
 }
 void Plane::calculate_positions() {
-    x_position = x_position + x_velocity/100.0;
-    y_position = y_position + y_velocity/100.0;
-    z_position = z_position + z_velocity/100.0;
+    x_position = x_position + x_velocity/10.0;
+    y_position = y_position + y_velocity/10.0;
+    z_position = z_position + z_velocity/10.0;
 	m_position = calculate_magnitude(x_position, y_position, z_position);
 	if(z_position < 0) {
 		z_position = 0;
