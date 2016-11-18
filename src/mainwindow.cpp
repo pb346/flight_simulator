@@ -112,12 +112,16 @@ void MainWindow::updateSpeed(joystick_event* event)
 
 void MainWindow::updateAltitude(joystick_event* event)
 {
+    float altitude = planeState->z_position;
     altImage = QPixmap::fromImage(*altObject);
     delete altScene;
     altScene = new QGraphicsScene(QRect(0,0,0,0));
     //altScene->addPixmap(altImage);
     QGraphicsPixmapItem* item = altScene->addPixmap(altImage);
+    //item->setPos(-18, -7565);// point zero
+    //roughly 17 pixels per 100 ft
     item->setPos(-18, -7565);
+    //item->setPos(-18, -7400);
     ui->graphicsViewAlt->setScene(altScene);
 }
 
@@ -132,7 +136,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         startFlag = 1;
     }
 
-    planeState->process_joystick_input(currentModel,event, &debug);
+    process_joystick_input(currentModel,event, &debug, &planeState);
     planeState->update_plane(debug->thrust, debug->elevator, debug->elevator, debug->aileronLeft, debug->aileronRight, debug->rudder, debug->afterburner);
     headerTimerCount += 1;
     updateValues(event);
@@ -244,7 +248,6 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::onEventLoopStarted()
 {
     currentModel = parseXML();
-    planeState->update_model_parameters();
 }
 
 PlaneModel* parseXML()

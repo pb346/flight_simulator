@@ -14,6 +14,8 @@
 
 #include <vector>
 #include <Windows.h>
+#include "planemodel.h"
+#include "plane.h"
 
 /*-- DEFINES: -------------------------------------------------------------*/
 
@@ -24,6 +26,7 @@
 /*-- GLOBAL DECLARATIONS: -------------------------------------------------*/
 
 /*-- FUNCTION DECLARATIONS: -----------------------------------------------*/
+
 struct joystick_event {
     int button[12];
     float stick_x; //Up/Down Aileron
@@ -34,6 +37,7 @@ struct joystick_event {
     float direct_y;
 };
 
+void process_joystick_input(PlaneModel* model, joystick_event* event, DebugValues** debug, Plane** planeState);
 void saveWin(joystick_event* saved);
 
 #endif // JOYSTICK_INTERFACE_H
