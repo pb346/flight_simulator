@@ -147,20 +147,22 @@ void MainWindow::updateAngular(joystick_event* event)
     QMatrix rm;
     double tempPitch;
 
-    double z = planeState->unit_vector_up.z/sqrt(pow(planeState->unit_vector_up.z,2) + pow(planeState->unit_vector_up.y,2));
-    double y = planeState->unit_vector_up.y/sqrt(pow(planeState->unit_vector_up.z,2) + pow(planeState->unit_vector_up.y,2));
+    double z = planeState->unit_vector_up.z;
+    double y = planeState->unit_vector_up.y;
+    double z = planeState->unit_vector_up.z;
+    double xy = sqrt(pow(y,2)+pow(x,2));
     double rollAngle = 0.0;
     if(z > 0 && y > 0) {
-        rollAngle = atan(-y/z)*180/PI;
+        rollAngle = atan(-xy/z)*180/PI;
     }
     else if(z < 0 && y > 0) {
-        rollAngle = 180+atan(-y/z)*180/PI;
+        rollAngle = 180+atan(-xy/z)*180/PI;
     }
     else if(z > 0 && y < 0) {
-        rollAngle = 360+atan(-y/z)*180/PI;
+        rollAngle = 360+atan(-xy/z)*180/PI;
     }
     else if(z < 0 && y < 0) {
-        rollAngle = 180+atan(-y/z)*180/PI;
+        rollAngle = 180+atan(-xy/z)*180/PI;
     }
     else if(z == 0 && y == 1) {
         rollAngle = 90;
