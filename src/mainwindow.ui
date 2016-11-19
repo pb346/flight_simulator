@@ -1100,6 +1100,19 @@
      <string>0</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="checkBrake">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>420</y>
+      <width>70</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Brakes</string>
+    </property>
+   </widget>
    <zorder>graphicsViewAO</zorder>
    <zorder>label</zorder>
    <zorder>checkGear</zorder>
@@ -1178,6 +1191,7 @@
    <zorder>rollVal</zorder>
    <zorder>label_33</zorder>
    <zorder>yawVal</zorder>
+   <zorder>checkBrake</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

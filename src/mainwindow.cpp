@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
+    ui->checkBrake->setChecked(true);
     runningFlag = 0;
     planeState = new Plane();
     debug = new DebugValues();
@@ -368,29 +369,32 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         }
     }
     */
-    /*
+
     if(previousDebug->brakes == 1 && debug->brakes == 0)
     {
         if(planeState->brakes == 0)
         {
-            planeState->brakes = 1;
+         //   planeState->brakes = 1;
+         //   ui->checkBrake->setChecked(true);
         }
         else
         {
-            planeState->brakes = 0;
+        //    planeState->brakes = 0;
+        //    ui->checkBrake->setChecked(false);
         }
     }
     if(planeState->brakes == 1)
     {
         if(planeState->m_velocity < 15.0)
         {
-            planeState->m_velocity = 0;
+         //   planeState->m_velocity = 0;
         }
         else
         {
-            planeState->m_velocity -= 15;
+         //   planeState->m_velocity -= 15;
         }
-    }*/
+    }
+
     debug->copyDebug(previousDebug);
 }
 
