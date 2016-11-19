@@ -146,6 +146,7 @@ public:
     int afterburnerActive;
     double m_afterburner;
     double flap;
+    int brakes;
 
     //function prototypes
 	double * cross_product(double a_x, double a_y, double a_z, double b_x, double b_y, double b_z);

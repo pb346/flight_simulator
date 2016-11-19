@@ -38,6 +38,7 @@ struct DebugValues
     double thrust;
     double slat;
     double flap;
+    int brakes;
     double afterburner;
     int afterburnerActive;
     double flapDown;

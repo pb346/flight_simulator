@@ -121,6 +121,7 @@ Plane::Plane() {
     gears_Deployed = 1;
     afterburnerActive = 0;
     m_afterburner = 0;
+    brakes = 1;
 }
 
 

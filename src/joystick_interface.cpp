@@ -226,6 +226,11 @@ void process_joystick_input(PlaneModel* model, joystick_event* event, DebugValue
     {
         localDebug->flapUp = 0;
     }
+
+    if(event->button[8] != 0)
+    {
+        localDebug->brakes = 1;
+    }
     //slat
     //flap
     //thrust, lElev, rElev, lAil, rAil, slatl, slatr, rudder
