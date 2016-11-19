@@ -618,7 +618,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="images/resource.qrc">:/new/prefix1/adjusted F16.png</pixmap>
+     <pixmap>:/new/prefix1/adjusted F16.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_26">
@@ -634,7 +634,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
+     <pixmap>:/new/prefix1/Fuel.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_27">
@@ -650,14 +650,14 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="images/resource.qrc">:/new/prefix1/Fuel.png</pixmap>
+     <pixmap>:/new/prefix1/Fuel.png</pixmap>
     </property>
    </widget>
    <widget class="QTextEdit" name="status">
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>500</y>
+      <y>530</y>
       <width>104</width>
       <height>71</height>
      </rect>
@@ -1032,7 +1032,20 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="images/resource.qrc">:/new/prefix1/reticle.png</pixmap>
+     <pixmap>:/new/prefix1/reticle.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_reset">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>500</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
     </property>
    </widget>
   </widget>
@@ -1057,8 +1070,6 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="images/resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

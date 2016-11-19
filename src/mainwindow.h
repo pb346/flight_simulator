@@ -62,7 +62,10 @@ public:
 private slots:
     void onUpdateGUI(joystick_event*);
     void on_pushButton_clicked();
+    void closeEvent(QCloseEvent *event);
     void onEventLoopStarted();
+
+    void on_pushButton_reset_clicked();
 
 private:
     Ui::MainWindow *ui;
