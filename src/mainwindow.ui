@@ -1019,6 +1019,22 @@
      <string>pitch</string>
     </property>
    </widget>
+   <widget class="QLabel" name="reticle">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>159</y>
+      <width>151</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images/resource.qrc">:/new/prefix1/reticle.png</pixmap>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
