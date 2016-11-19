@@ -149,7 +149,7 @@ void MainWindow::updateAngular(joystick_event* event)
 
     double z = planeState->unit_vector_up.z;
     double y = planeState->unit_vector_up.y;
-    double z = planeState->unit_vector_up.z;
+    double x = planeState->unit_vector_up.x;
     double xy = sqrt(pow(y,2)+pow(x,2));
     double rollAngle = 0.0;
     if(z > 0 && y > 0) {
@@ -164,16 +164,16 @@ void MainWindow::updateAngular(joystick_event* event)
     else if(z < 0 && y < 0) {
         rollAngle = 180+atan(-xy/z)*180/PI;
     }
-    else if(z == 0 && y == 1) {
+    else if(z == 0 && xy > 0) {
         rollAngle = 90;
     }
-    else if(z == 1 && y == 0) {
+    else if(z == 1 && xy == 0) {
         rollAngle = 0;
     }
-    else if(z == 0 && y == -1) {
+    else if(z == 0 && xy < 0) {
         rollAngle = 270;
     }
-    else if(z == -1 && y == 0) {
+    else if(z == -1 && xy == 0) {
         rollAngle = 180;
     }
     rm.rotate(rollAngle);
