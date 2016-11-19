@@ -216,8 +216,8 @@ void MainWindow::updateAngular(joystick_event* event)
     else
     {
         angularScene->addPixmap(angularImage); //hopefully stops ocassional crash
-    }*/
-    planeState->pitch_angle = pitch;
+    }
+    planeState->pitch_angle = pitch;*/
     ui->graphicsViewAO->setScene(angularScene);
     ui->rollVal->setText(QString::number(rollAngle, 'f', 2));
 }
@@ -371,7 +371,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         }
     }
     */
-
+/*
     if(previousDebug->brakes == 1 && debug->brakes == 0)
     {
         if(planeState->brakes == 0)
@@ -396,7 +396,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
          //   planeState->m_velocity -= 15;
         }
     }
-
+*/
     debug->copyDebug(previousDebug);
 }
 
