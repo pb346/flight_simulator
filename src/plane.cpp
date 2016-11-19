@@ -28,12 +28,15 @@ Plane::Plane() {
 	x_position = 0;
 	y_position = 0;
 	z_position = 0;
+    m_position = 0;
 	x_velocity = 0;
 	y_velocity = 0;
 	z_velocity = 0;
+    m_velocity = 0;
 	x_acceleration = 0;
 	y_acceleration = 0;
 	z_acceleration = 0;
+    m_acceleration = 0;
 // unit vector
 	unit_vector_front.x = 1;
 	unit_vector_front.y = 0;
@@ -212,9 +215,10 @@ void Plane::unitize(double &x, double &y, double &z) {
 
 void Plane::calculate_air_density() {
     air_pressure = 1.0 * exp(-z_position/22965.9);
+    air_pressure = sqrt(sqrt(sqrt(air_pressure)));
 }
 void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
-	// lift = 9800*log(x+1)-0.015v^2+0.0000076x^3-10^(0.0022047877(x))
+    // lift = 9800*log(x+1)-0.015v^2+0.0000076x^3-10^(0.0022047877(x))
     if(m_velocity <= 220 && z_position <= 1000) {
         m_lift_right = 50 * m_velocity;
         m_lift_left = 50 * m_velocity;
@@ -224,8 +228,14 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
         m_lift_left = 11000;
     }
     else {
-        m_lift_right = 10450;
-        m_lift_left = 10450;
+        if(m_velocity > 400) {
+            m_lift_right = 10450;
+            m_lift_left = 10450;
+        }
+        else {
+            m_lift_right = 26.125*m_velocity;
+            m_lift_left = 26.125*m_velocity;
+        }
     }
 
     if(m_lift_right < 0) {
@@ -233,40 +243,62 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
 	}
 	if(m_lift_left < 0) {
 		m_lift_left = 0;
-	}
+    }
+    m_lift_left = m_lift_left * air_pressure * (1 - abs(unit_vector_front.z));
+    m_lift_right = m_lift_right * air_pressure * (1 - abs(unit_vector_front.z));
+
+
+
 	x_lift_left = m_lift_left * unit_vector_up.x;
 	y_lift_left = m_lift_left * unit_vector_up.y;
 	z_lift_left = m_lift_left * unit_vector_up.z;
 	x_lift_right = m_lift_right * unit_vector_up.x;
 	y_lift_right = m_lift_right * unit_vector_up.y;
-	z_lift_right = m_lift_right * unit_vector_up.z;
+    z_lift_right = m_lift_right * unit_vector_up.z;
+
+    m_lift_left = calculate_magnitude(x_lift_left, y_lift_left, z_lift_left);
+    m_lift_right = calculate_magnitude(x_lift_right, y_lift_right, z_lift_right);
 }
 void Plane::calculate_drag() { // Cd * (p * v^2)/2 * A
-    m_drag_right = pow(m_velocity, 0.2) * 3218.15326;
-    m_drag_left = pow(m_velocity, 0.2) * 3218.15326;
-    if(m_drag_right > m_force/2) {
-        m_drag_right = m_force/2;
+    m_drag_left = 13.6363636364/2 * m_velocity * air_pressure;
+    m_drag_right = 13.6363636364/2 * m_velocity * air_pressure;
+
+    if(x_drag_left + x_drag_right > x_force) {
+        x_drag_left = x_force/2;
+        x_drag_right = x_force/2;
     }
-    if(m_drag_left > m_force/2) {
-        m_drag_left = m_force/2;
+    if(y_drag_left + y_drag_right > y_force) {
+        y_drag_left = y_force/2;
+        y_drag_right = y_force/2;
     }
-	if(m_drag_right < 0) {
-		m_drag_right = 0;
-	}
-	if(m_drag_left < 0) {
-		m_drag_left = 0;
-	}
-	x_drag_left = m_drag_left * -unit_vector_front.x;
-	y_drag_left = m_drag_left * -unit_vector_front.y;
-	z_drag_left = m_drag_left * -unit_vector_front.z;
-	x_drag_right = m_drag_right * -unit_vector_front.x;
-	y_drag_right = m_drag_right * -unit_vector_front.y;
-	z_drag_right = m_drag_right * -unit_vector_front.z;
+    if(z_drag_left + z_drag_right > z_force) {
+        z_drag_left = z_force/2;
+        z_drag_right = z_force/2;
+    }
+    if(m_velocity == 0) {
+        x_drag_left = 0;
+        y_drag_left = 0;
+        z_drag_left = 0;
+        x_drag_right = 0;
+        y_drag_right = 0;
+        z_drag_right = 0;
+    }
+    else {
+        x_drag_left = m_drag_left * -x_velocity/m_velocity;
+        y_drag_left = m_drag_left * -y_velocity/m_velocity;
+        z_drag_left = m_drag_left * -z_velocity/m_velocity;
+        x_drag_right = m_drag_right * -x_velocity/m_velocity;
+        y_drag_right = m_drag_right * -y_velocity/m_velocity;
+        z_drag_right = m_drag_right * -z_velocity/m_velocity;
+    }
+    m_drag_left = calculate_magnitude(x_drag_left, y_drag_left, z_drag_left);
+    m_drag_right = calculate_magnitude(x_drag_right, y_drag_right, z_drag_right);
 }
 void Plane::calculate_thrust() {
-	x_thrust = m_thrust * unit_vector_front.x;
-	y_thrust = m_thrust * unit_vector_front.y;
-	z_thrust = m_thrust * unit_vector_front.z;
+    m_thrust = m_thrust * air_pressure;
+    x_thrust = m_thrust * unit_vector_front.x;
+    y_thrust = m_thrust * unit_vector_front.y;
+    z_thrust = m_thrust * unit_vector_front.z;
 }
 void Plane::calculate_gravitational_force() {
 	m_gravity = mass * 32.174; // in feet not meters
@@ -276,9 +308,9 @@ void Plane::calculate_normal_force() {
 }
 void Plane::calculate_resultant_force() {
 	// thrust, drag, lift, and weight + normal (z only)
-	x_force = x_thrust + x_lift_left + x_lift_right + x_drag_left + x_drag_right;
-	y_force = y_thrust + y_lift_left + y_lift_right + y_drag_left + y_drag_right;
-	z_force = z_thrust + z_lift_left + z_lift_right + z_drag_left + z_drag_right + m_normal - m_gravity;
+    x_force = x_thrust + x_lift_left + x_lift_right + x_drag_left + x_drag_right;
+    y_force = y_thrust + y_lift_left + y_lift_right + y_drag_left + y_drag_right;
+    z_force = z_thrust + z_lift_left + z_lift_right + z_drag_left + z_drag_right + m_normal - m_gravity;
 	if(z_force < 0.05 && z_force > -0.05) {
 		z_force = 0;
 	}
@@ -288,9 +320,9 @@ void Plane::calculate_resultant_force() {
 	m_force = calculate_magnitude(x_force, y_force, z_force);
 }
 void Plane::calculate_torque() {
-	roll_torque = sqrt(m_velocity) * (m_lift_right * wingspan/4 + m_lift_left * -wingspan/4);
-	pitch_torque = sqrt(m_velocity) * (length/2*sin(left_elevator_angle * PI/180) + length/2*sin(right_elevator_angle * PI/180));
-	yaw_torque = sqrt(m_velocity) * (length/2*sin(rudder_angle * PI/180));
+    roll_torque = sqrt(m_velocity) * (m_lift_right * wingspan/4 + m_lift_left * -wingspan/4) * 10;
+    pitch_torque = sqrt(m_velocity) * (length/2*sin(left_elevator_angle * PI/180) + length/2*sin(right_elevator_angle * PI/180)) * 10;
+    yaw_torque = sqrt(m_velocity) * (length/2*sin(rudder_angle * PI/180)) * 10;
 //	x_torque = sqrt(abs(x_velocity)) * (roll_torque * unit_vector_front.x + pitch_torque * unit_vector_left.x + yaw_torque * unit_vector_up.x);
 //	y_torque = sqrt(abs(y_velocity)) * (roll_torque * unit_vector_front.y + pitch_torque * unit_vector_left.y + yaw_torque * unit_vector_up.y);
 //	z_torque = sqrt(abs(z_velocity)) * (roll_torque * unit_vector_front.z + pitch_torque * unit_vector_left.z + yaw_torque * unit_vector_up.z);
@@ -364,16 +396,16 @@ void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double
     //left_leading_edge_flap_angle = p_left_leading_edge_flap_angle;
     //right_leading_edge_flap_angle = p_right_leading_edge_flap_angle;
 	rudder_angle = p_rudder_angle;
-    //calculate_air_density();
+    calculate_air_density();
     calculate_lift(); // (1/2) * d * v^2 * s * CL
     calculate_drag(); // Cd * (p * v^2)/2 * A
 	calculate_thrust();
     calculate_gravitational_force();
     calculate_normal_force();
-	calculate_resultant_force();
-	calculate_torque();
+    calculate_resultant_force();
+    calculate_torque();
 
-	calculate_angular_accelerations();
+    calculate_angular_accelerations();
 	calculate_angular_velocities();
 	calculate_angular_positions();
 	rotate(roll_angle, pitch_angle, yaw_angle);

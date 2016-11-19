@@ -38,7 +38,8 @@ DISTFILES += \
     src/images/adjusted F16.png \
     src/images/Fuel.png \
     src/images/heading.png \
-    src/images/sphere.png
+    src/images/sphere.png \
+    src/input/planeModels.xml
 
 RESOURCES += \
     src/images/resource.qrc
