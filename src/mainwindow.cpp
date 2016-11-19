@@ -182,6 +182,34 @@ void MainWindow::updateAngular(joystick_event* event)
     }
     planeState->pitch_angle = pitch;
     ui->graphicsViewAO->setScene(angularScene);
+
+
+    double z = planeState->unit_vector_front.z/sqrt(pow(planeState->unit_vector_front.z,2) + pow(planeState->unit_vector_front.y,2));
+    double y = planeState->unit_vector_front.y/sqrt(pow(planeState->unit_vector_front.z,2) + pow(planeState->unit_vector_front.y,2));
+    if(z > 0 && y > 0) {
+        rollAngle = atan(z/x)*180/PI;
+    }
+    else if(z < 0 && y > 0) {
+        rollAngle = 180+atan(z/x)*180/PI;
+    }
+    else if(z > 0 && y < 0) {
+        rollAngle = 360+atan(z/x)*180/PI;
+    }
+    else if(z < 0 && y < 0) {
+        rollAngle = 180+atan(z/x)*180/PI;
+    }
+    else if(z == 0 && y == 1) {
+        rollAngle = 90;
+    }
+    else if(z == 1 && y == 0) {
+        rollAngle = 0;
+    }
+    else if(z == 0 && y == -1) {
+        rollAngle = 270;
+    }
+    else if(z == -1 && y == 0) {
+        rollAngle = 180;
+    }
 }
 
 void MainWindow::updateHeading(joystick_event* event)
