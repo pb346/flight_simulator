@@ -38,6 +38,7 @@ public:
     QPixmap altImage;
     QPixmap speedImage;
     QPixmap angularImage;
+    double pitch;
 
 
     QPixmap rotateImage;

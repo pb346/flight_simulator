@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     headerTimerCount = 0;
     startFlag = 0;
     clockCycles = 0;
+    pitch = 0;
     headingInit();
     altitudeInit();
     speedInit();
@@ -89,8 +90,89 @@ void MainWindow::speedInit()
 
 void MainWindow::updateAngular(joystick_event* event)
 {
+    pitch += 5; //planeState->pitch_angle;
+    if( pitch > 360)
+        pitch -= 360;
+    angularImage = QPixmap::fromImage(*angularObject);
+    delete angularScene;
+    angularScene = new QGraphicsScene(QRect(0,0,0,0));
+    QGraphicsPixmapItem* item;// = angularScene->addPixmap(angularImage);
+    QMatrix rm;
+    double tempPitch;
+    printf("Pitch %f\n", pitch);
+    if(pitch > 45 && pitch <=135 ) // all sky
+    {
+        item = angularScene->addPixmap(angularImage);
+        item->setPos(-136, 0);
+    }
+    else if(pitch > 135 && pitch <=225)//sky to ground
+    {
+        rm.rotate(180);
+        angularImage = angularImage.transformed(rm);
+        tempPitch = 275.0 - (275.0 * (pitch- 135.0)/90.0);
+        angularImage = angularImage.copy(137, tempPitch, angularImage.width(), angularImage.height());
+        angularScene->addPixmap(angularImage);
+    }
+    else if(pitch > 225 && pitch <=315) //all ground
+    {
+        rm.rotate(180);
+        angularImage = angularImage.transformed(rm);
+        angularImage = angularImage.copy(137, 0, angularImage.width(), angularImage.height());
+        angularScene->addPixmap(angularImage);
+    }
+    else if(pitch > 315 || pitch <= 45)
+    {
+        item = angularScene->addPixmap(angularImage);
+        if(pitch > 315)
+        {
+            item->setPos(-136, -275 + ((pitch -315.0)/90.0 )* 275.0);
+        }
+        else
+        {
+            item->setPos(-136, -137 + (137.0 * pitch/45.0));
+        }
+    }
+    /*
+    if(pitch <= 135)// II
+    {
+        item = angularScene->addPixmap(angularImage);
+        if(pitch/90.0 > 1.0 )
+        {
+            tempPitch = 0;
+        }
+        else
+        {
+        tempPitch = -137.0 + (pitch/90.0)*137.0;
+        }
+        item->setPos(-136,( tempPitch ));//-136, -137 zero point
+    }
 
+    if(pitch > 135 && pitch <= 270)// I
+    {
+        rm.rotate(180);
+        angularImage = angularImage.transformed(rm);
 
+        if(pitch > 270)
+        {
+            tempPitch = 0;
+        }
+        else
+        {
+            tempPitch = 275.0 - ((pitch - 135.0) / 180.0)*275.0;
+        }
+        printf("PITCH %f\n", tempPitch);
+        //int adjust = 275.0 - 137; //((pitch-135.0)/135.0)*275.0;
+        angularImage = angularImage.copy(137, tempPitch, image.width(), image.height());
+        //angularImage = angularImage.copy(137, 137, image.width(), image.height());
+        angularScene->addPixmap(angularImage);
+    }
+    else if(pitch > 270 && pitch < 361)// IV
+    {
+        item = angularScene->addPixmap(angularImage);
+        //item->setPos(-137, -275 +(pitch / 270.0)*275); //-137 -275
+        item->setPos(-137, -275 + ((pitch -270)/180.0)* 275);
+    }*/
+    ui->graphicsViewAO->setScene(angularScene);
 }
 
 void MainWindow::updateHeading(joystick_event* event)
@@ -143,13 +225,13 @@ void MainWindow::updateAltitude(joystick_event* event)
 
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
-    //clockCycles++;
+     //clockCycles++;
     //printf("Cycle %i\n", clockCycles);
     //printf("%i %i %i\n", (int)planeState->pitch_angle, (int)planeState->yaw_angle, (int)planeState->roll_angle);
-    if(startFlag == 0)
+    if(startFlag < 2)
     {
         event->throttle = -1.0;
-        startFlag = 1;
+        startFlag += 1;
     }
 
     process_joystick_input(currentModel,event, &debug, &planeState);
@@ -162,6 +244,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         updateHeading(event);
         updateAltitude(event);
         updateSpeed(event);
+        updateAngular(event);
         headerTimerCount = 0;
     }
     //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
@@ -192,6 +275,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         }
     }
 
+    /*
     if(previousDebug->flapDown == 1 && debug->flapDown == 0)
     {
         if(planeState->flap > ((-1.0)*currentModel->maxFlapAngleNEG))
@@ -208,6 +292,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
             //planeState->left_aileron_angle -= 1;
         }
     }
+    */
     debug->copyDebug(previousDebug);
 }
 
@@ -251,6 +336,7 @@ void MainWindow::on_pushButton_clicked()
         procThread->Stop = false;
         runningFlag = 1;
         ui->status->setText("READING");
+        //debug->thrust = 0;
         procThread->start();
     }
     else
