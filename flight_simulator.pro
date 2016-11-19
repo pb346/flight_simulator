@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 
-QT       += core gui xml opengl
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,7 +13,7 @@ TARGET = flight_simulator
 TEMPLATE = app
 INCLUDEPATH += src/
 
-win32:LIBS += -lwinmm -lopengl32
+win32:LIBS += -lwinmm
 
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
@@ -21,7 +21,6 @@ SOURCES += src/main.cpp\
     src/stateTimer.cpp \
     src/timerThread.cpp \
     src/plane.cpp \
-    src/glwidget.cpp \
     src/planemodel.cpp
 
 HEADERS  += src/mainwindow.h \
@@ -29,7 +28,6 @@ HEADERS  += src/mainwindow.h \
     src/stateTimer.h \
     src/timerThread.h \
     src/plane.h \
-    src/glwidget.h \
     src/planemodel.h
 
 FORMS    += src/mainwindow.ui
