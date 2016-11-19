@@ -11,7 +11,6 @@
 #ifndef JOYSTICK_INTERFACE_H
 #define JOYSTICK_INTERFACE_H
 /*-- INCLUDES: ------------------------------------------------------------*/
-
 #include <vector>
 #include <Windows.h>
 #include "planemodel.h"

@@ -384,6 +384,19 @@ void Plane::calculate_positions() {
 		z_position = 0;
 	}
 }
+
+bool Plane::check_for_crash()
+{
+    if(z_position <= 0)
+    {
+        if((((int)roll_angle % 360) < -10) || (((int)roll_angle % 360) > 10) )
+            return true;
+        if((((int)pitch_angle %360) < 0 || ((int)pitch_angle % 360 > 30)))
+            return true;
+    }
+    return false;
+}
+
 void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_rudder_angle, double p_m_afterburner) {
 
     m_thrust = 250.0 * p_m_thrust;//max 25,000

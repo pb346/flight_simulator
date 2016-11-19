@@ -1,7 +1,6 @@
 #ifndef PLANE_H
 #define PLANE_H
 #include "planemodel.h"
-//#include "joystick_interface.h"
 #include <iostream>
 
 struct unit_vector {
@@ -177,6 +176,7 @@ public:
 	void update_left_flaps(double angle);
 	void update_thrust(double thrust);
 	void update_air_break(double angle);
+    bool check_for_crash();
 
 };
 #endif
