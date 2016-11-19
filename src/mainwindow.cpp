@@ -90,8 +90,25 @@ void MainWindow::speedInit()
 
 void MainWindow::updateAngular(joystick_event* event)
 {
-    pitch += 5; //planeState->pitch_angle;
-    //pitch = planeState->pitch_angle;
+  //  pitch += 5; //planeState->pitch_angle;
+    pitch = planeState->pitch_angle;
+    if(pitch < 0)
+    {
+        while(pitch < 0)
+        {
+            pitch += 360;
+        }
+    }
+    if(pitch > 360)
+    {
+        while(pitch >= 360);
+        {
+            pitch -= 360;
+        }
+    }
+
+
+    /*
     if( pitch > 0)
     {
         int modulo = (int)pitch % 360;
@@ -111,7 +128,7 @@ void MainWindow::updateAngular(joystick_event* event)
             pitch += modulo*360.0;
         }
 
-    }
+    }*/
     ui->pitch->setText(QString::number(pitch, 'f', 2));
     angularImage = QPixmap::fromImage(*angularObject);
     delete angularScene;

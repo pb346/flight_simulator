@@ -321,7 +321,7 @@ void Plane::calculate_resultant_force() {
 }
 void Plane::calculate_torque() {
     roll_torque = sqrt(m_velocity) * (m_lift_right * wingspan/4 + m_lift_left * -wingspan/4) * 10;
-    pitch_torque = sqrt(m_velocity) * (length/2*sin(left_elevator_angle * PI/180) + length/2*sin(right_elevator_angle * PI/180)) * 10;
+    pitch_torque = sqrt(m_velocity) * (length/2*sin(left_elevator_angle * PI/180) + length/2*sin(right_elevator_angle * PI/180)) * 50;
     yaw_torque = sqrt(m_velocity) * (length/2*sin(rudder_angle * PI/180)) * 10;
 //	x_torque = sqrt(abs(x_velocity)) * (roll_torque * unit_vector_front.x + pitch_torque * unit_vector_left.x + yaw_torque * unit_vector_up.x);
 //	y_torque = sqrt(abs(y_velocity)) * (roll_torque * unit_vector_front.y + pitch_torque * unit_vector_left.y + yaw_torque * unit_vector_up.y);
