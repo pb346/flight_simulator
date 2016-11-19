@@ -10,12 +10,13 @@
 #include <QXmlStreamReader>
 #include <iostream>
 #include <stdio.h>
-
+extern bool rerun;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    rerun;
     ui->setupUi(this);
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
@@ -92,6 +93,23 @@ void MainWindow::updateAngular(joystick_event* event)
 {
   //  pitch += 5; //planeState->pitch_angle;
     pitch = planeState->pitch_angle;
+    if(planeState->m_velocity < 148.0)
+    {
+        if(pitch > 1 && pitch < 90)
+        {
+         pitch -= .75;
+        }
+
+        if(pitch > 90 && pitch <=179)
+        {
+            pitch += .75;
+        }
+        else if(pitch <= .78 && pitch > 0)
+        {
+            pitch = 0;
+        }
+    }
+
     if(pitch < 0)
     {
         while(pitch < 0)
@@ -106,29 +124,6 @@ void MainWindow::updateAngular(joystick_event* event)
             pitch -= 360;
         }
     }
-
-
-    /*
-    if( pitch > 0)
-    {
-        int modulo = (int)pitch % 360;
-        printf("%i\n", modulo);
-        if(modulo > 0 )
-        {
-                pitch -= modulo*360.0;
-        }
-
-    }
-    else
-    {
-        int modulo =(int)pitch % ((-1)*360);
-        printf("%i\n", modulo);
-        if(modulo > 0)
-        {
-            pitch += modulo*360.0;
-        }
-
-    }*/
     ui->pitch->setText(QString::number(pitch, 'f', 2));
     angularImage = QPixmap::fromImage(*angularObject);
     delete angularScene;
@@ -136,7 +131,6 @@ void MainWindow::updateAngular(joystick_event* event)
     QGraphicsPixmapItem* item;// = angularScene->addPixmap(angularImage);
     QMatrix rm;
     double tempPitch;
-    printf("Pitch %f\n", pitch);
     if(pitch > 45 && pitch <=135 ) // all sky
     {
         item = angularScene->addPixmap(angularImage);
@@ -169,46 +163,11 @@ void MainWindow::updateAngular(joystick_event* event)
             item->setPos(-136, -137 + (137.0 * pitch/45.0));
         }
     }
-    /*
-    if(pitch <= 135)// II
+    else
     {
-        item = angularScene->addPixmap(angularImage);
-        if(pitch/90.0 > 1.0 )
-        {
-            tempPitch = 0;
-        }
-        else
-        {
-        tempPitch = -137.0 + (pitch/90.0)*137.0;
-        }
-        item->setPos(-136,( tempPitch ));//-136, -137 zero point
+        angularScene->addPixmap(angularImage); //hopefully stops ocassional crash
     }
-
-    if(pitch > 135 && pitch <= 270)// I
-    {
-        rm.rotate(180);
-        angularImage = angularImage.transformed(rm);
-
-        if(pitch > 270)
-        {
-            tempPitch = 0;
-        }
-        else
-        {
-            tempPitch = 275.0 - ((pitch - 135.0) / 180.0)*275.0;
-        }
-        printf("PITCH %f\n", tempPitch);
-        //int adjust = 275.0 - 137; //((pitch-135.0)/135.0)*275.0;
-        angularImage = angularImage.copy(137, tempPitch, image.width(), image.height());
-        //angularImage = angularImage.copy(137, 137, image.width(), image.height());
-        angularScene->addPixmap(angularImage);
-    }
-    else if(pitch > 270 && pitch < 361)// IV
-    {
-        item = angularScene->addPixmap(angularImage);
-        //item->setPos(-137, -275 +(pitch / 270.0)*275); //-137 -275
-        item->setPos(-137, -275 + ((pitch -270)/180.0)* 275);
-    }*/
+    planeState->pitch_angle = pitch;
     ui->graphicsViewAO->setScene(angularScene);
 }
 
@@ -276,6 +235,8 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     headerTimerCount += 1;
     updateValues(event);
     updateSliders(event);
+
+
     if(headerTimerCount > 0)
     {
         updateHeading(event);
