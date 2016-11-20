@@ -82,7 +82,6 @@ void MainWindow::altitudeInit()
     altImage = QPixmap::fromImage(*altObject);
     altScene = new QGraphicsScene(QRect(0,0,0,0));
     QGraphicsPixmapItem* item = altScene->addPixmap(altImage);
-  //  item->setPos(-18, -7560);
     ui->graphicsViewAlt->setScene(altScene);
 }
 
@@ -98,16 +97,12 @@ void MainWindow::speedInit()
 
 void MainWindow::updateAngular(joystick_event* event)
 {
-  //  pitch += 5; //planeState->pitch_angle;
     pitch = planeState->pitch_angle;
-
-
-
     ui->pitch->setText(QString::number(pitch, 'f', 2));
     angularImage = QPixmap::fromImage(*angularObject);
     delete angularScene;
     angularScene = new QGraphicsScene(QRect(0,0,0,0));
-    QGraphicsPixmapItem* item;// = angularScene->addPixmap(angularImage);
+    QGraphicsPixmapItem* item;
     QMatrix rm;
     double tempPitch;
     rm.rotate((-1)*planeState->roll_angle);
@@ -118,16 +113,9 @@ void MainWindow::updateAngular(joystick_event* event)
     angularImage = angularImage.copy(offX, offY, original.width(), original.height());
     item = angularScene->addPixmap(angularImage);
     item->setPos(-136, -136);
-
-
-
-   // angularImage = angularImage.copy(250, 137, angularImage.width(), angularImage.height());
-   // angularScene->addPixmap(angularImage);
-
-
+    
     if(pitch > 45 && pitch <=135 ) // all sky
     {
-  //      item = angularScene->addPixmap(angularImage);
         item->setPos(-136, 0);
     }
     else if(pitch > 135 && pitch <=225)//sky to ground
@@ -139,7 +127,6 @@ void MainWindow::updateAngular(joystick_event* event)
         delete angularScene;
         angularScene = new QGraphicsScene(QRect(0,0,0,0));
         item = angularScene->addPixmap(angularImage);
-//        angularScene->addPixmap(angularImage);
     }
     else if(pitch > 225 && pitch <=315) //all ground
     {
@@ -148,12 +135,9 @@ void MainWindow::updateAngular(joystick_event* event)
         angularImage = angularImage.copy(137, 0, angularImage.width(), angularImage.height());
         delete angularScene;
         angularScene = new QGraphicsScene(QRect(0,0,0,0));
-        item = angularScene->addPixmap(angularImage);
-    //    angularScene->addPixmap(angularImage);
     }
     else if(pitch > 315 || pitch <= 45)
     {
-    //    item = angularScene->addPixmap(angularImage);
         if(pitch > 315)
         {
             item->setPos(-136, -275 + ((pitch -315.0)/90.0 )* 275.0);
@@ -174,34 +158,6 @@ void MainWindow::updateAngular(joystick_event* event)
 void MainWindow::updateHeading(joystick_event* event)
 {
     //+90 to get 0 degrees centered
-    /*
-    double x = planeState->unit_vector_front.x/sqrt(pow(planeState->unit_vector_front.x,2) + pow(planeState->unit_vector_front.y,2));
-    double y = planeState->unit_vector_front.y/sqrt(pow(planeState->unit_vector_front.x,2) + pow(planeState->unit_vector_front.y,2));
-    if(x > 0 && y > 0) {
-        headingAngle = atan(y/x)*180/PI;
-    }
-    else if(x < 0 && y > 0) {
-        headingAngle = 180+atan(y/x)*180/PI;
-    }
-    else if(x > 0 && y < 0) {
-        headingAngle = 360+atan(y/x)*180/PI;
-    }
-    else if(x < 0 && y < 0) {
-        headingAngle = 180+atan(y/x)*180/PI;
-    }
-    else if(x == 0 && y == 1) {
-        headingAngle = 90;
-    }
-    else if(x == 1 && y == 0) {
-        headingAngle = 0;
-    }
-    else if(x == 0 && y == -1) {
-        headingAngle = 270;
-    }
-    else if(x == -1 && y == 0) {
-        headingAngle = 180;
-    }
-    */
     QMatrix rm;
     rm.rotate(planeState->yaw_angle);
     rotateImage = image.transformed(rm);
@@ -247,9 +203,6 @@ void MainWindow::updateAltitude(joystick_event* event)
 
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
-     //clockCycles++;
-    //printf("Cycle %i\n", clockCycles);
-    //printf("%i %i %i\n", (int)planeState->pitch_angle, (int)planeState->yaw_angle, (int)planeState->roll_angle);
     if(startFlag < 2)
     {
         event->throttle = -1.0;
@@ -276,7 +229,6 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         updateAngular(event);
         headerTimerCount = 0;
     }
-    //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
     if(previousDebug->gears == 1 && debug->gears == 0)
     {
         if(ui->checkGear->isChecked() == 1)
@@ -371,13 +323,9 @@ void MainWindow::updateValues(joystick_event* event)
     ui->dragValue->setText(QString::number((planeState->m_drag_left + planeState->m_drag_right), 'f', 2 ));
     ui->thrustValue->setText(QString::number(planeState->m_thrust, 'f', 2 ));
     ui->airDensity->setText(QString::number(planeState->air_pressure, 'f', 2));
-    //ui->xAngleValue->setText(QString::number(planeState->unit_vector_front.x, 'f', 2));
-    //ui->yAngleValue->setText(QString::number(planeState->unit_vector_front.y, 'f', 2));
-    //ui->zAngleValue->setText(QString::number(planeState->unit_vector_front.z, 'f', 2));
-    ui->xAngleValue->setText(QString::number(planeState->unit_vector_up.x, 'f', 2));
-    ui->yAngleValue->setText(QString::number(planeState->unit_vector_up.y, 'f', 2));
-    ui->zAngleValue->setText(QString::number(planeState->unit_vector_up.z, 'f', 2));
-
+    ui->xAngleValue->setText(QString::number(planeState->unit_vector_front.x, 'f', 2));
+    ui->yAngleValue->setText(QString::number(planeState->unit_vector_front.y, 'f', 2));
+    ui->zAngleValue->setText(QString::number(planeState->unit_vector_front.z, 'f', 2));
     }
 void MainWindow::updateSliders(joystick_event* event)
 {
@@ -400,7 +348,6 @@ void MainWindow::on_pushButton_clicked()
         procThread->Stop = false;
         runningFlag = 1;
         ui->status->setText("READING");
-        //debug->thrust = 0;
         procThread->start();
     }
     else
