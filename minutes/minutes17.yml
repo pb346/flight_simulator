@@ -1,0 +1,8 @@
+date: November 16, 2016
+meeting_type: TA 
+attendace: [echriste, namaurer, paulbaba]
+task_progress:[ echriste {OpenGL Angular Orientation}
+		namaurer {Physics Engine Lift/Drag}
+		paulbaba {Alitmeter and heading in GraphicsView}]
+issues: Angular Orientation in open GL not working
+Notes: 
