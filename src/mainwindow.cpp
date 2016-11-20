@@ -110,52 +110,24 @@ void MainWindow::updateAngular(joystick_event* event)
     QGraphicsPixmapItem* item;// = angularScene->addPixmap(angularImage);
     QMatrix rm;
     double tempPitch;
-
-    double z = planeState->unit_vector_up.z;
-    double y = planeState->unit_vector_up.y;
-    double x = planeState->unit_vector_up.x;
-    double xy = sqrt(pow(z,2)+pow(x,2));
-    double rollAngle = 0.0;
-    if(z > 0 && xy > 0) {
-        rollAngle = atan(-xy/z)*180/PI;
-    }
-    else if(z < 0 && xy > 0) {
-        rollAngle = 180+atan(-xy/z)*180/PI;
-    }
-    else if(z > 0 && xy < 0) {
-        rollAngle = 360+atan(-xy/z)*180/PI;
-    }
-    else if(z < 0 && xy < 0) {
-        rollAngle = 180+atan(-xy/z)*180/PI;
-    }
-    else if(z == 0 && xy > 0) {
-        rollAngle = 90;
-    }
-    else if(z == 1 && xy == 0) {
-        rollAngle = 0;
-    }
-    else if(z == 0 && xy < 0) {
-        rollAngle = 270;
-    }
-    else if(z == -1 && xy == 0) {
-        rollAngle = 180;
-    }
     rm.rotate((-1)*planeState->roll_angle);
-
     angularImage = angularImage.transformed(rm);
-
-   // angularImage = angularImage.copy(250, 137, angularImage.width(), angularImage.height());
-   // angularScene->addPixmap(angularImage);
     QPixmap original = QPixmap::fromImage(*angularObject);
     int offX = (angularImage.width()- original.width()) / 2;
     int offY = (angularImage.height() - original.height())/2;
     angularImage = angularImage.copy(offX, offY, original.width(), original.height());
-    item =angularScene->addPixmap(angularImage);
+    item = angularScene->addPixmap(angularImage);
     item->setPos(-136, -136);
-/*
+
+
+
+   // angularImage = angularImage.copy(250, 137, angularImage.width(), angularImage.height());
+   // angularScene->addPixmap(angularImage);
+
+
     if(pitch > 45 && pitch <=135 ) // all sky
     {
-        item = angularScene->addPixmap(angularImage);
+  //      item = angularScene->addPixmap(angularImage);
         item->setPos(-136, 0);
     }
     else if(pitch > 135 && pitch <=225)//sky to ground
@@ -164,18 +136,24 @@ void MainWindow::updateAngular(joystick_event* event)
         angularImage = angularImage.transformed(rm);
         tempPitch = 275.0 - (275.0 * (pitch- 135.0)/90.0);
         angularImage = angularImage.copy(137, tempPitch, angularImage.width(), angularImage.height());
-        angularScene->addPixmap(angularImage);
+        delete angularScene;
+        angularScene = new QGraphicsScene(QRect(0,0,0,0));
+        item = angularScene->addPixmap(angularImage);
+//        angularScene->addPixmap(angularImage);
     }
     else if(pitch > 225 && pitch <=315) //all ground
     {
         rm.rotate(180);
         angularImage = angularImage.transformed(rm);
         angularImage = angularImage.copy(137, 0, angularImage.width(), angularImage.height());
-        angularScene->addPixmap(angularImage);
+        delete angularScene;
+        angularScene = new QGraphicsScene(QRect(0,0,0,0));
+        item = angularScene->addPixmap(angularImage);
+    //    angularScene->addPixmap(angularImage);
     }
     else if(pitch > 315 || pitch <= 45)
     {
-        item = angularScene->addPixmap(angularImage);
+    //    item = angularScene->addPixmap(angularImage);
         if(pitch > 315)
         {
             item->setPos(-136, -275 + ((pitch -315.0)/90.0 )* 275.0);
@@ -188,8 +166,7 @@ void MainWindow::updateAngular(joystick_event* event)
     else
     {
         angularScene->addPixmap(angularImage); //hopefully stops ocassional crash
-    }*/
-    //planeState->pitch_angle = pitch;
+    }
     ui->graphicsViewAO->setScene(angularScene);
     ui->rollVal->setText(QString::number(planeState->roll_angle, 'f', 2));
 }
@@ -197,6 +174,7 @@ void MainWindow::updateAngular(joystick_event* event)
 void MainWindow::updateHeading(joystick_event* event)
 {
     //+90 to get 0 degrees centered
+    /*
     double x = planeState->unit_vector_front.x/sqrt(pow(planeState->unit_vector_front.x,2) + pow(planeState->unit_vector_front.y,2));
     double y = planeState->unit_vector_front.y/sqrt(pow(planeState->unit_vector_front.x,2) + pow(planeState->unit_vector_front.y,2));
     if(x > 0 && y > 0) {
@@ -223,8 +201,9 @@ void MainWindow::updateHeading(joystick_event* event)
     else if(x == -1 && y == 0) {
         headingAngle = 180;
     }
+    */
     QMatrix rm;
-    rm.rotate(headingAngle);
+    rm.rotate(planeState->yaw_angle);
     rotateImage = image.transformed(rm);
     int offX = (rotateImage.width()- image.width()) / 2;
     int offY = (rotateImage.height() - image.height())/2;

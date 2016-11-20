@@ -335,9 +335,9 @@ void Plane::calculate_torque() {
 	z_torque = (roll_torque * unit_vector_front.z + pitch_torque * unit_vector_left.z + yaw_torque * unit_vector_up.z);
 }
 void Plane::calculate_angular_accelerations() {
-    pitch_angular_acceleration = pitch_angular_acceleration + pitch_torque / (mass);
-    yaw_angular_acceleration = yaw_angular_acceleration + yaw_torque / (mass);
-    roll_angular_acceleration = roll_angular_acceleration + roll_torque / (mass);
+    pitch_angular_acceleration = pitch_angular_acceleration + y_torque / (mass);
+    yaw_angular_acceleration = yaw_angular_acceleration + z_torque / (mass);
+    roll_angular_acceleration = roll_angular_acceleration + x_torque / (mass);
 }
 void Plane::calculate_angular_velocities() {
     pitch_angular_velocity = (pitch_angular_velocity + pitch_angular_acceleration)/ 10.0;
@@ -400,6 +400,21 @@ void Plane::calculate_angular_positions() {
         while(roll_angle >= 360)
         {
             roll_angle -= 360;
+        }
+    }
+
+    if(yaw_angle < 0)
+    {
+        while(yaw_angle < 0)
+        {
+            yaw_angle += 360;
+        }
+    }
+    if(yaw_angle >= 360)
+    {
+        while(yaw_angle >= 360)
+        {
+            yaw_angle -= 360;
         }
     }
 
