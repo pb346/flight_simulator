@@ -238,13 +238,15 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
             m_lift_left = 26.125*m_velocity;
         }
     }
-
+    m_lift_left = m_lift_left +(left_aileron_angle/20.0) * 10.0;
+    m_lift_right = m_lift_right + (right_aileron_angle/20.0) * 10.0;
     if(m_lift_right < 0) {
 		m_lift_right = 0;
 	}
 	if(m_lift_left < 0) {
 		m_lift_left = 0;
     }
+
     m_lift_left = m_lift_left * air_pressure * (1 - abs(unit_vector_front.z));
     m_lift_right = m_lift_right * air_pressure * (1 - abs(unit_vector_front.z));
 
