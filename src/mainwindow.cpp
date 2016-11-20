@@ -203,7 +203,7 @@ void MainWindow::updateHeading(joystick_event* event)
     }
     */
     QMatrix rm;
-    rm.rotate(planeState->yaw_angle);
+    rm.rotate(360 - planeState->yaw_angle);
     rotateImage = image.transformed(rm);
     int offX = (rotateImage.width()- image.width()) / 2;
     int offY = (rotateImage.height() - image.height())/2;
