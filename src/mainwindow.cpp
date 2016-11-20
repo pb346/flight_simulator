@@ -139,12 +139,20 @@ void MainWindow::updateAngular(joystick_event* event)
     }
     else if(z == -1 && xy == 0) {
         rollAngle = 180;
-    }/*
-    rm.rotate(rollAngle);*/
-    //angularImage = angularImage.transformed(rm);
-    //angularImage = angularImage.copy(137, 137, angularImage.width(), angularImage.height());
-    //angularScene->addPixmap(angularImage);
+    }
+    rm.rotate((-1)*planeState->roll_angle);
 
+    angularImage = angularImage.transformed(rm);
+
+   // angularImage = angularImage.copy(250, 137, angularImage.width(), angularImage.height());
+   // angularScene->addPixmap(angularImage);
+    QPixmap original = QPixmap::fromImage(*angularObject);
+    int offX = (angularImage.width()- original.width()) / 2;
+    int offY = (angularImage.height() - original.height())/2;
+    angularImage = angularImage.copy(offX, offY, original.width(), original.height());
+    item =angularScene->addPixmap(angularImage);
+    item->setPos(-136, -136);
+/*
     if(pitch > 45 && pitch <=135 ) // all sky
     {
         item = angularScene->addPixmap(angularImage);
@@ -180,7 +188,7 @@ void MainWindow::updateAngular(joystick_event* event)
     else
     {
         angularScene->addPixmap(angularImage); //hopefully stops ocassional crash
-    }
+    }*/
     //planeState->pitch_angle = pitch;
     ui->graphicsViewAO->setScene(angularScene);
     ui->rollVal->setText(QString::number(planeState->roll_angle, 'f', 2));
@@ -228,7 +236,7 @@ void MainWindow::updateHeading(joystick_event* event)
     item->setPos(-50, 0);
     item =scene->addPixmap(rotateImage);
     item->setPos(-50, 0);
-    ui->yawVal->setText(QString::number(headingAngle, 'f', 2));
+    ui->yawVal->setText(QString::number(360-headingAngle, 'f', 2));
     ui->graphicsView1->setScene(scene);
 }
 

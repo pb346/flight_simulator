@@ -240,6 +240,7 @@ void Plane::calculate_lift() { // (1/2) * d * v^2 * s * CL
     }
     m_lift_left = m_lift_left +(left_aileron_angle/20.0) * 10.0;
     m_lift_right = m_lift_right + (right_aileron_angle/20.0) * 10.0;
+
     if(m_lift_right < 0) {
 		m_lift_right = 0;
 	}
@@ -384,6 +385,21 @@ void Plane::calculate_angular_positions() {
         while(pitch_angle >= 360)
         {
             pitch_angle -= 360;
+        }
+    }
+
+    if(roll_angle < 0)
+    {
+        while(roll_angle < 0)
+        {
+            roll_angle += 360;
+        }
+    }
+    if(roll_angle >= 360)
+    {
+        while(roll_angle >= 360)
+        {
+            roll_angle -= 360;
         }
     }
 

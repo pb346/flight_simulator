@@ -41,6 +41,7 @@ public:
     double pitch;
 
 
+
     QPixmap rotateImage;
     QGraphicsScene* scene;
     QGraphicsScene* altScene;
