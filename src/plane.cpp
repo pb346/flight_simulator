@@ -351,6 +351,40 @@ void Plane::calculate_angular_positions() {
     roll_angular_acceleration = 0.0;
     yaw_angular_acceleration = 0.0;
     pitch_angular_acceleration = 0.0;
+
+
+    if(m_velocity < 148.0)
+    {
+        if(pitch_angle > 1 && pitch_angle < 90)
+        {
+         pitch_angle -= .75;
+        }
+
+        if(pitch_angle > 90 && pitch_angle <=179)
+        {
+            pitch_angle += .75;
+        }
+        else if(pitch_angle <= .78 && pitch_angle > 0)
+        {
+            pitch_angle = 0;
+        }
+    }
+
+    if(pitch_angle < 0)
+    {
+        while(pitch_angle < 0)
+        {
+            pitch_angle += 360;
+        }
+    }
+    if(pitch_angle >= 360)
+    {
+        while(pitch_angle >= 360)
+        {
+            pitch_angle -= 360;
+        }
+    }
+
 }
 void Plane::calculate_accelerations() {
     x_acceleration = x_force / (mass);//*100.0);
@@ -384,6 +418,18 @@ void Plane::calculate_positions() {
 	if(z_position < 0) {
 		z_position = 0;
 	}
+
+    if(z_position == 0)
+    {
+        if(elevator_angle < 0 )
+        {
+            if(pitch_angle <360 && pitch_angle >=270)
+            {
+                pitch_angle = 0;
+            }
+        }
+    }
+
 }
 
 bool Plane::check_for_crash()

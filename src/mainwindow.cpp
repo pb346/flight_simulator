@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
     planeState = new Plane();
     debug = new DebugValues();
     previousDebug = new DebugValues();
+    previousDebug->afterburnerActive = 0;
+    previousDebug->afterburner = 0;
+    previousDebug->brakes = 1;
     previousDebug->gears = -1;
     headerTimerCount = 0;
     startFlag = 0;
@@ -97,48 +100,9 @@ void MainWindow::updateAngular(joystick_event* event)
 {
   //  pitch += 5; //planeState->pitch_angle;
     pitch = planeState->pitch_angle;
-    if(planeState->m_velocity < 148.0)
-    {
-        if(pitch > 1 && pitch < 90)
-        {
-         pitch -= .75;
-        }
 
-        if(pitch > 90 && pitch <=179)
-        {
-            pitch += .75;
-        }
-        else if(pitch <= .78 && pitch > 0)
-        {
-            pitch = 0;
-        }
-    }
 
-    if(pitch < 0)
-    {
-        while(pitch < 0)
-        {
-            pitch += 360;
-        }
-    }
-    if(pitch > 360)
-    {
-        while(pitch >= 360);
-        {
-            pitch -= 360;
-        }
-    }
 
-    if(planeState->z_position == 0)
-    {
-        if(debug->elevator < 0 )
-        {
-            if(pitch <360 && pitch >=270)
-            {
-                pitch = 0;
-            }
-        }
-    }
     ui->pitch->setText(QString::number(pitch, 'f', 2));
     angularImage = QPixmap::fromImage(*angularObject);
     delete angularScene;
@@ -152,16 +116,16 @@ void MainWindow::updateAngular(joystick_event* event)
     double x = planeState->unit_vector_up.x;
     double xy = sqrt(pow(y,2)+pow(x,2));
     double rollAngle = 0.0;
-    if(z > 0 && y > 0) {
+    if(z > 0 && xy > 0) {
         rollAngle = atan(-xy/z)*180/PI;
     }
-    else if(z < 0 && y > 0) {
+    else if(z < 0 && xy > 0) {
         rollAngle = 180+atan(-xy/z)*180/PI;
     }
-    else if(z > 0 && y < 0) {
+    else if(z > 0 && xy < 0) {
         rollAngle = 360+atan(-xy/z)*180/PI;
     }
-    else if(z < 0 && y < 0) {
+    else if(z < 0 && xy < 0) {
         rollAngle = 180+atan(-xy/z)*180/PI;
     }
     else if(z == 0 && xy > 0) {
@@ -175,12 +139,12 @@ void MainWindow::updateAngular(joystick_event* event)
     }
     else if(z == -1 && xy == 0) {
         rollAngle = 180;
-    }
-    rm.rotate(rollAngle);
-    angularImage = angularImage.transformed(rm);
-    angularImage = angularImage.copy(137, 137, angularImage.width(), angularImage.height());
-    angularScene->addPixmap(angularImage);
-    /*
+    }/*
+    rm.rotate(rollAngle);*/
+    //angularImage = angularImage.transformed(rm);
+    //angularImage = angularImage.copy(137, 137, angularImage.width(), angularImage.height());
+    //angularScene->addPixmap(angularImage);
+
     if(pitch > 45 && pitch <=135 ) // all sky
     {
         item = angularScene->addPixmap(angularImage);
@@ -217,7 +181,7 @@ void MainWindow::updateAngular(joystick_event* event)
     {
         angularScene->addPixmap(angularImage); //hopefully stops ocassional crash
     }
-    planeState->pitch_angle = pitch;*/
+    //planeState->pitch_angle = pitch;
     ui->graphicsViewAO->setScene(angularScene);
     ui->rollVal->setText(QString::number(rollAngle, 'f', 2));
 }
