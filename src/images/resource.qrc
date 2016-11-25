@@ -6,7 +6,8 @@
         <file>heading.bmp</file>
         <file>altitude50Kft.png</file>
         <file>speed2K.png</file>
-        <file>angularOrientation.png</file>
         <file>reticle.png</file>
+        <file>angularOrientation.png</file>
+        <file>largerAO.png</file>
     </qresource>
 </RCC>

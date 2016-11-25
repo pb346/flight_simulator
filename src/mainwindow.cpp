@@ -98,11 +98,7 @@ void MainWindow::speedInit()
 
 void MainWindow::updateAngular(joystick_event* event)
 {
-  //  pitch += 5; //planeState->pitch_angle;
     pitch = planeState->pitch_angle;
-
-
-
     ui->pitch->setText(QString::number(pitch, 'f', 2));
     angularImage = QPixmap::fromImage(*angularObject);
     delete angularScene;
@@ -119,17 +115,12 @@ void MainWindow::updateAngular(joystick_event* event)
     item = angularScene->addPixmap(angularImage);
     item->setPos(-136, -136);
 
-
-
-   // angularImage = angularImage.copy(250, 137, angularImage.width(), angularImage.height());
-   // angularScene->addPixmap(angularImage);
-
-
     if(pitch > 45 && pitch <=135 ) // all sky
     {
   //      item = angularScene->addPixmap(angularImage);
         item->setPos(-136, 0);
     }
+
     else if(pitch > 135 && pitch <=225)//sky to ground
     {
         rm.rotate(180);
@@ -163,10 +154,11 @@ void MainWindow::updateAngular(joystick_event* event)
             item->setPos(-136, -137 + (137.0 * pitch/45.0));
         }
     }
+    /*
     else
     {
         angularScene->addPixmap(angularImage); //hopefully stops ocassional crash
-    }
+    }*/
     ui->graphicsViewAO->setScene(angularScene);
     ui->rollVal->setText(QString::number(planeState->roll_angle, 'f', 2));
 }
@@ -174,34 +166,6 @@ void MainWindow::updateAngular(joystick_event* event)
 void MainWindow::updateHeading(joystick_event* event)
 {
     //+90 to get 0 degrees centered
-    /*
-    double x = planeState->unit_vector_front.x/sqrt(pow(planeState->unit_vector_front.x,2) + pow(planeState->unit_vector_front.y,2));
-    double y = planeState->unit_vector_front.y/sqrt(pow(planeState->unit_vector_front.x,2) + pow(planeState->unit_vector_front.y,2));
-    if(x > 0 && y > 0) {
-        headingAngle = atan(y/x)*180/PI;
-    }
-    else if(x < 0 && y > 0) {
-        headingAngle = 180+atan(y/x)*180/PI;
-    }
-    else if(x > 0 && y < 0) {
-        headingAngle = 360+atan(y/x)*180/PI;
-    }
-    else if(x < 0 && y < 0) {
-        headingAngle = 180+atan(y/x)*180/PI;
-    }
-    else if(x == 0 && y == 1) {
-        headingAngle = 90;
-    }
-    else if(x == 1 && y == 0) {
-        headingAngle = 0;
-    }
-    else if(x == 0 && y == -1) {
-        headingAngle = 270;
-    }
-    else if(x == -1 && y == 0) {
-        headingAngle = 180;
-    }
-    */
     QMatrix rm;
     rm.rotate(360 - planeState->yaw_angle);
     rotateImage = image.transformed(rm);

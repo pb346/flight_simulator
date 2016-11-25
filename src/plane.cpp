@@ -467,9 +467,9 @@ void Plane::calculate_positions() {
 
 bool Plane::check_for_crash()
 {
-    if(z_position <= 0)
+    if(z_position <= 0 && m_velocity > 300)
     {
-        if((((int)roll_angle % 360) < -10) || (((int)roll_angle % 360) > 10) )
+        if((((int)roll_angle % 360) < 350) || (((int)roll_angle % 360) > 10) )
             return true;
         if((((int)pitch_angle %360) < 0 || ((int)pitch_angle % 360 > 30)))
             return true;
