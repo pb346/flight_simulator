@@ -34,23 +34,36 @@ MainWindow::MainWindow(QWidget *parent) :
     previousDebug->gears = -1;
     headerTimerCount = 0;
     startFlag = 0;
+    statusCount = 0;
+    crashCount = 0;
     clockCycles = 0;
     pitch = 0;
+    isCrashed = false;
     headingInit();
     altitudeInit();
     speedInit();
     angularInit();
+    statusInit();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::statusInit()
+{
+    statusObject = new QImage();
+    statusObject->load(":new/prefix1/adjusted F16.png");
+    statusImage = QPixmap::fromImage(*statusObject);
+    statusScene = new QGraphicsScene(QRect(0,0,0,0));
+    statusScene->addPixmap(statusImage);
+    ui->graphicsViewStatus->setScene(statusScene);
+}
 
 void MainWindow::angularInit()
 {
     angularObject = new QImage();
-    angularObject->load(":new/prefix1/angularOrientation.png");
+    angularObject->load(":new/prefix1/angularOrientation.png");//":new/prefix1/largerAO.png");//
     angularImage = QPixmap::fromImage(*angularObject);
     angularScene = new QGraphicsScene(QRect(0,0,0,0));
     angularScene->addPixmap(angularImage);
@@ -96,7 +109,7 @@ void MainWindow::speedInit()
     ui->graphicsViewSpeed->setScene(speedScene);
 }
 
-void MainWindow::updateAngular(joystick_event* event)
+void MainWindow::updateAngular()
 {
     pitch = planeState->pitch_angle;
     ui->pitch->setText(QString::number(pitch, 'f', 2));
@@ -163,7 +176,7 @@ void MainWindow::updateAngular(joystick_event* event)
     ui->rollVal->setText(QString::number(planeState->roll_angle, 'f', 2));
 }
 
-void MainWindow::updateHeading(joystick_event* event)
+void MainWindow::updateHeading()
 {
     //+90 to get 0 degrees centered
     QMatrix rm;
@@ -183,7 +196,7 @@ void MainWindow::updateHeading(joystick_event* event)
     ui->graphicsView1->setScene(scene);
 }
 
-void MainWindow::updateSpeed(joystick_event* event)
+void MainWindow::updateSpeed()
 {
     double speed = (planeState->m_velocity * 3600.0)/(5280.0);
     speedImage = QPixmap::fromImage(*speedObject);
@@ -196,7 +209,7 @@ void MainWindow::updateSpeed(joystick_event* event)
     ui->speedVal->setText(QString::number(speed, 'f', 1));
 }
 
-void MainWindow::updateAltitude(joystick_event* event)
+void MainWindow::updateAltitude()
 {
     int altitude = (planeState->z_position);
     altImage = QPixmap::fromImage(*altObject);
@@ -209,6 +222,29 @@ void MainWindow::updateAltitude(joystick_event* event)
     ui->altValue->setText(QString::number( altitude ));
 }
 
+void MainWindow::updateStatus()
+{/*
+    statusCount += 1;
+    delete statusScene;
+    statusScene = new QGraphicsScene(QRect(0,0,0,0));
+    statusObject->load(":/new/prefix1/adjusted F16.png");
+    statusScene->addPixmap(statusImage);
+    statusImage = QPixmap::fromImage(*statusObject);
+    ui->graphicsViewStatus->setScene(statusScene);
+    if(statusCount <= 10)
+    {
+        //if() engine, left ail, right ail, left elev, right elev, rudder, fuel
+        statusObject->load(":/new/prefix1/fullDamage.png");
+        statusImage = QPixmap::fromImage(*statusObject);
+        QGraphicsPixmapItem* item = statusScene->addPixmap(statusImage);
+        ui->graphicsViewStatus->setScene(statusScene);
+    }
+    if(statusCount == 20)
+    {
+        statusCount = 0;
+    }*/
+}
+
 void MainWindow::onUpdateGUI(joystick_event* event)
 {
      //clockCycles++;
@@ -219,7 +255,30 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         event->throttle = -1.0;
         startFlag += 1;
     }
+    if(isCrashed == true)
+    {
 
+        crashCount += 1;
+        delete statusScene;
+        statusScene = new QGraphicsScene(QRect(0,0,0,0));
+        statusObject->load(":/new/prefix1/adjusted F16.png");
+        statusScene->addPixmap(statusImage);
+        statusImage = QPixmap::fromImage(*statusObject);
+        ui->graphicsViewStatus->setScene(statusScene);
+        if(crashCount <= 10)
+        {
+            //if() engine, left ail, right ail, left elev, right elev, rudder, fuel
+            statusObject->load(":/new/prefix1/fullDamage.png");
+            statusImage = QPixmap::fromImage(*statusObject);
+            QGraphicsPixmapItem* item = statusScene->addPixmap(statusImage);
+            ui->graphicsViewStatus->setScene(statusScene);
+        }
+        if(crashCount == 20)
+        {
+            crashCount = 0;
+        }
+    return;
+    }
     process_joystick_input(currentModel,event, &debug, &planeState);
     planeState->update_plane(debug->thrust, debug->elevator, debug->elevator, debug->aileronLeft, debug->aileronRight, debug->rudder, debug->afterburner);
     headerTimerCount += 1;
@@ -227,17 +286,21 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     updateSliders(event);
     if(planeState->check_for_crash())
     {
-        this->on_pushButton_clicked();
+    //    this->on_pushButton_clicked();
+        isCrashed = true;
+        planeState->m_velocity = 0;
+        updateSpeed();
         ui->status->setText("CRASHED");
     }
 
 
     if(headerTimerCount > 0)
     {
-        updateHeading(event);
-        updateAltitude(event);
-        updateSpeed(event);
-        updateAngular(event);
+        updateHeading();
+        updateAltitude();
+        updateSpeed();
+        updateAngular();
+        updateStatus();
         headerTimerCount = 0;
     }
     //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));

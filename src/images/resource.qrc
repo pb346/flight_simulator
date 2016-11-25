@@ -9,5 +9,6 @@
         <file>reticle.png</file>
         <file>angularOrientation.png</file>
         <file>largerAO.png</file>
+        <file>fullDamage.png</file>
     </qresource>
 </RCC>

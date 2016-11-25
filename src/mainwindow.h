@@ -34,10 +34,12 @@ public:
     QImage* altObject;
     QImage* speedObject;
     QImage* angularObject;
+    QImage* statusObject;
     QPixmap image;
     QPixmap altImage;
     QPixmap speedImage;
     QPixmap angularImage;
+    QPixmap statusImage;
     double pitch;
 
 
@@ -47,18 +49,24 @@ public:
     QGraphicsScene* altScene;
     QGraphicsScene* speedScene;
     QGraphicsScene* angularScene;
+    QGraphicsScene* statusScene;
     int headingAngle;
     int headerTimerCount;
+    int statusCount;
+    int crashCount;
+    bool isCrashed;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
-    void updateHeading(joystick_event* event);
-    void updateAltitude(joystick_event* event);
-    void updateSpeed(joystick_event* event);
-    void updateAngular(joystick_event* event);
+    void updateHeading();
+    void updateAltitude();
+    void updateSpeed();
+    void updateAngular();
+    void updateStatus();
     void headingInit();
     void altitudeInit();
     void speedInit();
     void angularInit();
+    void statusInit();
 
 private slots:
     void onUpdateGUI(joystick_event*);

@@ -605,27 +605,11 @@
      <string>Plane Status</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_24">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>40</y>
-      <width>191</width>
-      <height>311</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="images/resource.qrc">:/new/prefix1/adjusted F16.png</pixmap>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_26">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>50</y>
+      <x>860</x>
+      <y>30</y>
       <width>51</width>
       <height>151</height>
      </rect>
@@ -640,8 +624,8 @@
    <widget class="QLabel" name="label_27">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>50</y>
+      <x>730</x>
+      <y>30</y>
       <width>51</width>
       <height>151</height>
      </rect>
@@ -1113,6 +1097,16 @@
      <string>Brakes</string>
     </property>
    </widget>
+   <widget class="QGraphicsView" name="graphicsViewStatus">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>41</y>
+      <width>201</width>
+      <height>311</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>graphicsViewAO</zorder>
    <zorder>label</zorder>
    <zorder>checkGear</zorder>
@@ -1156,9 +1150,6 @@
    <zorder>fuelValue</zorder>
    <zorder>label_21</zorder>
    <zorder>label_25</zorder>
-   <zorder>label_24</zorder>
-   <zorder>label_26</zorder>
-   <zorder>label_27</zorder>
    <zorder>status</zorder>
    <zorder>pushButton</zorder>
    <zorder>line_3</zorder>
@@ -1192,6 +1183,9 @@
    <zorder>label_33</zorder>
    <zorder>yawVal</zorder>
    <zorder>checkBrake</zorder>
+   <zorder>graphicsViewStatus</zorder>
+   <zorder>label_27</zorder>
+   <zorder>label_26</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
