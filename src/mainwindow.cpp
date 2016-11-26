@@ -498,7 +498,9 @@ PlaneModel* MainWindow::parseXML()
 {
     QString exe = QCoreApplication::applicationDirPath();
     QString fileName = exe + "/../../flight_simulator/src/input/planeModels.xml";
+    ui->interfaceDisplay->append("Loading planeModels.xml");
     printf(fileName.toLatin1());
+
     QFile* file = new QFile(fileName);
     if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
         ui->interfaceDisplay->append("ERROR: Cannot open XML File\n");
@@ -517,7 +519,7 @@ PlaneModel* MainWindow::parseXML()
            if(xmlParser.name() == "PLANE")
            {
                node = new PlaneModel;
-               printf("New Plane Model Loaded\n");
+               ui->interfaceDisplay->append("Loading Plane Model\n");
                continue;
            }
            if(xmlParser.name() == "NAME")
@@ -629,8 +631,6 @@ PlaneModel* MainWindow::parseXML()
         }
     }
     return node;
-    //QString content = file->readAll();
-   // printf(content.toLatin1());
 }
 
 void MainWindow::on_pushButton_reset_clicked()
