@@ -122,7 +122,6 @@ Plane::Plane() {
     afterburnerActive = 0;
     auxActive = 0;
     m_afterburner = 0;
-    brakes = 1;
 }
 
 
@@ -519,4 +518,5 @@ void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double
     calculate_accelerations();
     calculate_velocities();
 	calculate_positions();
+
 }

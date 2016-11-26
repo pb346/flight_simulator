@@ -68,6 +68,7 @@ public:
     void speedInit();
     void angularInit();
     void statusInit();
+    PlaneModel* parseXML();
 
 private slots:
     void onUpdateGUI(joystick_event*);
@@ -76,6 +77,8 @@ private slots:
     void onEventLoopStarted();
 
     void on_pushButton_reset_clicked();
+
+    void on_pushButton_quit_clicked();
 
 private:
     Ui::MainWindow *ui;

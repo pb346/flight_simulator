@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
-    ui->checkBrake->setChecked(true);
     runningFlag = 0;
     planeState = new Plane();
     debug = new DebugValues();
@@ -402,7 +401,6 @@ void MainWindow::onUpdateGUI(joystick_event* event)
             planeState->auxActive = 1;
         }
     }
-
     /*
     if(previousDebug->flapDown == 1 && debug->flapDown == 0)
     {
@@ -421,32 +419,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         }
     }
     */
-/*
-    if(previousDebug->brakes == 1 && debug->brakes == 0)
-    {
-        if(planeState->brakes == 0)
-        {
-         //   planeState->brakes = 1;
-         //   ui->checkBrake->setChecked(true);
-        }
-        else
-        {
-        //    planeState->brakes = 0;
-        //    ui->checkBrake->setChecked(false);
-        }
-    }
-    if(planeState->brakes == 1)
-    {
-        if(planeState->m_velocity < 15.0)
-        {
-         //   planeState->m_velocity = 0;
-        }
-        else
-        {
-         //   planeState->m_velocity -= 15;
-        }
-    }
-*/
+
     debug->copyDebug(previousDebug);
 }
 
@@ -501,6 +474,7 @@ void MainWindow::on_pushButton_clicked()
         procThread->Stop = false;
         runningFlag = 1;
         ui->status->setText("READING");
+        ui->interfaceDisplay->append("Program is running");
         //debug->thrust = 0;
         procThread->start();
     }
@@ -508,7 +482,8 @@ void MainWindow::on_pushButton_clicked()
     {
         runningFlag = 0;
         procThread->Stop = true;
-        ui->status->setText("STOPPED");
+        ui->status->setText("PAUSED");
+        ui->interfaceDisplay->append("Program is paused");
     }
 }
 
@@ -519,14 +494,14 @@ void MainWindow::onEventLoopStarted()
     planeState->auxFuel = currentModel->auxFuel;
 }
 
-PlaneModel* parseXML()
+PlaneModel* MainWindow::parseXML()
 {
     QString exe = QCoreApplication::applicationDirPath();
     QString fileName = exe + "/../../flight_simulator/src/input/planeModels.xml";
     printf(fileName.toLatin1());
     QFile* file = new QFile(fileName);
     if(!file->open(QIODevice::ReadOnly | QIODevice::Text))
-        printf("ERROR: Cannot open XML File\n");
+        ui->interfaceDisplay->append("ERROR: Cannot open XML File\n");
     QXmlStreamReader xmlParser(file);
     PlaneModel* node;
     while(!xmlParser.atEnd() && !xmlParser.hasError())
@@ -679,5 +654,26 @@ void MainWindow::on_pushButton_reset_clicked()
     delete previousDebug;
     delete previousState;
     delete currentModel;
+    QApplication::quit();
+}
+
+void MainWindow::on_pushButton_quit_clicked()
+{
+    procThread->exit(0);
+    delete procThread;
+    delete scene;
+    delete altScene;
+    delete speedScene;
+    delete angularScene;
+    delete imageObject;
+    delete altObject;
+    delete speedObject;
+    delete angularObject;
+    delete planeState;
+    delete debug;
+    delete previousDebug;
+    delete previousState;
+    delete currentModel;
+    rerun = false;
     QApplication::quit();
 }

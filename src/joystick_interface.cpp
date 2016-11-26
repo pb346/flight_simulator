@@ -227,8 +227,8 @@ void process_joystick_input(PlaneModel* model, joystick_event* event, DebugValue
     {
         localDebug->flapUp = 0;
     }*/
-
-    if(event->button[8] != 0)
+/*
+    if(event->button[6] != 0)
     {
         localDebug->brakes = 1;
         planeReference->brakes = 1;
@@ -238,6 +238,7 @@ void process_joystick_input(PlaneModel* model, joystick_event* event, DebugValue
         localDebug->brakes = 0;
         planeReference->brakes = 0;
     }
+    */
     if(event->button[9] != 0)
     {
         localDebug->auxActive = 1;
