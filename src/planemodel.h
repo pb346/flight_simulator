@@ -14,6 +14,9 @@ public:
     float surfaceArea;
     float minWeight;    //no fuel, no AUX
     float maxWeight;    //max fuel, plus AUX
+    float maxFuel;
+    float mainFuel;
+    float auxFuel;
 
 /**Lift Surfaces **/
     float maxSlatPOS;     //leading edge flap angle positive
@@ -41,6 +44,7 @@ struct DebugValues
     int brakes;
     double afterburner;
     int afterburnerActive;
+    int auxActive;
     double flapDown;
     double flapUp;
     //int flapDown;

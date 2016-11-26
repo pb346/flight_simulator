@@ -223,7 +223,7 @@ void MainWindow::updateAltitude()
 }
 
 void MainWindow::updateStatus()
-{/*
+{
     statusCount += 1;
     delete statusScene;
     statusScene = new QGraphicsScene(QRect(0,0,0,0));
@@ -233,16 +233,72 @@ void MainWindow::updateStatus()
     ui->graphicsViewStatus->setScene(statusScene);
     if(statusCount <= 10)
     {
+        /*
         //if() engine, left ail, right ail, left elev, right elev, rudder, fuel
         statusObject->load(":/new/prefix1/fullDamage.png");
         statusImage = QPixmap::fromImage(*statusObject);
         QGraphicsPixmapItem* item = statusScene->addPixmap(statusImage);
-        ui->graphicsViewStatus->setScene(statusScene);
+        ui->graphicsViewStatus->setScene(statusScene);*/
     }
     if(statusCount == 20)
     {
         statusCount = 0;
-    }*/
+    }
+}
+
+void MainWindow::updateFuel()
+{
+    //double fuelConsumption = 0;
+    if(ui->checkAux->isChecked() == 1)
+    {
+        if(planeState->afterburnerActive == 1)
+        {
+            planeState->auxFuel -= .22;
+            planeState->auxFuel -= (planeState->m_afterburner / 5000.0) * 1.55;
+        //    fuelConsumption = .22 + (planeState->m_afterburner / 5000.0) * 1.55;
+        }
+        else
+        {
+            if((planeState->m_thrust/250.0) < 5.0)
+            {
+                planeState->auxFuel -= .011; //idle fuel consumption;
+            //    fuelConsumption = .011;
+            }
+            else
+            {
+                planeState->auxFuel -= (planeState->m_thrust/25000.0)*.22;
+            //    fuelConsumption = (planeState->m_thrust/25000.0)*.22;
+            }
+        }
+    }
+    else
+    {
+        if(planeState->afterburnerActive == 1)
+        {
+            planeState->mainFuel -= .22;
+            planeState->mainFuel -= (planeState->m_afterburner /5000.0) *1.55;
+        }
+        else
+        {
+            if((planeState->m_thrust/ 250.0) < 5.0)
+            {
+                planeState->mainFuel -= .011; //idle fuel consumption;
+            }
+            else
+            {
+                planeState->mainFuel -= (planeState->m_thrust/25000.0)*.22;
+            }
+        }
+    }
+    if(planeState->mainFuel < 0.0)
+    {
+        planeState->mainFuel = 0;
+    }
+    if(planeState->auxFuel < 0.0)
+    {
+        planeState->auxFuel = 0;
+    }
+    //printf("FUEL %f\n", fuelConsumption);
 }
 
 void MainWindow::onUpdateGUI(joystick_event* event)
@@ -280,7 +336,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
     return;
     }
     process_joystick_input(currentModel,event, &debug, &planeState);
-    planeState->update_plane(debug->thrust, debug->elevator, debug->elevator, debug->aileronLeft, debug->aileronRight, debug->rudder, debug->afterburner);
+    planeState->update_plane(debug->thrust, debug->elevator, debug->elevator, debug->aileronLeft, debug->aileronRight, debug->rudder, debug->afterburner, ui->checkAux->isChecked());
     headerTimerCount += 1;
     updateValues(event);
     updateSliders(event);
@@ -301,6 +357,7 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         updateSpeed();
         updateAngular();
         updateStatus();
+        updateFuel();
         headerTimerCount = 0;
     }
     //ui->leftAilVal->setText(QString::number(debug->aileronLeft, 'f', 2));
@@ -328,6 +385,19 @@ void MainWindow::onUpdateGUI(joystick_event* event)
         {
             ui->checkAfterburner->setChecked(1);
             planeState->afterburnerActive = 1;
+        }
+    }
+    if(previousDebug->auxActive == 1 && debug->auxActive == 0)
+    {
+        if(ui->checkAux->isChecked() == 1)
+        {
+            ui->checkAux->setChecked(0);
+            planeState->auxActive = 0;
+        }
+        else
+        {
+            ui->checkAux->setChecked(1);
+            planeState->auxActive = 1;
         }
     }
 
@@ -398,6 +468,8 @@ void MainWindow::updateValues(joystick_event* event)
     ui->dragValue->setText(QString::number((planeState->m_drag_left + planeState->m_drag_right), 'f', 2 ));
     ui->thrustValue->setText(QString::number(planeState->m_thrust, 'f', 2 ));
     ui->airDensity->setText(QString::number(planeState->air_pressure, 'f', 2));
+    ui->mainFuel->setText(QString::number(planeState->mainFuel, 'f', 2));
+    ui->auxFuelValue->setText(QString::number(planeState->auxFuel, 'f', 2));
     //ui->xAngleValue->setText(QString::number(planeState->unit_vector_front.x, 'f', 2));
     //ui->yAngleValue->setText(QString::number(planeState->unit_vector_front.y, 'f', 2));
     //ui->zAngleValue->setText(QString::number(planeState->unit_vector_front.z, 'f', 2));
@@ -441,6 +513,8 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::onEventLoopStarted()
 {
     currentModel = parseXML();
+    planeState->mainFuel = currentModel->mainFuel;
+    planeState->auxFuel = currentModel->auxFuel;
 }
 
 PlaneModel* parseXML()
@@ -508,6 +582,17 @@ PlaneModel* parseXML()
            }
            if(xmlParser.name() == "MAXFUEL")
            {
+               node->maxFuel = xmlParser.readElementText().toFloat();
+               continue;
+           }
+           if(xmlParser.name() == "MAINFUEL")
+           {
+               node->mainFuel = xmlParser.readElementText().toFloat();
+               continue;
+           }
+           if(xmlParser.name() == "AUXFUEL")
+           {
+               node->auxFuel = xmlParser.readElementText().toFloat();
                continue;
            }
            if(xmlParser.name() == "ACTUATOR_SPEED")

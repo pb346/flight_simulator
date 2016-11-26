@@ -62,6 +62,7 @@ public:
     void updateSpeed();
     void updateAngular();
     void updateStatus();
+    void updateFuel();
     void headingInit();
     void altitudeInit();
     void speedInit();

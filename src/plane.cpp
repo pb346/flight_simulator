@@ -120,6 +120,7 @@ Plane::Plane() {
     //misc controls
     gears_Deployed = 1;
     afterburnerActive = 0;
+    auxActive = 0;
     m_afterburner = 0;
     brakes = 1;
 }
@@ -477,11 +478,24 @@ bool Plane::check_for_crash()
     return false;
 }
 
-void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_rudder_angle, double p_m_afterburner) {
+void Plane::update_plane(double p_m_thrust, double p_left_elevator_angle, double p_right_elevator_angle, double p_left_aileron_angle, double p_right_aileron_angle, double p_rudder_angle, double p_m_afterburner, int auxActive) {
 
-    m_thrust = 250.0 * p_m_thrust;//max 25,000
-    m_afterburner = 50.0 * p_m_afterburner;//max 30,000
-    m_thrust += m_afterburner;
+    if(mainFuel == 0 && auxActive == 0)
+    {
+        m_thrust = 0;
+        m_afterburner = 0;
+    }
+    else if(mainFuel == 0 && auxActive == 1 && auxFuel == 0)
+    {
+        m_thrust = 0;
+        m_afterburner = 0;
+    }
+    else
+    {
+        m_thrust = 250.0 * p_m_thrust;//max 25,000
+        m_afterburner = 50.0 * p_m_afterburner;//max 30,000
+        m_thrust += m_afterburner;
+    }
 	left_elevator_angle = p_left_elevator_angle;
 	right_elevator_angle = p_right_elevator_angle;
     left_aileron_angle = p_left_aileron_angle;

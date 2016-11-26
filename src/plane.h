@@ -146,6 +146,9 @@ public:
     int afterburnerActive;
     double m_afterburner;
     double flap;
+    double mainFuel;
+    double auxFuel;
+    int auxActive;
     int brakes;
 
     //function prototypes
@@ -172,7 +175,7 @@ public:
 	void calculate_positions();
 
 	Plane();
-    void update_plane(double, double, double, double, double, double, double);
+    void update_plane(double, double, double, double, double, double, double, int);
 	void update_right_flaps(double angle);
 	void update_left_flaps(double angle);
 	void update_thrust(double thrust);
