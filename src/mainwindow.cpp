@@ -233,12 +233,14 @@ void MainWindow::updateStatus()
     ui->graphicsViewStatus->setScene(statusScene);
     if(statusCount <= 10)
     {
-        /*
-        //if() engine, left ail, right ail, left elev, right elev, rudder, fuel
-        statusObject->load(":/new/prefix1/fullDamage.png");
-        statusImage = QPixmap::fromImage(*statusObject);
-        QGraphicsPixmapItem* item = statusScene->addPixmap(statusImage);
-        ui->graphicsViewStatus->setScene(statusScene);*/
+        if((planeState->mainFuel == 0 && ui->checkAux->isChecked() == 0) || (planeState->mainFuel == 0 && ui->checkAux->isChecked() == 1 && planeState->auxFuel == 0))
+        {
+            statusObject->load(":/new/prefix1/noFuel.png");
+            statusImage = QPixmap::fromImage(*statusObject);
+            QGraphicsPixmapItem* item = statusScene->addPixmap(statusImage);
+            ui->graphicsViewStatus->setScene(statusScene);
+            //no fuel
+        }
     }
     if(statusCount == 20)
     {

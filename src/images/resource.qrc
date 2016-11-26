@@ -10,5 +10,6 @@
         <file>angularOrientation.png</file>
         <file>largerAO.png</file>
         <file>fullDamage.png</file>
+        <file>noFuel.png</file>
     </qresource>
 </RCC>
