@@ -3,12 +3,28 @@
 #include "timerThread.h"
 #include "plane.h"
 #include "planemodel.h"
+#include "QMediaPlayer"
 #include <QMainWindow>
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
-PlaneModel* parseXML();
+struct ProgramTime
+{
+    int hours;
+    int minutes;
+    int seconds;
+    int milli;
+    ProgramTime(){};
+    ProgramTime(int h, int min, int s, int mil)
+    {
+        hours = h;
+        minutes = min;
+        seconds = s;
+        milli = mil;
+    }
+};
+
 namespace Ui {
 class MainWindow;
 }
@@ -29,7 +45,18 @@ public:
     int runningFlag;
     int startFlag;
     int clockCycles;
-    //int rotate = 90;
+    bool warningActive;
+    bool crashActive;
+    bool noFuelActive;
+    bool engineActive = false;
+    int spoolCounter;
+    bool angularFlip;
+    bool spoolOne;
+    bool planeSet;
+    QMediaPlayer* warning1;
+    QMediaPlayer* pullUp;
+    QMediaPlayer* noFuel;
+    QMediaPlayer* engine;
     QImage* imageObject;
     QImage* altObject;
     QImage* speedObject;
@@ -40,21 +67,21 @@ public:
     QPixmap speedImage;
     QPixmap angularImage;
     QPixmap statusImage;
-    double pitch;
-
-
-
     QPixmap rotateImage;
     QGraphicsScene* scene;
     QGraphicsScene* altScene;
     QGraphicsScene* speedScene;
     QGraphicsScene* angularScene;
     QGraphicsScene* statusScene;
+    ProgramTime* currentTime;
     int headingAngle;
     int headerTimerCount;
     int statusCount;
     int crashCount;
+    int cycleTimer;
     bool isCrashed;
+    double pitch;
+    QString localPath;
     void updateValues(joystick_event* event);
     void updateSliders(joystick_event* event);
     void updateHeading();
@@ -68,18 +95,17 @@ public:
     void speedInit();
     void angularInit();
     void statusInit();
+    void printSnappyResponse();
     PlaneModel* parseXML();
+    void updateTime();
 
 private slots:
     void onUpdateGUI(joystick_event*);
     void on_pushButton_clicked();
     void closeEvent(QCloseEvent *event);
-    void onEventLoopStarted();
-
+    void onEventLoopStarted();\
     void on_pushButton_reset_clicked();
-
     void on_pushButton_quit_clicked();
-
 private:
     Ui::MainWindow *ui;
 };

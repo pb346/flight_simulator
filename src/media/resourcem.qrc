@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/media/prefix1">
+        <file>crashSound.mp3</file>
+        <file>pullUp.mp3</file>
+        <file>warning.mp3</file>
+    </qresource>
+</RCC>

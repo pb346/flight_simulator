@@ -11,5 +11,7 @@
         <file>largerAO.png</file>
         <file>fullDamage.png</file>
         <file>noFuel.png</file>
+        <file>angularOLarge.png</file>
+        <file>angularV2.png</file>
     </qresource>
 </RCC>
