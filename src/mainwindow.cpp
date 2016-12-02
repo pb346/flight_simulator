@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
     localPath = QDir::currentPath();
-    //localPath += "/../flight_simulator/deploy";
+    localPath += "../../flight_simulator/src";
     runningFlag = 0;
     planeState = new Plane();
     debug = new DebugValues();
@@ -639,8 +639,7 @@ void MainWindow::onEventLoopStarted()
 
 PlaneModel* MainWindow::parseXML()
 {
-    QString exe = QCoreApplication::applicationDirPath();
-    QString fileName = exe + "/input/planeModels.xml";
+    QString fileName = localPath + "/input/planeModels.xml";
     ui->interfaceDisplay->append("Loading planeModels.xml");
     printf(fileName.toLatin1());
 
