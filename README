@@ -12,9 +12,9 @@ Logitech Extreme 3D Pro Joystick
 
 /******* Installation *********/
 
-Extract libraries from libraries.7z and copy all of them into the deploy directory. 
-
-NOTE: In the event the libraries.7z file is not present, you must download QT Creator. Any version will do. From there, you must copy the files in LibraryPaths.txt to deploy.
+From libraries, extract librariesPart1, librariesPart2, and 
+librariesPart3 using either 7zip or winRar.
+NOTE: In the event the libraries are not present, you must download QT Creator. Any version will do. From there, you must copy the files in LibraryPaths.txt to the deploy directory.
 
 Plug in joystick and calibrate (Go to "Devices and Printers". Right click on "Logitech Extreme 3D" and navigate to "Game Controller Settings/Properties/Settings/Calibrate"). Click on flight_simulator.exe to run.
 
