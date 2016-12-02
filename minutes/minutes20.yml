@@ -1,7 +1,8 @@
-date: November 19, 2016
-meeting_type: Group 
-attendace: [namaurer, paulbaba]
-task_progress:[ namaurer {Clean Bugs}
-		paulbaba {Fix Angular Orientation image}]
+date: November 29, 2016
+meeting_type: TA 
+attendace: [namaurer, paulbaba, echriste]
+task_progress:[ namaurer {work on presentation}
+		echriste{}
+		paulbaba {work on deploying}]
 issues:
 Notes: 
