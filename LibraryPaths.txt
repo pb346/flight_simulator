@@ -8,3 +8,5 @@ C:/Qt/5.7/mingw53_32/bin/Qt5Cored.dll
 C:/Qt/5.7/mingw53_32/bin/Qt5Guid.dll
 C:/Qt/5.7/mingw53_32/bin/Qt5OpenGLd.dll
 C:/Qt/5.7/mingw53_32/bin/Qt5Widgetsd.dll
+C:/Qt/5.7/mingw53_32/bin/Qt5Networkd.dll
+C:/Qt/5.7/mingw53_32/bin/Multimediad.dll
