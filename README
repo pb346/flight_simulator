@@ -1,20 +1,40 @@
-This is a flight simulator.  It will show the user what a pilot would see looking at the instruments on the plane.  
-The user will be able to control the plane via a joystick. In the development phase of the project it will also show 
-information helpful for debugging the program and the joystick.
-
-/******* File List    *********/
+This is a flight simulator.  It shows the user what a pilot would see looking at the instruments on the plane.  
+The user is able to control the plane via a joystick. The simulation will detect when the plane has crashed and the
+engines will stop when there is no fuel.
 
 
 /******* Requirements *********/
 
+Operating System: Windows 7,8,10
+RAM: 6 Gigabytes
+Processer: Intel or AMD DuoCore
+Logitech Extreme 3D Pro Joystick
 
 /******* Installation *********/
 
+Extract libraries from libraries.7z and copy all of them into the deploy directory. Plug in joystick and calibrate (Go to "Devices and Printers". Right click on "Logitech Extreme 3D" and navigate to "Game Controller Settings/Properties/Settings/Calibrate"). Click on flight_simulator.exe to run.
+
 
 /*******  Usage       ********/
+Program:
+Press start to start the simulation and press again to stop it.
+The program simulates the engine spooling so there will not be
+any control of the plane for a few moments after starting the simulation.
+Press reset to immediately restart the program.
+Press quit to close the program.
 
+Joystick:
+Moving the joystick left and right affects the roll of the plane. Pushing the joystick forward and backwards adjusts the pitch. Rotating the joystick clockwise and counter clockwise adjusts the yaw of the plane.
+The throttle increases when the slider is moved up.
+Button 2 must be held to activate the afterburners (the throttle must also be at 100%)
+Button 8 deploys and retracts the gears.
+Button 10 engages and disables the Auxillary fuel tanks.
 
+/******* Further Development ******/
 
+Engine Sound: divide clip into 80 parts
+Angular Orientation: Fix flipping
+Stop sounds when reseting
 
 
 
