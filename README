@@ -18,6 +18,8 @@ NOTE: In the event the libraries are not present, you must download QT Creator. 
 
 Plug in joystick and calibrate (Go to "Devices and Printers". Right click on "Logitech Extreme 3D" and navigate to "Game Controller Settings/Properties/Settings/Calibrate"). Click on flight_simulator.exe to run.
 
+Note: To develop the program in QT, there are two things to do. After opening the .pro file in QT, the build path must be changed to be in the same directory that the root folder for flight_simulator currently resides. Also line 28 of mainwindow.cpp must be uncommented or else the program will crash at runtime.
+
 
 /*******  Usage       ********/
 Program:

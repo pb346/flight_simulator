@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     procThread = new timerThread(this);
     connect(procThread, SIGNAL(updateGUI(joystick_event*)),this, SLOT(onUpdateGUI(joystick_event*)));
     localPath = QDir::currentPath();
-    //localPath += "../../flight_simulator/src";  //use if running in QT Creator
+    localPath += "../../flight_simulator/src";  //use if running in QT Creator
     //localPath += "deploy/";                     //use if exporting executable
     runningFlag = 0;
     planeState = new Plane();
